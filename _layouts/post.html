@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f2e9">
+    <title>{{ page.title }} — Aryan Mishra</title>
+    <link rel="stylesheet" href="/styles.css">
+
+    <!-- MathJax Script for LaTeX rendering -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        .article-shell {
+            max-width: 680px;
+            margin: 60px auto 100px;
+        }
+
+        .article-header {
+            margin-bottom: 40px;
+        }
+
+        .article-header h1 {
+            font-size: clamp(38px, 5vw, 54px);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .article-date {
+            font-size: 13px;
+            color: var(--muted);
+            letter-spacing: .08em;
+        }
+
+        .article-content {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--ink);
+        }
+
+        .article-content h2 {
+            margin-top: 48px;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .article-content pre {
+            background: #eee8dc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .back-nav {
+            margin-bottom: 30px;
+            display: inline-block;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .back-nav:hover {
+            color: var(--rust);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="wordmark" href="/" aria-label="Aryan Mishra home">
+                <span class="wordmark-symbol">am<span>·</span></span>
+                <span>Aryan Mishra</span>
+            </a>
+            <nav aria-label="Main navigation">
+                <a href="/#work">The work <span aria-hidden="true">↘</span></a>
+                <a href="/#about">A bit about me</a>
+            </nav>
+        </header>
+
+        <main class="article-shell">
+            <a class="back-nav" href="/blog.html">← All notes</a>
+            <header class="article-header">
+                <p class="article-date">{{ page.date | date: "%B %d, %Y" }}</p>
+                <h1>{{ page.title }}</h1>
+            </header>
+
+            <div class="article-content">
+                {{ content }}
+            </div>
+        </main>
+
+        <footer>
+            <a class="footer-name" href="/">Always a work <em>in progress.</em><span aria-hidden="true">↗</span></a>
+            <div><span>Aryan Mishra</span><span>2026</span></div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+markdown: kramdown
+permalink: /writing/:title/
+kramdown:
+  math_engine: mathjax

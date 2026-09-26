@@ -202,10 +202,11 @@ em {
 .intro-foot {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 28px;
     flex-wrap: wrap;
     font-size: 13px;
-    color: var(--muted)
+    color: var(--muted);
 }
 
 .text-link {
@@ -291,7 +292,7 @@ em {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin: 0;
+    margin: 0 !important;
     padding: 0;
     border: 0;
     background: none;

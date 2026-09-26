@@ -193,10 +193,11 @@ em {
 
 .intro-text {
     max-width: 535px;
-    color: var(--muted);
+    color: #2b2724;
+    font-weight: 420;
     font-size: 17px;
     line-height: 1.8;
-    margin-bottom: 25px
+    margin-bottom: 25px;
 }
 
 .intro-foot {
@@ -388,8 +389,8 @@ em {
 }
 
 .off-screen {
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
     color: var(--muted);
     margin: 23px 0 0
 }
@@ -1726,7 +1727,8 @@ footer>div {
     inset: 0;
     display: block;
     /* background-image: url("./assets/aryan-emotes.webp"); */
-    background-image: url("./assets/aryan-emotes-likeness.webp");
+    /* background-image: url("./assets/aryan-emotes-likeness.webp"); */
+    background-image: url("./assets/aryan-emotes-v2.webp");
     background-repeat: no-repeat;
     /* background-size: 200% 200%; */
     background-size: 200% 300%;
@@ -1817,4 +1819,150 @@ footer>div {
 
 .portrait-art--emotes::before {
     content: none;
+}
+
+/* Inline Company Links */
+/* Base text darkness & legibility for the bio */
+.intro-role {
+    color: #24201c;
+    /* Deep dark charcoal/ink instead of washed-out muted gray */
+    font-weight: 420;
+    /* Slightly elevated from normal 400 for crisp screen rendering */
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+}
+
+/* Option 4: Controlled Medium Weight Highlight */
+.intro-role strong {
+    color: #12100e;
+    /* Deepest ink black for crisp distinction */
+    font-weight: 580;
+    /* Clean medium-bold: distinct without heavy ink blobs */
+    letter-spacing: -0.01em;
+}
+
+/* Company Links */
+.company-link {
+    color: var(--rust);
+    /* Terracotta accent tone */
+    text-decoration: none;
+    font-weight: 580;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.company-link:hover {
+    opacity: 0.8;
+    filter: brightness(0.9);
+}
+
+.eyebrow,
+.about-detail h3 {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    letter-spacing: .14em !important;
+    font-weight: 650 !important;
+    text-transform: uppercase !important;
+    color: #1a1715 !important;
+    margin: 0 0 25px !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.intro-role,
+.about-bio,
+.about-text p {
+    color: #24201d !important;
+    font-weight: 450 !important;
+    line-height: 1.65;
+}
+
+.intro-role strong,
+.about-text strong {
+    color: #110f0e !important;
+    font-weight: 600 !important;
+}
+
+.company-link {
+    color: var(--rust) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.company-link:hover {
+    opacity: 0.82;
+    filter: brightness(0.9);
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skill-list li {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 500 !important;
+    color: #24201d !important;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid #d1c8be !important;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    letter-spacing: -0.01em;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.skill-list li:hover {
+    border-color: var(--rust) !important;
+    color: var(--rust) !important;
+}
+
+.interest-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.interest-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: #24201d !important;
+    font-weight: 480 !important;
+    margin-bottom: 0.5rem;
+}
+
+.interest-list li span {
+    font-family: inherit !important;
+    font-size: 0.95rem;
+    font-weight: 450 !important;
+    color: #6b6057 !important;
+    min-width: 1.8rem;
+    display: inline-block;
+    opacity: 1;
+}
+
+.off-screen,
+.away-text {
+    color: #24201d !important;
+    font-weight: 450 !important;
+    line-height: 1.6;
+    margin-top: 1.5rem;
+}
+
+.off-screen span {
+    display: block;
+    font-size: 11px !important;
+    line-height: 1.6 !important;
+    letter-spacing: .14em !important;
+    font-weight: 650 !important;
+    text-transform: uppercase !important;
+    color: #1a1715 !important;
+    margin-bottom: 0.35rem;
 }

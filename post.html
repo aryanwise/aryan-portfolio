@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f2e9">
+    <title>Article — Aryan Mishra</title>
+    <link rel="stylesheet" href="./styles.css?v=1.1">
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+
+    <!-- KaTeX JS (Load synchronously to prevent race conditions) -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <!-- Marked.js + Official Marked KaTeX Extension -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
+
+    <style>
+        .article-shell {
+            max-width: 680px;
+            margin: 60px auto 100px;
+        }
+
+        .article-content {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--ink);
+        }
+
+        .article-content h1 {
+            font-size: clamp(38px, 5vw, 54px);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .article-content h2 {
+            margin-top: 48px;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .article-content pre {
+            background: #eee8dc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .article-content code {
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        /* KaTeX equation display spacing */
+        .katex-display {
+            margin: 1.5em 0 !important;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 4px 0;
+        }
+
+        .back-nav {
+            margin-bottom: 30px;
+            display: inline-block;
+            font-size: 14px;
+            color: var(--muted);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 2px;
+        }
+
+        .back-nav:hover {
+            color: var(--rust);
+        }
+
+        /* Wrapper & Copy Button */
+        .code-block-wrapper {
+            position: relative;
+            margin: 28px 0;
+        }
+
+        .code-block-wrapper pre {
+            margin: 0;
+            background: #eee8dc;
+            padding: 38px 20px 20px;
+            /* Top padding leaves room for the button */
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #e1d7c7;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            background: #e3dbc9;
+            color: var(--muted);
+            border: 1px solid #cfc2ae;
+            border-radius: 4px;
+            padding: 3px 8px;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+        .copy-btn:hover {
+            background: #dad0bc;
+            color: var(--ink);
+        }
+
+        .copy-btn.copied {
+            background: var(--rust);
+            border-color: var(--rust);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="wordmark" href="./index.html" aria-label="Aryan Mishra home">
+                <span class="wordmark-symbol">am<span>·</span></span>
+                <span>Aryan Mishra</span>
+            </a>
+            <nav aria-label="Main navigation">
+                <a href="./index.html#work">The work <span aria-hidden="true">↘</span></a>
+                <a href="./index.html#about">A bit about me</a>
+            </nav>
+        </header>
+
+        <main class="article-shell">
+            <a class="back-nav" href="./blog.html">← All notes</a>
+            <div id="content" class="article-content">Loading...</div>
+        </main>
+
+        <footer>
+            <a class="footer-name" href="./index.html">Always a work <em>in progress.</em><span
+                    aria-hidden="true">↗</span></a>
+            <div><span>Aryan Mishra</span><span>2026</span></div>
+        </footer>
+    </div>
+
+    <script>
+        // Register the KaTeX extension with marked
+        marked.use(markedKatex({
+            throwOnError: false,
+            nonStandard: true
+        }));
+
+        const params = new URLSearchParams(window.location.search);
+        const fileName = params.get('file');
+
+        if (!fileName) {
+            document.getElementById('content').innerHTML = '<p>No article specified.</p>';
+        } else {
+            fetch(`./posts/${fileName}`)
+                .then(res => {
+                    if (!res.ok) throw new Error('Post not found');
+                    return res.text();
+                })
+                .then(md => {
+                    const content = document.getElementById('content');
+                    content.innerHTML = marked.parse(md);
+
+                    // Find all rendered <pre> blocks and wrap them with a copy button
+                    content.querySelectorAll('pre').forEach(pre => {
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'code-block-wrapper';
+
+                        const button = document.createElement('button');
+                        button.className = 'copy-btn';
+                        button.type = 'button';
+                        button.textContent = 'Copy';
+
+                        button.addEventListener('click', async () => {
+                            const code = pre.querySelector('code')?.innerText || pre.innerText;
+                            try {
+                                await navigator.clipboard.writeText(code);
+                                button.textContent = 'Copied!';
+                                button.classList.add('copied');
+                                setTimeout(() => {
+                                    button.textContent = 'Copy';
+                                    button.classList.remove('copied');
+                                }, 1800);
+                            } catch (err) {
+                                button.textContent = 'Failed';
+                                setTimeout(() => { button.textContent = 'Copy'; }, 1800);
+                            }
+                        });
+
+                        pre.parentNode.insertBefore(wrapper, pre);
+                        wrapper.appendChild(pre);
+                        wrapper.appendChild(button);
+                    });
+                })
+                .catch(err => {
+                    document.getElementById('content').innerHTML = `<p>${err.message}</p>`;
+                });
+        }
+    </script>
+</body>
+
+</html>

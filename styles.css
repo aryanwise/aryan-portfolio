@@ -288,14 +288,15 @@ em {
 }
 
 .about-toggle {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin: 27px auto 0;
-    padding: 3px;
+    margin: 0;
+    padding: 0;
     border: 0;
     background: none;
-    font-size: 14px
+    font-size: 14px;
+    color: var(--ink);
 }
 
 .round-arrow {
@@ -1129,10 +1130,6 @@ footer>div {
         font-size: 16px
     }
 
-    .intro-foot>span {
-        display: none
-    }
-
     .portrait {
         padding: 9px 9px 13px
     }
@@ -1156,7 +1153,7 @@ footer>div {
     .about-toggle {
         font-size: 12px;
         gap: 7px;
-        margin-top: 21px
+        margin: 0;
     }
 
     .round-arrow {
@@ -1330,10 +1327,6 @@ footer>div {
         gap: 10px
     }
 
-    .intro-foot>span {
-        display: none
-    }
-
     .portrait-column {
         align-self: center;
         width: 218px;
@@ -1365,7 +1358,7 @@ footer>div {
 
     .about-toggle {
         font-size: 14px;
-        margin-top: 23px
+        margin: 0;
     }
 
     .round-arrow {

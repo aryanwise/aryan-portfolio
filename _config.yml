@@ -1,3 +1,5 @@
+baseurl: "/aryan-portfolio"
+url: "https://aryanwise.github.io"
 markdown: kramdown
 permalink: /writing/:title/
 kramdown:

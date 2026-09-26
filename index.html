@@ -1,81 +1,262 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f2e9">
-  <meta name="description" content="Aryan Mishra's connected world of AI projects, hands-on experiments, and experience.">
+  <meta name="description"
+    content="Aryan Mishra's connected world of AI projects, hands-on experiments, and experience.">
   <title>Aryan Mishra — A little world of work</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
 </head>
+
 <body>
-<a class="skip-link" href="#work">Skip to the work</a>
-<div class="page-shell">
-  <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="Aryan Mishra home"><span class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span></a>
-    <nav aria-label="Main navigation"><a href="#work">The work <span aria-hidden="true">↘</span></a><a href="#about" id="about-link">A bit about me</a></nav>
-  </header>
-  <main id="top">
-    <section class="intro" aria-labelledby="intro-title">
-      <div class="intro-copy">
-        <p class="eyebrow"><span class="little-rule" aria-hidden="true"></span>A PERSONAL COLLECTION OF WORK & CURIOSITY</p>
-        <h1 id="intro-title">Curious mind.<br>Hands-on <em>builder.</em></h1>
-        <p class="intro-text">Hey, I’m Aryan. I study data science and build things with AI — from tools that make knowledge useful to robots that find their way.</p>
-        <div class="intro-foot"><span>Data, intelligence & a little tinkering.</span><a class="text-link" href="#work">Explore my work <span aria-hidden="true">↓</span></a></div>
-      </div>
-      <div class="portrait-column">
-        <figure class="portrait">
-          <div class="portrait-art" role="img" aria-label="Aryan Mishra monogram, used in place of a portrait for this concept"><span class="portrait-initials" aria-hidden="true">am.</span><span class="portrait-corner" aria-hidden="true">01 / THE HUMAN</span></div>
-          <figcaption><span>Aryan, in a nutshell.</span><span class="caption-note">portrait to come</span></figcaption>
-        </figure>
-        <button class="about-toggle" type="button" aria-expanded="false" aria-controls="about"><span class="round-arrow" aria-hidden="true">↓</span><span>Read a little more</span></button>
-      </div>
-    </section>
-    <section class="about-panel" id="about" aria-labelledby="about-heading" hidden>
-      <div class="about-heading"><p class="eyebrow">BEHIND THE PROJECTS</p><h2 id="about-heading">A little more <em>human.</em></h2><p>A data science, AI & digital business student at GISMA, with a growing interest in systems that can sense, learn, and act.</p></div>
-      <div class="about-detail"><h3>Things I work with</h3><ul class="skill-list"><li>Python</li><li>Machine learning</li><li>FastAPI</li><li>RAG & LLMs</li><li>FAISS</li><li>Data analysis</li><li>Arduino</li></ul></div>
-      <div class="about-detail"><h3>Things I’m drawn to</h3><ul class="interest-list"><li><span>01</span>Autonomous intelligent systems</li><li><span>02</span>Robotics & embedded ML</li><li><span>03</span>Open-source learning tools</li></ul><p class="off-screen"><span>AWAY FROM THE SCREEN</span>Freestyle swimming, learning German, and tinkering with my rover.</p></div>
-    </section>
-    <section class="work-section" id="work" aria-labelledby="work-title">
-      <div class="section-heading"><div><p class="eyebrow">SELECTED PROJECTS & EXPERIENCE</p><h2 id="work-title">Different paths.<br><em>Connected ideas.</em></h2></div><div class="work-context"><p>A few things I’ve built,<br>and what they’ve taught me.</p><div class="legend" aria-label="Card types"><span><i class="project-dot" aria-hidden="true"></i>Project</span><span><i class="experience-dot" aria-hidden="true"></i>Experience</span></div></div></div>
-      <div class="canvas-tools"><p class="interaction-hint"><span aria-hidden="true">✳</span><span class="desktop-hint">Hover to focus. Click to stay a while.</span><span class="mobile-hint">Tap a card to take a closer look.</span></p><button class="reset-focus" id="reset-focus" type="button" hidden>Show all cards <span aria-hidden="true">↗</span></button></div>
-      <div class="work-canvas" id="work-canvas">
-        <svg class="connections" aria-hidden="true" preserveAspectRatio="none"></svg>
-        <div class="connection-label label-one" aria-hidden="true">knowledge → useful tools</div>
-        <div class="connection-label label-two" aria-hidden="true">learning by building</div>
-        <div class="connection-label label-three" aria-hidden="true">from data to decisions</div>
-        <article class="work-card card-study project-card" id="openstudylm" data-node="openstudylm" style="--turn:-2deg;--surface:#fffdf7;--accent:#8c4938">
-          <button class="card-trigger" aria-expanded="false" aria-controls="details-openstudylm" type="button"><span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">01</span></span><span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5c-3-2-7-2-10 0v15c3-2 7-2 10 0 3-2 7-2 10 0V5c-3-2-7-2-10 0Z"/><path d="M12 5v15M5 8h3M5 11h3M16 8h3M16 11h3"/></svg></span><span class="card-field">LLMs / knowledge tools</span></span><h3>OpenStudyLM</h3><span class="card-description">A space to turn a pile of documents into something you can actually learn from.</span><span class="tags"><span>Python</span><span>RAG</span><span>FAISS</span></span><span class="card-bottom"><span>From information to understanding</span><span class="card-arrow" aria-hidden="true">↗</span></span></button>
-          <div class="card-details" id="details-openstudylm" hidden><h4>What I’m exploring</h4><p>An open-source document learning tool combining parsing, semantic retrieval, and user-selected language models.</p><p class="detail-skill">Hands-on with document processing, embeddings, and local model workflows.</p><div class="related"><span>CONNECTED THROUGH LLMs & RETRIEVAL</span><button data-connect="careergenie" type="button">CareerGenie ↗</button><button data-connect="fertrado" type="button">FERTRADO ↗</button></div></div>
-        </article>
-        <article class="work-card card-career experience-card" id="careergenie" data-node="careergenie" style="--turn:2deg;--surface:#ead6c8;--accent:#7d402f">
-          <button class="card-trigger" aria-expanded="false" aria-controls="details-careergenie" type="button"><span class="card-meta"><span class="card-type">EXPERIENCE</span><span class="card-number">02</span></span><span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="3"/><path d="M8 7V4h8v3M3 12c5 4 13 4 18 0M10 14h4"/></svg></span><span class="card-field">AI engineering / recruiting</span></span><h3>CareerGenie</h3><span class="role-label">AI Backend Engineer</span><span class="card-description">Connecting public work to richer, evidence-based candidate profiles.</span><span class="tags"><span>n8n</span><span>LLMs</span><span>APIs</span></span><span class="card-bottom"><span>Making signals useful</span><span class="card-arrow" aria-hidden="true">↗</span></span></button>
-          <div class="card-details" id="details-careergenie" hidden><h4>The work</h4><p>Built workflows around LinkedIn activity and GitHub signals, combining deterministic analysis with language models.</p><p class="detail-skill">Profile normalization, signal extraction, and structured outputs for downstream use.</p><div class="related"><span>CONNECTED THROUGH AI APPLICATIONS</span><button data-connect="openstudylm" type="button">OpenStudyLM ↗</button></div></div>
-        </article>
-        <article class="work-card card-rover project-card" id="rover" data-node="rover" style="--turn:-2.4deg;--surface:#e4e7d6;--accent:#4d5d39">
-          <button class="card-trigger" aria-expanded="false" aria-controls="details-rover" type="button"><span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">03</span></span><span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v5M15 1v5M9 18v5M15 18v5M1 9h5M1 15h5M18 9h5M18 15h5M10 10h4v4h-4z"/></svg></span><span class="card-field">Robotics / physical systems</span></span><h3>A little rover.<br>A lot of learning.</h3><span class="card-description">Taking intelligence off the screen, one obstacle and wiring fix at a time.</span><span class="tags"><span>Arduino</span><span>C++</span><span>Sensors</span></span><span class="card-bottom"><span>4WD obstacle-avoidance experiment</span><span class="card-arrow" aria-hidden="true">↗</span></span></button>
-          <div class="card-details" id="details-rover" hidden><h4>On the workbench</h4><p>A four-wheel rover using an Arduino Uno, an ultrasonic sensor, a scanning servo, and an L298N motor driver.</p><p class="detail-skill">Exploring sensing, motor control, power constraints, and state-based navigation. An ongoing experiment.</p><div class="related"><span>CONNECTED THROUGH HANDS-ON LEARNING</span><button data-connect="openstudylm" type="button">OpenStudyLM ↗</button></div></div>
-        </article>
-        <article class="work-card card-fertrado experience-card" id="fertrado" data-node="fertrado" style="--turn:1.5deg;--surface:#e8e1d7;--accent:#705948">
-          <button class="card-trigger" aria-expanded="false" aria-controls="details-fertrado" type="button"><span class="card-meta"><span class="card-type">EXPERIENCE</span><span class="card-number">04</span></span><span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6"/></svg></span><span class="card-field">RAG / regulatory information</span></span><h3>FERTRADO</h3><span class="role-label">AI Regulatory Navigator</span><span class="card-description">Making complex EU fertiliser regulations easier to explore and understand.</span><span class="tags"><span>Qwen</span><span>FAISS</span><span>Docling</span></span><span class="card-bottom"><span>Knowledge with a real-world context</span><span class="card-arrow" aria-hidden="true">↗</span></span></button>
-          <div class="card-details" id="details-fertrado" hidden><h4>The work</h4><p>Worked on a retrieval-augmented tool for EU fertiliser regulations, including FPR, REACH, and CLP source material.</p><p class="detail-skill">Document extraction, vector retrieval, and grounded responses with Qwen.</p><div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span><button data-connect="openstudylm" type="button">OpenStudyLM ↗</button></div></div>
-        </article>
-        <article class="work-card card-sentiment project-card" id="sentiment" data-node="sentiment" style="--turn:-1.4deg;--surface:#f4e8ce;--accent:#806037">
-          <button class="card-trigger" aria-expanded="false" aria-controls="details-sentiment" type="button"><span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">05</span></span><span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-5 4 2 6-8M17 5h4v4"/></svg></span><span class="card-field">Data science / language</span></span><h3>Reading between<br>the reviews.</h3><span class="card-description">Exploring what e-commerce reviews can tell us beyond a star rating.</span><span class="tags"><span>Python</span><span>NLP</span><span>Sentiment analysis</span></span><span class="card-bottom"><span>E-commerce sentiment analysis</span><span class="card-arrow" aria-hidden="true">↗</span></span></button>
-          <div class="card-details" id="details-sentiment" hidden><h4>The question</h4><p>How can customer language become a useful signal? An academic project exploring sentiment in e-commerce reviews.</p><p class="detail-skill">Working with text, interpreting sentiment, and connecting analysis to a business question.</p><div class="related"><span>CONNECTED THROUGH DATA ANALYSIS</span><button data-connect="teleperformance" type="button">Teleperformance ↗</button><button data-connect="careergenie" type="button">CareerGenie ↗</button></div></div>
-        </article>
-        <article class="work-card card-tele experience-card" id="teleperformance" data-node="teleperformance" style="--turn:2.3deg;--surface:#f9f6ed;--accent:#6f6048">
-          <button class="card-trigger" aria-expanded="false" aria-controls="details-teleperformance" type="button"><span class="card-meta"><span class="card-type">EXPERIENCE</span><span class="card-number">06</span></span><span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5"/></svg></span><span class="card-field">Analytics / business</span></span><h3>Teleperformance</h3><span class="role-label">Data Analyst Intern</span><span class="card-description">Bringing a data science perspective into a working business environment.</span><span class="tags"><span>Data analysis</span><span>Problem framing</span></span><span class="card-bottom"><span>Learning in practice · India</span><span class="card-arrow" aria-hidden="true">↗</span></span></button>
-          <div class="card-details" id="details-teleperformance" hidden><h4>The experience</h4><p>An on-site data analyst internship in India, connecting academic study with practical business work.</p><p class="detail-skill">A place to develop analytical thinking and understand how data work fits into a team.</p><div class="related"><span>CONNECTED THROUGH APPLIED ANALYTICS</span><button data-connect="sentiment" type="button">Sentiment analysis ↗</button></div></div>
-        </article>
-      </div>
-      <p class="graph-footnote"><span class="line-sample" aria-hidden="true"></span>Lines connect shared skills and interests.</p>
-    </section>
-  </main>
-  <footer><a class="footer-name" href="#top">Always a work <em>in progress.</em><span aria-hidden="true">↗</span></a><div><span>Aryan Mishra</span><span>Portfolio concept · 2026</span></div></footer>
-</div>
-<div class="sr-only" aria-live="polite" id="focus-announcement"></div>
+  <a class="skip-link" href="#work">Skip to the work</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Aryan Mishra home"><span
+          class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span></a>
+      <nav aria-label="Main navigation"><a href="#work">The work <span aria-hidden="true">↘</span></a><a href="#about"
+          id="about-link">A bit about me</a></nav>
+      <!-- <a href="#blog" target="_blank">Blog</a>  -->
+      <!-- TODO: Make a nav link for writing blog also, should open in different page -->
+    </header>
+    <main id="top">
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="little-rule" aria-hidden="true"></span>BUILDING TO UNDERSTAND
+          </p>
+          <h1 id="intro-title">hi, <em>aryan</em> here.</h1>
+          <p class="intro-text">Hey, I’m Aryan. I study data science and build things with AI — from tools that make
+            knowledge useful to robots that find their way.</p>
+          <div class="intro-foot"><span>Data, intelligence & a little tinkering.</span><a class="text-link"
+              href="#work">Explore my work <span aria-hidden="true">↓</span></a></div>
+        </div>
+        <div class="portrait-column">
+          <figure class="portrait">
+            <div class="portrait-art" role="img"
+              aria-label="Aryan Mishra monogram, used in place of a portrait for this concept"><span
+                class="portrait-initials" aria-hidden="true">am.</span><span class="portrait-corner"
+                aria-hidden="true">01 / THE HUMAN</span></div>
+            <figcaption><span>Aryan, in a nutshell.</span><span class="caption-note">portrait to come</span>
+            </figcaption>
+          </figure>
+          <button class="about-toggle" type="button" aria-expanded="false" aria-controls="about"><span
+              class="round-arrow" aria-hidden="true">↓</span><span>Read a little more</span></button>
+        </div>
+      </section>
+      <section class="about-panel" id="about" aria-labelledby="about-heading" hidden>
+        <div class="about-heading">
+          <p class="eyebrow">BEHIND THE PROJECTS</p>
+          <h2 id="about-heading">A little more <em>human.</em></h2>
+          <p>A data science, AI & digital business student at GISMA, with a growing interest in systems that can sense,
+            learn, and act.</p>
+        </div>
+        <div class="about-detail">
+          <h3>Things I work with</h3>
+          <ul class="skill-list">
+            <li>Python</li>
+            <li>Machine learning</li>
+            <li>FastAPI</li>
+            <li>RAG & LLMs</li>
+            <li>FAISS</li>
+            <li>Data analysis</li>
+            <li>Arduino</li>
+          </ul>
+        </div>
+        <div class="about-detail">
+          <h3>Things I’m drawn to</h3>
+          <ul class="interest-list">
+            <li><span>01</span>Autonomous intelligent systems</li>
+            <li><span>02</span>Robotics & embedded ML</li>
+            <li><span>03</span>Open-source learning tools</li>
+          </ul>
+          <p class="off-screen"><span>AWAY FROM THE SCREEN</span>Freestyle swimming, learning German, and tinkering with
+            my rover.</p>
+        </div>
+      </section>
+      <section class="work-section" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SELECTED PROJECTS & EXPERIENCE</p>
+            <h2 id="work-title">Different paths.<br><em>Connected ideas.</em></h2>
+          </div>
+          <div class="work-context">
+            <p>A few things I’ve built,<br>and what they’ve taught me.</p>
+            <div class="legend" aria-label="Card types"><span><i class="project-dot"
+                  aria-hidden="true"></i>Project</span><span><i class="experience-dot"
+                  aria-hidden="true"></i>Experience</span></div>
+          </div>
+        </div>
+        <div class="canvas-tools">
+          <p class="interaction-hint"><span aria-hidden="true">✳</span><span class="desktop-hint">Hover to focus. Click
+              to stay a while.</span><span class="mobile-hint">Tap a card to take a closer look.</span></p><button
+            class="reset-focus" id="reset-focus" type="button" hidden>Show all cards <span
+              aria-hidden="true">↗</span></button>
+        </div>
+        <div class="work-canvas" id="work-canvas">
+          <svg class="connections" aria-hidden="true" preserveAspectRatio="none"></svg>
+          <div class="connection-label label-one" aria-hidden="true">knowledge → useful tools</div>
+          <div class="connection-label label-two" aria-hidden="true">learning by building</div>
+          <div class="connection-label label-three" aria-hidden="true">from data to decisions</div>
+          <article class="work-card card-study project-card" id="openstudylm" data-node="openstudylm"
+            style="--turn:-2deg;--surface:#fffdf7;--accent:#8c4938">
+            <button class="card-trigger" aria-expanded="false" aria-controls="details-openstudylm" type="button"><span
+                class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">01</span></span><span
+                class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M12 5c-3-2-7-2-10 0v15c3-2 7-2 10 0 3-2 7-2 10 0V5c-3-2-7-2-10 0Z" />
+                    <path d="M12 5v15M5 8h3M5 11h3M16 8h3M16 11h3" />
+                  </svg></span><span class="card-field">LLMs / knowledge tools</span></span>
+              <h3>OpenStudyLM</h3><span class="card-description">A space to turn a pile of documents into something you
+                can actually learn from.</span><span
+                class="tags"><span>Python</span><span>RAG</span><span>FAISS</span></span><span
+                class="card-bottom"><span>From information to understanding</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-openstudylm" hidden>
+              <h4>What I’m exploring</h4>
+              <p>An open-source document learning tool combining parsing, semantic retrieval, and user-selected language
+                models.</p>
+              <p class="detail-skill">Hands-on with document processing, embeddings, and local model workflows.</p>
+              <div class="related"><span>CONNECTED THROUGH LLMs & RETRIEVAL</span><button data-connect="careergenie"
+                  type="button">CareerGenie ↗</button><button data-connect="fertrado" type="button">FERTRADO ↗</button>
+              </div>
+            </div>
+          </article>
+          <article class="work-card card-career experience-card" id="careergenie" data-node="careergenie"
+            style="--turn:2deg;--surface:#ead6c8;--accent:#7d402f">
+            <button class="card-trigger" aria-expanded="false" aria-controls="details-careergenie" type="button"><span
+                class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">02</span></span><span class="card-topline"><span class="card-icon"
+                  aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <rect x="3" y="7" width="18" height="14" rx="3" />
+                    <path d="M8 7V4h8v3M3 12c5 4 13 4 18 0M10 14h4" />
+                  </svg></span><span class="card-field">AI engineering / recruiting</span></span>
+              <h3>CareerGenie</h3><span class="role-label">AI Backend Engineer</span><span
+                class="card-description">Connecting public work to richer, evidence-based candidate
+                profiles.</span><span class="tags"><span>n8n</span><span>LLMs</span><span>APIs</span></span><span
+                class="card-bottom"><span>Making signals useful</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-careergenie" hidden>
+              <h4>The work</h4>
+              <p>Built workflows around LinkedIn activity and GitHub signals, combining deterministic analysis with
+                language models.</p>
+              <p class="detail-skill">Profile normalization, signal extraction, and structured outputs for downstream
+                use.</p>
+              <div class="related"><span>CONNECTED THROUGH AI APPLICATIONS</span><button data-connect="openstudylm"
+                  type="button">OpenStudyLM ↗</button></div>
+            </div>
+          </article>
+          <article class="work-card card-rover project-card" id="rover" data-node="rover"
+            style="--turn:-2.4deg;--surface:#e4e7d6;--accent:#4d5d39">
+            <button class="card-trigger" aria-expanded="false" aria-controls="details-rover" type="button"><span
+                class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">03</span></span><span
+                class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="2" />
+                    <path d="M9 1v5M15 1v5M9 18v5M15 18v5M1 9h5M1 15h5M18 9h5M18 15h5M10 10h4v4h-4z" />
+                  </svg></span><span class="card-field">Robotics / physical systems</span></span>
+              <h3>A little rover.<br>A lot of learning.</h3><span class="card-description">Taking intelligence off the
+                screen, one obstacle and wiring fix at a time.</span><span
+                class="tags"><span>Arduino</span><span>C++</span><span>Sensors</span></span><span
+                class="card-bottom"><span>4WD obstacle-avoidance experiment</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-rover" hidden>
+              <h4>On the workbench</h4>
+              <p>A four-wheel rover using an Arduino Uno, an ultrasonic sensor, a scanning servo, and an L298N motor
+                driver.</p>
+              <p class="detail-skill">Exploring sensing, motor control, power constraints, and state-based navigation.
+                An ongoing experiment.</p>
+              <div class="related"><span>CONNECTED THROUGH HANDS-ON LEARNING</span><button data-connect="openstudylm"
+                  type="button">OpenStudyLM ↗</button></div>
+            </div>
+          </article>
+          <article class="work-card card-fertrado experience-card" id="fertrado" data-node="fertrado"
+            style="--turn:1.5deg;--surface:#e8e1d7;--accent:#705948">
+            <button class="card-trigger" aria-expanded="false" aria-controls="details-fertrado" type="button"><span
+                class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">04</span></span><span class="card-topline"><span class="card-icon"
+                  aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6" />
+                  </svg></span><span class="card-field">RAG / regulatory information</span></span>
+              <h3>FERTRADO</h3><span class="role-label">AI Regulatory Navigator</span><span
+                class="card-description">Making complex EU fertiliser regulations easier to explore and
+                understand.</span><span class="tags"><span>Qwen</span><span>FAISS</span><span>Docling</span></span><span
+                class="card-bottom"><span>Knowledge with a real-world context</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-fertrado" hidden>
+              <h4>The work</h4>
+              <p>Worked on a retrieval-augmented tool for EU fertiliser regulations, including FPR, REACH, and CLP
+                source material.</p>
+              <p class="detail-skill">Document extraction, vector retrieval, and grounded responses with Qwen.</p>
+              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span><button data-connect="openstudylm"
+                  type="button">OpenStudyLM ↗</button></div>
+            </div>
+          </article>
+          <article class="work-card card-sentiment project-card" id="sentiment" data-node="sentiment"
+            style="--turn:-1.4deg;--surface:#f4e8ce;--accent:#806037">
+            <button class="card-trigger" aria-expanded="false" aria-controls="details-sentiment" type="button"><span
+                class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">05</span></span><span
+                class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M3 3v18h18M7 16l4-5 4 2 6-8M17 5h4v4" />
+                  </svg></span><span class="card-field">Data science / language</span></span>
+              <h3>Reading between<br>the reviews.</h3><span class="card-description">Exploring what e-commerce reviews
+                can tell us beyond a star rating.</span><span
+                class="tags"><span>Python</span><span>NLP</span><span>Sentiment analysis</span></span><span
+                class="card-bottom"><span>E-commerce sentiment analysis</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-sentiment" hidden>
+              <h4>The question</h4>
+              <p>How can customer language become a useful signal? An academic project exploring sentiment in e-commerce
+                reviews.</p>
+              <p class="detail-skill">Working with text, interpreting sentiment, and connecting analysis to a business
+                question.</p>
+              <div class="related"><span>CONNECTED THROUGH DATA ANALYSIS</span><button data-connect="teleperformance"
+                  type="button">Teleperformance ↗</button><button data-connect="careergenie" type="button">CareerGenie
+                  ↗</button></div>
+            </div>
+          </article>
+          <article class="work-card card-tele experience-card" id="teleperformance" data-node="teleperformance"
+            style="--turn:2.3deg;--surface:#f9f6ed;--accent:#6f6048">
+            <button class="card-trigger" aria-expanded="false" aria-controls="details-teleperformance"
+              type="button"><span class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">06</span></span><span class="card-topline"><span class="card-icon"
+                  aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M4 20h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5" />
+                  </svg></span><span class="card-field">Analytics / business</span></span>
+              <h3>Teleperformance</h3><span class="role-label">Data Analyst Intern</span><span
+                class="card-description">Bringing a data science perspective into a working business
+                environment.</span><span class="tags"><span>Data analysis</span><span>Problem framing</span></span><span
+                class="card-bottom"><span>Learning in practice · India</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-teleperformance" hidden>
+              <h4>The experience</h4>
+              <p>An on-site data analyst internship in India, connecting academic study with practical business work.
+              </p>
+              <p class="detail-skill">A place to develop analytical thinking and understand how data work fits into a
+                team.</p>
+              <div class="related"><span>CONNECTED THROUGH APPLIED ANALYTICS</span><button data-connect="sentiment"
+                  type="button">Sentiment analysis ↗</button></div>
+            </div>
+          </article>
+        </div>
+        <p class="graph-footnote"><span class="line-sample" aria-hidden="true"></span>Lines connect shared skills and
+          interests.</p>
+      </section>
+    </main>
+    <footer><a class="footer-name" href="#top">Always a work <em>in progress.</em><span aria-hidden="true">↗</span></a>
+      <div><span>Aryan Mishra</span><span>Portfolio concept · 2026</span></div>
+    </footer>
+  </div>
+  <div class="sr-only" aria-live="polite" id="focus-announcement"></div>
 </body>
+
 </html>

@@ -10,8 +10,8 @@
   <title>Aryan Mishra — A little world of work</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=1.1">
-  <script src="./app.js" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=1.2">
+  <script src="./app.js?v=1.2" defer></script>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
       <nav aria-label="Main navigation">
         <a href="#work">The work</a>
         <a href="#about" id="about-link">A bit about me</a>
-        <a href="./blog.html" target="_blank" rel="noopener noreferrer">Writing</a>
+        <a href="./blog.html" target="_blank" rel="noopener noreferrer">Blogs</a>
       </nav>
     </header>
     <main id="top">
@@ -88,7 +88,7 @@
             <li>Embedded Systems</li>
             <li>Docker &amp; Database</li>
             <li>LLM Orchestration &amp; APIs</li>
-            <li>Typescript</li>
+            <li>Typescript &amp; Javascript</li>
           </ul>
         </div>
         <div class="about-detail">
@@ -110,13 +110,17 @@
           </div>
           <div class="work-context">
             <p>A few things I’ve built,<br>and what they’ve taught me.</p>
-            <div class="legend" aria-label="Card types"><span><i class="project-dot"
-                  aria-hidden="true"></i>Project</span><span><i class="experience-dot"
-                  aria-hidden="true"></i>Experience</span></div>
+            <div class="legend" role="group" aria-label="Filter work">
+              <button class="thread-filter" type="button" data-thread="project" aria-pressed="false"
+                aria-controls="work-canvas"><i class="project-dot" aria-hidden="true"></i>Project</button>
+              <button class="thread-filter" type="button" data-thread="experience" aria-pressed="false"
+                aria-controls="work-canvas"><i class="experience-dot" aria-hidden="true"></i>Experience</button>
+            </div>
           </div>
         </div>
         <div class="canvas-tools">
-          <p class="interaction-hint"><span aria-hidden="true">✳</span><span class="desktop-hint">Hover to focus. Click
+          <p class="interaction-hint"><span aria-hidden="true">✳</span><span class="desktop-hint">Hover to focus.
+              Click
               to stay a while.</span><span class="mobile-hint">Tap a card to take a closer look.</span></p><button
             class="reset-focus" id="reset-focus" type="button" hidden>Show all cards <span
               aria-hidden="true">↗</span></button>
@@ -141,12 +145,14 @@
                   aria-hidden="true">↗</span></span>
             </button>
             <div class="card-details" id="details-openstudylm" hidden>
-              <h4>What I’m exploring</h4>
-              <p>An open-source document learning tool combining parsing, semantic retrieval, and user-selected language
+              <h4>What I’m exploring and building</h4>
+              <p>An open-source document learning tool combining parsing, semantic retrieval, and user-selected
+                language
                 models.</p>
               <p class="detail-skill">Hands-on with document processing, embeddings, and local model workflows.</p>
               <div class="related"><span>CONNECTED THROUGH LLMs & RETRIEVAL</span><button data-connect="careergenie"
-                  type="button">CareerGenie ↗</button><button data-connect="fertrado" type="button">FERTRADO ↗</button>
+                  type="button">CareerGenie ↗</button><button data-connect="fertrado" type="button">FERTRADO
+                  ↗</button>
               </div>
             </div>
           </article>
@@ -237,7 +243,8 @@
             </button>
             <div class="card-details" id="details-sentiment" hidden>
               <h4>The question</h4>
-              <p>How can customer language become a useful signal? An academic project exploring sentiment in e-commerce
+              <p>How can customer language become a useful signal? An academic project exploring sentiment in
+                e-commerce
                 reviews.</p>
               <p class="detail-skill">Working with text, interpreting sentiment, and connecting analysis to a business
                 question.</p>
@@ -256,9 +263,9 @@
                   </svg></span><span class="card-field">Analytics / business</span></span>
               <h3>Teleperformance</h3><span class="role-label">Data Analyst Intern</span><span
                 class="card-description">Bringing a data science perspective into a working business
-                environment.</span><span class="tags"><span>Data analysis</span><span>Problem framing</span></span><span
-                class="card-bottom"><span>Learning in practice · India</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+                environment.</span><span class="tags"><span>Data analysis</span><span>Problem
+                  framing</span></span><span class="card-bottom"><span>Learning in practice · India</span><span
+                  class="card-arrow" aria-hidden="true">↗</span></span>
             </button>
             <div class="card-details" id="details-teleperformance" hidden>
               <h4>The experience</h4>

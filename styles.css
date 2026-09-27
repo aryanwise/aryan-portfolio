@@ -1966,3 +1966,86 @@ footer>div {
     color: #1a1715 !important;
     margin-bottom: 0.35rem;
 }
+
+/* Project / Experience filter */
+.legend {
+    align-items: center;
+    gap: 18px;
+}
+
+.legend .thread-filter {
+    --thread-accent: #a26745;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    padding: 7px 0 5px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--muted);
+    font-size: 17px;
+    font-weight: 550;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.legend .thread-filter[data-thread="experience"] {
+    --thread-accent: #928575;
+}
+
+.legend .thread-filter i {
+    width: 10px;
+    height: 10px;
+    flex: none;
+}
+
+.legend .thread-filter:hover,
+.legend .thread-filter[aria-pressed="true"] {
+    color: var(--ink);
+}
+
+.legend .thread-filter[aria-pressed="true"] {
+    border-bottom-color: var(--thread-accent);
+}
+
+.work-canvas.has-thread .connections,
+.work-canvas.has-thread .connection-label {
+    opacity: .12;
+}
+
+.work-canvas.has-thread .work-card.thread-muted {
+    transform: rotate(var(--turn)) scale(.89);
+    filter: blur(3px);
+    opacity: .22;
+    pointer-events: none;
+}
+
+.work-canvas.has-thread .work-card:not(.thread-muted):not(.is-active) {
+    z-index: 3;
+    transform: rotate(0) scale(1.018);
+    filter: none;
+    opacity: 1;
+    box-shadow: 0 16px 34px #593e2718, 0 3px 8px #593e270a;
+}
+
+@media (max-width: 600px) {
+    .legend {
+        align-items: flex-start;
+        gap: 3px;
+    }
+
+    .legend .thread-filter {
+        min-height: 36px;
+        padding: 5px 0;
+        font-size: 16px;
+    }
+
+    .work-canvas.has-thread .work-card:not(.thread-muted) {
+        order: 1;
+    }
+
+    .work-canvas.has-thread .work-card.thread-muted {
+        order: 2;
+    }
+}

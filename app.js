@@ -18,6 +18,7 @@
     ["sentiment", "teleperformance"],
   ];
   let active = null;
+  let activeThread = null;
   let pinned = false;
   let hoverTimer;
   let leaveTimer;
@@ -122,7 +123,7 @@
     active = id;
     pinned = pin && Boolean(id);
     canvas.classList.toggle("has-focus", Boolean(id));
-    reset.hidden = !id;
+    reset.hidden = !id && !activeThread;
     cards.forEach((card) => {
       const selected = card.dataset.node === id;
       card.classList.toggle("is-active", selected);
@@ -135,7 +136,9 @@
     if (speak)
       announcement.textContent = id
         ? `${document.getElementById(id).querySelector("h3").textContent}. Details expanded. Use Show all cards or Escape to reset.`
-        : "Showing all projects and experiences.";
+        : activeThread
+          ? `Showing the ${activeThread} thread.`
+          : "Showing all projects and experiences.";
   }
   cards.forEach((card) => {
     const trigger = card.querySelector(".card-trigger");
@@ -195,6 +198,65 @@
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(drawConnections);
   });
+  const threadButtons = [...document.querySelectorAll(".thread-filter")];
+
+  function setThread(kind, closeCard = true) {
+    if (closeCard) focusCard(null);
+    activeThread = kind;
+    canvas.classList.toggle("has-thread", Boolean(kind));
+    canvas.dataset.thread = kind || "";
+
+    threadButtons.forEach((button) => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.thread === kind),
+      );
+    });
+
+    cards.forEach((card) => {
+      const muted = Boolean(kind) && !card.classList.contains(`${kind}-card`);
+      card.classList.toggle("thread-muted", muted);
+      card.inert = muted;
+    });
+
+    reset.hidden = !active && !kind;
+    drawConnections();
+    announcement.textContent = kind
+      ? `Showing ${kind} cards. Click the filter again or Show all cards to reset.`
+      : "Showing all projects and experiences.";
+  }
+
+  threadButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const kind = button.dataset.thread;
+      setThread(activeThread === kind ? null : kind);
+    });
+  });
+
+  reset.addEventListener("click", () => setThread(null, false), true);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !activeThread) return;
+    const button = threadButtons.find(
+      (item) => item.dataset.thread === activeThread,
+    );
+    setThread(null, false);
+    button?.focus({ preventScroll: true });
+  });
+
+  canvas.addEventListener(
+    "click",
+    (event) => {
+      const related = event.target.closest("[data-connect]");
+      if (!related || !activeThread) return;
+
+      const target = document.getElementById(related.dataset.connect);
+      if (target && !target.classList.contains(`${activeThread}-card`)) {
+        setThread(null, false);
+      }
+    },
+    true,
+  );
   if (document.fonts) document.fonts.ready.then(drawConnections);
   drawConnections();
 

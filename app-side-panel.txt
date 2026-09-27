@@ -3,8 +3,7 @@
   const canvas =
     [...document.querySelectorAll(".work-canvas")].find(
       (element) =>
-        element.querySelector(".connections") &&
-        element.querySelector(".work-card"),
+        element.querySelector(".connections") && element.querySelector(".work-card"),
     ) || document.querySelector("#work-canvas");
   const cards = [...canvas.querySelectorAll(".work-card")];
   const cardById = new Map(cards.map((card) => [card.dataset.node, card]));
@@ -153,10 +152,7 @@
   function cardKind(card) {
     if (card.classList.contains("project-card")) return "project";
     if (card.classList.contains("experience-card")) return "experience";
-    const label = card
-      .querySelector(".card-type")
-      ?.textContent.trim()
-      .toLowerCase();
+    const label = card.querySelector(".card-type")?.textContent.trim().toLowerCase();
     return label === "project" || label === "experience" ? label : null;
   }
   function positionPanel() {
@@ -198,11 +194,7 @@
 
   function focusCard(id, speak = false) {
     const selectedCard = cardById.get(id);
-    if (
-      selectedCard &&
-      activeThread &&
-      cardKind(selectedCard) !== activeThread
-    ) {
+    if (selectedCard && activeThread && cardKind(selectedCard) !== activeThread) {
       setThread(null, false, false);
     }
     active = selectedCard ? id : null;
@@ -224,22 +216,17 @@
       panelBody.replaceChildren(
         ...[...details.childNodes].map((node) => node.cloneNode(true)),
       );
-      panelTitle.textContent = selectedCard
-        .querySelector("h3")
-        .textContent.trim();
-      panelLabel.textContent =
-        selectedCard.querySelector(".card-type")?.textContent.trim() || "WORK";
+      panelTitle.textContent = selectedCard.querySelector("h3").textContent.trim();
+      panelLabel.textContent = selectedCard.querySelector(".card-type")?.textContent.trim() || "WORK";
       panel.style.setProperty(
         "--panel-accent",
-        getComputedStyle(selectedCard).getPropertyValue("--accent").trim() ||
-          "#984935",
+        getComputedStyle(selectedCard).getPropertyValue("--accent").trim() || "#984935",
       );
       panel.scrollTop = 0;
       panel.hidden = false;
       positionPanel();
       schedulePanel();
-      if (panel.classList.contains("is-sheet"))
-        panelClose.focus({ preventScroll: true });
+      if (panel.classList.contains("is-sheet")) panelClose.focus({ preventScroll: true });
     } else {
       panel.hidden = true;
       backdrop.hidden = true;
@@ -262,10 +249,7 @@
     canvas.classList.toggle("has-thread", Boolean(kind));
     canvas.dataset.thread = kind || "";
     threadButtons.forEach((button) => {
-      button.setAttribute(
-        "aria-pressed",
-        String(button.dataset.thread === kind),
-      );
+      button.setAttribute("aria-pressed", String(button.dataset.thread === kind));
     });
     cards.forEach((card) => {
       const muted = Boolean(kind && cardKind(card) !== kind);
@@ -327,25 +311,13 @@
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && (active || activeThread)) {
       const previous = cardById.get(active);
-      const filter = threadButtons.find(
-        (button) => button.dataset.thread === activeThread,
-      );
+      const filter = threadButtons.find((button) => button.dataset.thread === activeThread);
       focusCard(null);
       setThread(null, false);
-      (previous?.querySelector(".card-trigger") || filter)?.focus({
-        preventScroll: true,
-      });
+      (previous?.querySelector(".card-trigger") || filter)?.focus({ preventScroll: true });
     }
-    if (
-      event.key !== "Tab" ||
-      panel.hidden ||
-      !panel.classList.contains("is-sheet")
-    )
-      return;
-    const focusable = [
-      panelClose,
-      ...panelBody.querySelectorAll("button, a[href]"),
-    ];
+    if (event.key !== "Tab" || panel.hidden || !panel.classList.contains("is-sheet")) return;
+    const focusable = [panelClose, ...panelBody.querySelectorAll("button, a[href]")];
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
     if (event.shiftKey && document.activeElement === first) {

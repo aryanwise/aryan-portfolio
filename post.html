@@ -118,6 +118,24 @@
             border-color: var(--rust);
             color: #fff;
         }
+
+        .nav-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: var(--sans);
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: none;
+            padding: 10px 0;
+            transition: color 0.2s ease;
+        }
+
+        .nav-back-link:hover {
+            color: var(--rust);
+        }
     </style>
 </head>
 
@@ -128,10 +146,9 @@
                 <span class="wordmark-symbol">am<span>·</span></span>
                 <span>Aryan Mishra</span>
             </a>
-            <!-- <nav aria-label="Main navigation">
-                <a href="./index.html#work">The work <span aria-hidden="true">↘</span></a>
-                <a href="./index.html#about">A bit about me</a>
-            </nav> -->
+            <nav aria-label="Main navigation">
+                <a class="nav-back-link" href="./index.html">← Back to portfolio</a>
+            </nav>
         </header>
 
         <main class="article-shell">

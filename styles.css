@@ -5,7 +5,7 @@
 }
 
 :root {
-    --cream: #f9f6ef;
+    --cream: #f6f2e9;
     --ink: #342b24;
     --muted: #71665b;
     --rust: #984935;
@@ -2159,160 +2159,214 @@ footer>div {
     }
 }
 
-/* Card details float next to the selected card without changing the graph layout. */
-.detail-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 120;
-    background: rgba(41, 29, 19, .32);
+/* The card focuses first; Read more reveals its existing details over the card. */
+.work-card>.card-trigger .card-bottom>span:first-child {
+    display: block;
+    padding-right: 90px;
 }
 
-.work-detail-panel {
-    --accent: var(--panel-accent, #984935);
-    position: fixed;
-    z-index: 121;
-    width: 410px;
-    max-height: calc(100vh - 32px);
-    max-height: calc(100dvh - 32px);
+.work-card>.card-read-more {
+    position: absolute;
+    right: 17px;
+    bottom: 15px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border: 1px solid #8d74514a;
+    border-radius: 5px;
+    background: var(--surface);
+    background: color-mix(in srgb, var(--surface) 82%, white);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+    transition: background .18s, border-color .18s;
+}
+
+.work-card>.card-read-more:hover {
+    background: #fffdf2;
+    border-color: var(--accent);
+}
+
+.work-card>.card-read-more span {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.work-card.is-details-open>.card-trigger,
+.work-card.is-details-open>.card-read-more {
+    visibility: hidden;
+}
+
+.work-canvas.has-focus .work-card.is-in-thread {
+    z-index: 5;
+    transform: rotate(0) scale(1.012);
+    filter: none;
+    opacity: 1;
+    box-shadow: 0 12px 28px #593e271a, 0 3px 8px #593e270a;
+}
+
+.work-canvas.has-thread.has-focus .work-card:not(.is-active):not(.is-in-thread):not(.thread-muted) {
+    z-index: 2;
+    transform: rotate(var(--turn)) scale(.92);
+    filter: blur(2.4px);
+    opacity: .47;
+    box-shadow: 0 7px 15px #60432609;
+}
+
+.work-canvas.has-connection-thread .connections path:not(.is-connected) {
+    opacity: .08;
+}
+
+.work-canvas.has-connection-thread .connections path.is-connected {
+    stroke-width: 2;
+    opacity: 1;
+}
+
+.work-card>.card-details {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
-    border: 1px solid rgba(121, 83, 56, .29);
-    border-top: 3px solid var(--accent);
-    border-radius: 17px;
-    background: rgba(255, 250, 241, .92);
-    -webkit-backdrop-filter: blur(18px) saturate(1.15);
-    backdrop-filter: blur(18px) saturate(1.15);
-    box-shadow: 0 26px 65px rgba(62, 40, 26, .23), 0 7px 20px rgba(62, 40, 26, .12);
-    color: #342b24;
-    scrollbar-color: #c9ad96 transparent;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 22px 20px;
+    border: 0;
+    border-radius: inherit;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px #8f725127;
+    color: var(--ink);
+    scrollbar-color: #bba890 transparent;
     scrollbar-width: thin;
-    animation: appear .22s ease both;
+    animation: appear .22s ease;
 }
 
-.detail-panel-head {
+.work-card>.card-details::-webkit-scrollbar {
+    width: 7px;
+}
+
+.work-card>.card-details::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #bba890;
+}
+
+.detail-overlay-head {
     position: sticky;
     top: 0;
     z-index: 1;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 18px;
-    padding: 19px 23px 15px;
-    border-bottom: 1px solid rgba(121, 83, 56, .18);
-    background: rgba(255, 250, 241, .96);
+    gap: 10px;
+    margin: 0 -22px 17px;
+    padding: 16px 21px 13px;
+    border-bottom: 1px solid #8d745130;
+    background: var(--surface);
 }
 
-.detail-panel-label {
-    display: block;
-    margin-bottom: 3px;
+.detail-overlay-type {
     color: var(--accent);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: .14em;
+    letter-spacing: .12em;
 }
 
-.detail-panel-head h3 {
-    margin: 0;
-    color: #342b24;
+.card-details .detail-overlay-title {
+    margin: 2px 0 0;
+    color: var(--ink);
     font-family: var(--serif);
-    font-size: clamp(23px, 2.8vw, 29px);
+    font-size: 25px;
     font-weight: 500;
-    line-height: 1.16;
-    letter-spacing: -.025em;
+    line-height: 1.14;
+    letter-spacing: -.02em;
 }
 
-.detail-panel-close {
+.detail-overlay-close {
     flex: none;
     display: grid;
     place-items: center;
-    width: 33px;
-    height: 33px;
-    padding: 0 0 3px;
-    border: 1px solid rgba(121, 83, 56, .28);
+    width: 30px;
+    height: 30px;
+    padding: 0 0 2px;
+    border: 1px solid #8d74514a;
     border-radius: 50%;
-    background: rgba(255, 255, 255, .58);
-    color: #604636;
-    font-size: 25px;
-    font-weight: 300;
+    background: #fffdf188;
+    color: var(--ink);
+    font-size: 23px;
     line-height: 1;
 }
 
-.detail-panel-close:hover {
-    background: #eadcd0;
+.detail-overlay-close:hover {
+    background: #fffdf1;
 }
 
-.work-detail-panel .detail-panel-body {
-    border: 0;
-    padding: 19px 23px 23px;
-    animation: none;
+.work-card>.card-details p,
+.work-card>.card-details .detail-list {
+    color: #40342a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.62;
 }
 
-.work-detail-panel .detail-panel-body p,
-.work-detail-panel .detail-panel-body .detail-list {
-    margin: 0 0 13px;
-    color: #463a31;
-    font-size: 15px;
-    font-weight: 450;
-    line-height: 1.65;
+.work-card>.card-details p:first-of-type {
+    margin-top: 0;
 }
 
-.work-detail-panel .detail-list {
+.work-card>.card-details .detail-list {
     padding-left: 19px;
 }
 
-.work-detail-panel .detail-list li+li {
-    margin-top: 9px;
-}
-
-.work-detail-panel .detail-list strong {
+.work-card>.card-details .detail-list strong {
     color: #30261e;
     font-weight: 700;
 }
 
-.work-detail-panel .related {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top-color: rgba(121, 83, 56, .22);
+.work-card>.card-details .related {
+    margin-top: 17px;
 }
 
-.work-detail-panel .related>span {
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .075em;
-}
-
-.work-detail-panel .related button {
-    padding: 7px 10px;
-    border-color: rgba(121, 83, 56, .34);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, .58);
-    color: #45382e;
+.work-card>.card-details .related button {
+    color: #3b3028;
     font-size: 12px;
     font-weight: 650;
 }
 
-.work-detail-panel .related button:hover {
-    background: #f0e0d3;
-}
-
-.work-detail-panel.is-sheet {
-    left: 12px !important;
-    right: 12px;
-    top: auto !important;
-    bottom: max(12px, env(safe-area-inset-bottom));
-    width: auto !important;
-    max-height: min(82vh, 700px);
-    max-height: min(82dvh, 700px);
-    border-radius: 18px;
-}
-
 @media (max-width: 600px) {
-    .detail-panel-head {
-        padding: 16px 18px 13px;
+    .work-card>.card-details {
+        padding: 0 18px 18px;
     }
 
-    .work-detail-panel .detail-panel-body {
-        padding: 17px 18px 20px;
+    .detail-overlay-head {
+        margin: 0 -18px 15px;
+        padding: 15px 17px 12px;
+    }
+
+    .work-card>.card-read-more {
+        right: 18px;
+        bottom: 17px;
+    }
+}
+
+/* Add this at the end of styles.css */
+@media (max-width: 600px) {
+    .site-header {
+        height: auto;
+        min-height: 80px;
+        padding: 12px 0;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .site-header nav {
+        gap: 10px;
+    }
+
+    .site-header nav a:last-child {
+        display: inline;
     }
 }

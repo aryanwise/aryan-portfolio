@@ -30,31 +30,11 @@
     });
   });
 
-  // Keep the card details in the HTML; display a copy beside the card.
-  const backdrop = document.createElement("div");
-  backdrop.className = "detail-backdrop";
-  backdrop.hidden = true;
-  const panel = document.createElement("aside");
-  panel.className = "work-detail-panel";
-  panel.id = "work-detail-panel";
-  panel.setAttribute("role", "region");
-  panel.setAttribute("aria-labelledby", "work-detail-heading");
-  panel.hidden = true;
-  panel.innerHTML = `
-    <div class="detail-panel-head">
-      <div><span class="detail-panel-label"></span><h3 id="work-detail-heading"></h3></div>
-      <button type="button" class="detail-panel-close" aria-label="Close details">×</button>
-    </div>
-    <div class="card-details detail-panel-body"></div>`;
-  document.body.append(backdrop, panel);
-  const panelTitle = panel.querySelector("#work-detail-heading");
-  const panelLabel = panel.querySelector(".detail-panel-label");
-  const panelBody = panel.querySelector(".detail-panel-body");
-  const panelClose = panel.querySelector(".detail-panel-close");
   let active = null;
   let activeThread = null;
+  let detailOpen = null;
+  let connectionPath = [];
   let resizeFrame;
-  let panelFrame;
 
   function showAbout(open) {
     about.hidden = !open;
@@ -86,6 +66,11 @@
     const h = canvas.clientHeight;
     svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
     svg.replaceChildren();
+    const pathEdges = new Set(
+      connectionPath.slice(1).map((id, index) =>
+        [connectionPath[index], id].sort().join("::"),
+      ),
+    );
     edges.forEach(([from, to]) => {
       const a = document.getElementById(from);
       const b = document.getElementById(to);
@@ -131,7 +116,11 @@
         "d",
         `M ${sx} ${sy} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${ex} ${ey}`,
       );
-      if (active && (from === active || to === active))
+      if (
+        pathEdges.size
+          ? pathEdges.has([from, to].sort().join("::"))
+          : active && (from === active || to === active)
+      )
         path.classList.add("is-connected");
       svg.append(path);
       [
@@ -159,213 +148,168 @@
       .toLowerCase();
     return label === "project" || label === "experience" ? label : null;
   }
-  function positionPanel() {
-    if (!active || panel.hidden) return;
-    const card = cardById.get(active);
-    const rect = card.getBoundingClientRect();
-    const inset = 16;
-    const gap = 18;
-    const spaceRight = innerWidth - rect.right - gap - inset;
-    const spaceLeft = rect.left - gap - inset;
-    const useSheet = innerWidth < 700 || Math.max(spaceRight, spaceLeft) < 260;
-
-    panel.classList.toggle("is-sheet", useSheet);
-    panel.setAttribute("role", useSheet ? "dialog" : "region");
-    if (useSheet) panel.setAttribute("aria-modal", "true");
-    else panel.removeAttribute("aria-modal");
-    backdrop.hidden = !useSheet;
-
-    if (useSheet) {
-      panel.style.removeProperty("width");
-      panel.style.removeProperty("left");
-      panel.style.removeProperty("top");
-      return;
-    }
-
-    const onRight = spaceRight >= spaceLeft;
-    const available = onRight ? spaceRight : spaceLeft;
-    const width = Math.min(410, Math.floor(available));
-    panel.style.width = `${width}px`;
-    const left = onRight ? rect.right + gap : rect.left - gap - width;
-    panel.style.left = `${Math.max(inset, Math.min(left, innerWidth - inset - width))}px`;
-    const maxTop = Math.max(inset, innerHeight - panel.offsetHeight - inset);
-    panel.style.top = `${Math.max(inset, Math.min(rect.top + 8, maxTop))}px`;
-  }
-  function schedulePanel() {
-    cancelAnimationFrame(panelFrame);
-    panelFrame = requestAnimationFrame(positionPanel);
-  }
-
-  function focusCard(id, speak = false) {
-    const selectedCard = cardById.get(id);
-    if (
-      selectedCard &&
-      activeThread &&
-      cardKind(selectedCard) !== activeThread
-    ) {
-      setThread(null, false, false);
-    }
-    active = selectedCard ? id : null;
+  function render(speak = false) {
     canvas.classList.toggle("has-focus", Boolean(active));
+    canvas.classList.toggle("has-connection-thread", connectionPath.length > 1);
     reset.hidden = !active && !activeThread;
-
     cards.forEach((card) => {
-      const selected = card === selectedCard;
+      const selected = card.dataset.node === active;
+      const reading = card.dataset.node === detailOpen;
       card.classList.toggle("is-active", selected);
-      const trigger = card.querySelector(".card-trigger");
-      const details = card.querySelector(".card-details");
-      details.hidden = true; // A card never grows; its details appear in the panel.
-      trigger.setAttribute("aria-expanded", String(selected));
-      trigger.setAttribute("aria-controls", selected ? panel.id : details.id);
+      card.classList.toggle(
+        "is-in-thread",
+        !selected && connectionPath.length > 1 && connectionPath.includes(card.dataset.node),
+      );
+      card.classList.toggle("is-details-open", reading);
+      card.querySelector(".card-trigger").setAttribute("aria-pressed", String(selected));
+      card.querySelector(".card-read-more").setAttribute("aria-expanded", String(reading));
+      card.querySelector(".card-details").hidden = !reading;
     });
-
-    if (selectedCard) {
-      const details = selectedCard.querySelector(".card-details");
-      panelBody.replaceChildren(
-        ...[...details.childNodes].map((node) => node.cloneNode(true)),
-      );
-      panelTitle.textContent = selectedCard
-        .querySelector("h3")
-        .textContent.trim();
-      panelLabel.textContent =
-        selectedCard.querySelector(".card-type")?.textContent.trim() || "WORK";
-      panel.style.setProperty(
-        "--panel-accent",
-        getComputedStyle(selectedCard).getPropertyValue("--accent").trim() ||
-          "#984935",
-      );
-      panel.scrollTop = 0;
-      panel.hidden = false;
-      positionPanel();
-      schedulePanel();
-      if (panel.classList.contains("is-sheet"))
-        panelClose.focus({ preventScroll: true });
-    } else {
-      panel.hidden = true;
-      backdrop.hidden = true;
-      panelBody.replaceChildren();
-    }
     drawConnections();
     if (speak) {
-      announcement.textContent = active
-        ? `${panelTitle.textContent}. Details open beside the card. Select a connection or close the panel.`
-        : activeThread
-          ? `Showing the ${activeThread} thread.`
-          : "Showing all projects and experiences.";
+      const title = cardById.get(active)?.querySelector("h3").textContent.trim();
+      announcement.textContent = detailOpen
+        ? `${title} details open. Use the connection buttons to follow a thread, or close details.`
+        : active
+          ? `${title} focused. Choose Read more to see the details.`
+          : activeThread
+            ? `Showing ${activeThread} cards.`
+            : "Showing all projects and experiences.";
     }
   }
 
-  function setThread(kind, closeCard = true, speak = true) {
+  function setThread(kind, clearSelection = true, speak = true) {
     if (kind && !cards.some((card) => cardKind(card) === kind)) kind = null;
-    if (closeCard) focusCard(null);
+    if (clearSelection) {
+      active = null;
+      detailOpen = null;
+      connectionPath = [];
+    }
     activeThread = kind;
     canvas.classList.toggle("has-thread", Boolean(kind));
     canvas.dataset.thread = kind || "";
     threadButtons.forEach((button) => {
-      button.setAttribute(
-        "aria-pressed",
-        String(button.dataset.thread === kind),
-      );
+      button.setAttribute("aria-pressed", String(button.dataset.thread === kind));
     });
     cards.forEach((card) => {
       const muted = Boolean(kind && cardKind(card) !== kind);
       card.classList.toggle("thread-muted", muted);
       card.inert = muted;
     });
-    reset.hidden = !active && !kind;
-    drawConnections();
-    if (speak) {
-      announcement.textContent = kind
-        ? `Showing ${kind} cards. Click the filter again or Show all cards to reset.`
-        : "Showing all projects and experiences.";
-    }
+    render(false);
+    if (speak) announcement.textContent = kind
+      ? `Showing ${kind} cards. Choose a card to focus it.`
+      : "Showing all projects and experiences.";
   }
 
-  // A card opens only when clicked; clicking it again closes the panel.
+  function closeDetails(returnFocus = true) {
+    if (!detailOpen) return;
+    const card = cardById.get(detailOpen);
+    detailOpen = null;
+    render(true);
+    if (returnFocus) card.querySelector(".card-read-more").focus({ preventScroll: true });
+  }
+
+  // The supplied card content stays in the HTML; only the close control is added.
   cards.forEach((card) => {
-    card.querySelector(".card-trigger").addEventListener("click", (event) => {
-      const next = active === card.dataset.node ? null : card.dataset.node;
-      focusCard(next, true);
-      if (next && event.detail === 0) panelClose.focus({ preventScroll: true });
+    const details = card.querySelector(".card-details");
+    const name = card.querySelector("h3").textContent.trim();
+    const header = document.createElement("div");
+    header.className = "detail-overlay-head";
+    const heading = document.createElement("div");
+    const type = document.createElement("span");
+    type.className = "detail-overlay-type";
+    type.textContent = card.querySelector(".card-type").textContent.trim();
+    const title = document.createElement("h4");
+    title.className = "detail-overlay-title";
+    title.textContent = name;
+    heading.append(type, title);
+    const close = document.createElement("button");
+    close.className = "detail-overlay-close";
+    close.type = "button";
+    close.setAttribute("aria-label", `Close details for ${name}`);
+    close.textContent = "×";
+    close.addEventListener("click", (event) => {
+      event.stopPropagation();
+      closeDetails();
+    });
+    header.append(heading, close);
+    details.prepend(header);
+    details.setAttribute("role", "region");
+    details.setAttribute("aria-label", `${name} details`);
+
+    card.querySelector(".card-trigger").addEventListener("click", () => {
+      active = active === card.dataset.node ? null : card.dataset.node;
+      detailOpen = null;
+      connectionPath = [];
+      render(true);
+    });
+    card.querySelector(".card-read-more").addEventListener("click", () => {
+      if (activeThread && cardKind(card) !== activeThread) setThread(null, false, false);
+      active = card.dataset.node;
+      connectionPath = connectionPath.at(-1) === active ? connectionPath : [];
+      detailOpen = active;
+      details.scrollTop = 0;
+      render(true);
+      close.focus({ preventScroll: true });
     });
   });
-  panel.addEventListener("click", (event) => {
-    const link = event.target.closest("button[data-connect]");
-    if (!link || !panel.contains(link)) return;
-    const target = cardById.get(link.dataset.connect);
-    if (!target) return;
-    focusCard(target.dataset.node, true);
-    panelClose.focus({ preventScroll: true });
-    const rect = target.getBoundingClientRect();
-    if (rect.bottom < 56 || rect.top > innerHeight - 56) {
-      target.scrollIntoView({
-        behavior: reducedMotion.matches ? "auto" : "smooth",
-        block: "center",
-      });
+
+  canvas.addEventListener("click", (event) => {
+    const connection = event.target.closest("[data-connect]");
+    if (connection && canvas.contains(connection)) {
+      const from = connection.closest(".work-card")?.dataset.node;
+      const to = connection.dataset.connect;
+      const target = cardById.get(to);
+      if (!from || !target) return;
+      if (activeThread && cardKind(target) !== activeThread) setThread(null, false, false);
+      const previous = connectionPath.at(-1) === from ? connectionPath : [from];
+      connectionPath = [...previous, to];
+      active = to;
+      detailOpen = null;
+      render(true);
+      const rect = target.getBoundingClientRect();
+      if (rect.bottom < 56 || rect.top > innerHeight - 56) {
+        target.scrollIntoView({
+          behavior: reducedMotion.matches ? "auto" : "smooth",
+          block: "center",
+        });
+      }
+      target.querySelector(".card-trigger").focus({ preventScroll: true });
+      return;
+    }
+    if (!event.target.closest(".work-card") && active) {
+      active = null;
+      detailOpen = null;
+      connectionPath = [];
+      render(true);
     }
   });
-  function closePanel() {
-    const previous = cardById.get(active);
-    focusCard(null, true);
-    previous?.querySelector(".card-trigger").focus({ preventScroll: true });
-  }
-  panelClose.addEventListener("click", closePanel);
-  backdrop.addEventListener("click", closePanel);
-  reset.addEventListener("click", () => {
-    focusCard(null);
-    setThread(null, false);
-  });
+  reset.addEventListener("click", () => setThread(null));
   threadButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const kind = button.dataset.thread;
       setThread(activeThread === kind ? null : kind);
     });
   });
-  canvas.addEventListener("click", (event) => {
-    if (!event.target.closest(".work-card") && active) focusCard(null, true);
-  });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && (active || activeThread)) {
-      const previous = cardById.get(active);
-      const filter = threadButtons.find(
-        (button) => button.dataset.thread === activeThread,
-      );
-      focusCard(null);
-      setThread(null, false);
-      (previous?.querySelector(".card-trigger") || filter)?.focus({
-        preventScroll: true,
-      });
-    }
-    if (
-      event.key !== "Tab" ||
-      panel.hidden ||
-      !panel.classList.contains("is-sheet")
-    )
+    if (event.key !== "Escape") return;
+    if (detailOpen) {
+      closeDetails();
       return;
-    const focusable = [
-      panelClose,
-      ...panelBody.querySelectorAll("button, a[href]"),
-    ];
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
+    }
+    if (active || activeThread) {
+      const previous = cardById.get(active);
+      const filter = threadButtons.find((button) => button.dataset.thread === activeThread);
+      setThread(null);
+      (previous?.querySelector(".card-trigger") || filter)?.focus({ preventScroll: true });
     }
   });
   window.addEventListener("resize", () => {
     cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(() => {
-      drawConnections();
-      positionPanel();
-    });
+    resizeFrame = requestAnimationFrame(drawConnections);
   });
-  window.addEventListener("scroll", schedulePanel, { passive: true });
 
-  // Start clean, including when the browser restores the page from its cache.
   setThread(null, true, false);
   announcement.textContent = "";
   window.addEventListener("pageshow", (event) => {

@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f9f6ef">
+  <meta name="theme-color" content="#f6f2e9">
   <meta name="description"
     content="Aryan Mishra's connected world of AI projects, hands-on experiments, and experience.">
   <title>Aryan Mishra — A little world of work</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=1.4">
-  <script src="./app.js?v=1.4" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=2.0">
+  <script src="./app.js?v=2.0" defer></script>
 </head>
 
 <body>
@@ -134,7 +134,7 @@
           <div class="connection-label label-three" aria-hidden="true">agents in motion</div>
           <article class="work-card project-card card-openbooklm" id="openbooklm" data-node="openbooklm"
             style="--turn:-2deg;--surface:#fffdf7;--accent:#8c4938">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-openbooklm">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">01</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M12 5c-3-2-7-2-10 0v15c3-2 7-2 10 0 3-2 7-2 10 0V5c-3-2-7-2-10 0Z" />
@@ -148,8 +148,9 @@
                 class="tags"><span>TypeScript</span><span>FastAPI</span><span>C++</span><span>GraphRAG</span><span>Llamaindex
                   & Langchain</span><span>USearch</span><span>Llama.cpp</span></span>
               <span class="card-bottom"><span>NotebookLM told you how it works; OpenbookLM builds it for
-                  you.</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+                  you.</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-openbooklm" aria-label="Read more about OpenbookLM">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-openbooklm" hidden>
               <p>OpenBookLM solves the privacy and fragmentation issues of modern technical work by providing a
                 local-first workspace that turns sensitive documentation, research papers, and codebases into actionable
@@ -158,16 +159,16 @@
                 between passive reading and real execution by autonomously writing, refactoring, and verifying code
                 directly within their local repositories.</p>
               <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL • AGENTS THAT WRITE CODE</span>
-                <button type="button" data-connect="fertrado" aria-label="Open FERTRADO: document retrieval">FERTRADO
+                <button type="button" data-connect="fertrado" aria-label="Go to FERTRADO: document retrieval">FERTRADO
                   ↗</button>
-                <button type="button" data-connect="adsa" aria-label="Open A.D.S.A.: agents that write code">A.D.S.A.
+                <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: agents that write code">A.D.S.A.
                   ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card experience-card card-fertrado" id="fertrado" data-node="fertrado"
             style="--turn:1.5deg;--surface:#e8e1d7;--accent:#705948">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-fertrado">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
                   class="card-number">02</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
@@ -178,9 +179,9 @@
                 understand.</span>
               <span
                 class="tags"><span>Python</span><span>FastAPI</span><span>FAISS</span><span>Ollama</span><span>Langchain</span><span>AWS</span><span>Docling</span></span>
-              <span class="card-bottom"><span>Grounded regulatory search & retrieval</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>Grounded regulatory search & retrieval</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-fertrado" aria-label="Read more about FERTRADO">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-fertrado" hidden>
               <p>Architected FERTRADO&#x27;s internal regulatory navigator by serving a high-parameter Qwen model
                 locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for
@@ -191,13 +192,13 @@
                 documentation to be added seamlessly as regulatory requirements expand.</p>
               <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span>
                 <button type="button" data-connect="openbooklm"
-                  aria-label="Open OpenbookLM: document retrieval">OpenbookLM ↗</button>
+                  aria-label="Go to OpenbookLM: document retrieval">OpenbookLM ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card experience-card card-careergenie" id="careergenie" data-node="careergenie"
             style="--turn:2deg;--surface:#ead6c8;--accent:#7d402f">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-careergenie">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
                   class="card-number">03</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
@@ -210,9 +211,9 @@
                 roles.</span>
               <span
                 class="tags"><span>n8n</span><span>JavaScript</span><span>LLMs</span><span>Laya/Jev</span><span>APIs</span></span>
-              <span class="card-bottom"><span>Evaluating signals & skill gaps</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>Evaluating signals & skill gaps</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-careergenie" aria-label="Read more about CareerGenie">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-careergenie" hidden>
               <p>Built automated candidate signal and upskilling workflows using n8n, JavaScript, and LLMs, integrating
                 Laya/Jev for classification and external APIs for data ingestion.</p>
@@ -226,13 +227,13 @@
               </ul>
               <div class="related"><span>CONNECTED THROUGH STRUCTURED SIGNAL PIPELINES</span>
                 <button type="button" data-connect="polymarket"
-                  aria-label="Open Polymarket Analyzer: structured signal pipelines">Polymarket Analyzer ↗</button>
+                  aria-label="Go to Polymarket Analyzer: structured signal pipelines">Polymarket Analyzer ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card project-card card-adsa" id="adsa" data-node="adsa"
             style="--turn:-1.4deg;--surface:#f0e5d9;--accent:#80543e">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-adsa">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">04</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <rect x="4" y="4" width="16" height="16" rx="3" />
@@ -244,9 +245,9 @@
               <span
                 class="tags"><span>Python</span><span>DeepAnalyze-8B</span><span>Docker</span><span>e2b</span><span>Ollama
                   & APIs</span><span>Data Analysis</span></span>
-              <span class="card-bottom"><span>End to End Autonomous Data Science work in a secure sandbox </span><span
-                  class="card-arrow" aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>End to End Autonomous Data Science work in a secure sandbox </span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-adsa" aria-label="Read more about A.D.S.A.">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-adsa" hidden>
               <p>An open-source autonomous data science system inspired by DeepAnalyze-8B, designed to turn raw tabular
                 data into analytical reports without manual script writing.</p>
@@ -260,15 +261,15 @@
               </ul>
               <div class="related"><span>CONNECTED THROUGH AGENTS THAT WRITE CODE · SANDBOXED DATA AGENTS</span>
                 <button type="button" data-connect="openbooklm"
-                  aria-label="Open OpenbookLM: agents that write code">OpenbookLM ↗</button>
+                  aria-label="Go to OpenbookLM: agents that write code">OpenbookLM ↗</button>
                 <button type="button" data-connect="teleperformance"
-                  aria-label="Open Teleperformance: sandboxed data agents">Teleperformance ↗</button>
+                  aria-label="Go to Teleperformance: sandboxed data agents">Teleperformance ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card experience-card card-teleperformance" id="teleperformance"
             data-node="teleperformance" style="--turn:2.3deg;--surface:#f9f6ed;--accent:#6f6048">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-teleperformance">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
                   class="card-number">05</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
@@ -279,9 +280,9 @@
                 boosting time-series forecasting accuracy with zero-shot foundation models.</span>
               <span
                 class="tags"><span>Python</span><span>TimesFM</span><span>Chronos</span><span>Docker</span><span>Time-Series</span><span>IBM-Granite</span><span>e2b</span><span>DeepAnalyze-8B</span></span>
-              <span class="card-bottom"><span>Autonomous analytics & foundation forecasting</span><span
-                  class="card-arrow" aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>Autonomous analytics & foundation forecasting</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-teleperformance" aria-label="Read more about Teleperformance">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-teleperformance" hidden>
               <ul class="detail-list">
                 <li><strong>Data science agent.</strong> Implemented a DeepAnalyze-8B architecture that ingests raw
@@ -294,16 +295,16 @@
                   boundaries for privacy and controlled execution.</li>
               </ul>
               <div class="related"><span>CONNECTED THROUGH SANDBOXED DATA AGENTS · PREDICTION AND VERIFICATION</span>
-                <button type="button" data-connect="adsa" aria-label="Open A.D.S.A.: sandboxed data agents">A.D.S.A.
+                <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: sandboxed data agents">A.D.S.A.
                   ↗</button>
                 <button type="button" data-connect="polymarket"
-                  aria-label="Open Polymarket Analyzer: prediction and verification">Polymarket Analyzer ↗</button>
+                  aria-label="Go to Polymarket Analyzer: prediction and verification">Polymarket Analyzer ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card project-card card-polymarket" id="polymarket" data-node="polymarket"
             style="--turn:-1.7deg;--surface:#f4e8ce;--accent:#806037">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-polymarket">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">06</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M3 3v18h18M7 16l4-5 4 2 6-8M17 5h4v4" />
@@ -314,9 +315,9 @@
               <span class="tags"><span>Python</span><span>Github Actions</span><span>Supabase</span><span>Polymarket
                   API</span><span>APIs (Groq & Gemini)</span><span>Polymarket & Yahoo Finance API</span><span>bs4 &
                   Selenium</span></span>
-              <span class="card-bottom"><span>Automated market pipeline & backtesting</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>Automated market pipeline & backtesting</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-polymarket" aria-label="Read more about Polymarket Analyzer">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-polymarket" hidden>
               <p>Built an automated, scheduled data pipeline to evaluate whether prediction markets offer an early
                 trading edge on specific equity holdings:</p>
@@ -333,15 +334,15 @@
               <div class="related"><span>CONNECTED THROUGH STRUCTURED SIGNAL PIPELINES · PREDICTION AND
                   VERIFICATION</span>
                 <button type="button" data-connect="careergenie"
-                  aria-label="Open CareerGenie: structured signal pipelines">CareerGenie ↗</button>
+                  aria-label="Go to CareerGenie: structured signal pipelines">CareerGenie ↗</button>
                 <button type="button" data-connect="teleperformance"
-                  aria-label="Open Teleperformance: prediction and verification">Teleperformance ↗</button>
+                  aria-label="Go to Teleperformance: prediction and verification">Teleperformance ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card project-card card-rover" id="rover" data-node="rover"
             style="--turn:-2.4deg;--surface:#e4e7d6;--accent:#4d5d39">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-rover">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">07</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <rect x="6" y="6" width="12" height="12" rx="2" />
@@ -352,9 +353,9 @@
                 navigation on resource-constrained embedded hardware.</span>
               <span class="tags"><span>C++</span><span>Arduino</span><span>Ultrasonic
                   HC-SR04</span><span>L298N</span><span>Servo Control</span><span>Embedded Systems</span></span>
-              <span class="card-bottom"><span>Autonomous navigation & control logic</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>Autonomous navigation & control logic</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-rover" aria-label="Read more about Autonomous 4WD Rover">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-rover" hidden>
               <p>Built a real-time autonomous 4-wheel mobile rover driven by a deterministic perception —> decision —>
                 action pipeline:</p>
@@ -368,13 +369,13 @@
               </ul>
               <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT</span>
                 <button type="button" data-connect="zombie"
-                  aria-label="Open Zombie Shooter AI: agents that sense and act">Zombie Shooter AI ↗</button>
+                  aria-label="Go to Zombie Shooter AI: agents that sense and act">Zombie Shooter AI ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card project-card card-zombie" id="zombie" data-node="zombie"
             style="--turn:1.3deg;--surface:#e7e5d7;--accent:#5e6547">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-zombie">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">08</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M4 8h16l2 10H2L4 8ZM8 5v3M16 5v3M8 13h4M10 11v4M17 12v3M15.5 13.5h3" />
@@ -385,9 +386,9 @@
               <span
                 class="tags"><span>Python</span><span>Pygame</span><span>Q-Learning</span><span>NumPy</span><span>Jupyter
                   Notebook</span><span>Reinforcement Learning</span></span>
-              <span class="card-bottom"><span>RL training pipeline & game engine</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>RL training pipeline & game engine</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-zombie" aria-label="Read more about Zombie Shooter AI">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-zombie" hidden>
               <p>Built and trained a discrete reinforcement learning agent from scratch to master a custom-built 2D
                 survival arcade game:</p>
@@ -401,15 +402,15 @@
               </ul>
               <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT · GAME AGENT DECISIONS</span>
                 <button type="button" data-connect="rover"
-                  aria-label="Open Autonomous 4WD Rover: agents that sense and act">Autonomous 4WD Rover ↗</button>
+                  aria-label="Go to Autonomous 4WD Rover: agents that sense and act">Autonomous 4WD Rover ↗</button>
                 <button type="button" data-connect="gomoku"
-                  aria-label="Open Gomoku Game AI: game agent decisions">Gomoku Game AI ↗</button>
+                  aria-label="Go to Gomoku Game AI: game agent decisions">Gomoku Game AI ↗</button>
               </div>
             </div>
           </article>
           <article class="work-card project-card card-gomoku" id="gomoku" data-node="gomoku"
             style="--turn:-1.8deg;--surface:#eee3da;--accent:#765a50">
-            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-gomoku">
+            <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">09</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M4 4h16v16H4zM9 4v16M15 4v16M4 9h16M4 15h16M6 6l2 2M8 6 6 8M17 17l2 2M19 17l-2 2" />
@@ -420,9 +421,9 @@
               <span class="tags"><span>Python</span><span>Alpha-Beta
                   Pruning</span><span>Minimax</span><span>Threat-Space Search</span><span>Heuristic
                   Evaluation</span><span>Game Theory</span><span>Algorithms</span></span>
-              <span class="card-bottom"><span>Minimax game engine & search logic</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+              <span class="card-bottom"><span>Minimax game engine & search logic</span></span>
             </button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-gomoku" aria-label="Read more about Gomoku Game AI">Read more <span aria-hidden="true">↗</span></button>
             <div class="card-details" id="details-gomoku" hidden>
               <p>Engineered a competitive AI game agent capable of playing Gomoku (Five-in-a-Row) against both human
                 players and opponent algorithms within a strict 10-second turn limit:</p>
@@ -436,7 +437,7 @@
               </ul>
               <div class="related"><span>CONNECTED THROUGH GAME AGENT DECISIONS</span>
                 <button type="button" data-connect="zombie"
-                  aria-label="Open Zombie Shooter AI: game agent decisions">Zombie Shooter AI ↗</button>
+                  aria-label="Go to Zombie Shooter AI: game agent decisions">Zombie Shooter AI ↗</button>
               </div>
             </div>
           </article>

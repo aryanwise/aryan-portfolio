@@ -1968,11 +1968,7 @@ footer>div {
 }
 
 /* Project / Experience filter */
-.legend {
-    align-items: center;
-    gap: 18px;
-}
-
+.legend { align-items: center; gap: 18px; }
 .legend .thread-filter {
     --thread-accent: #a26745;
     display: inline-flex;
@@ -1989,38 +1985,19 @@ footer>div {
     line-height: 1.2;
     cursor: pointer;
 }
-
-.legend .thread-filter[data-thread="experience"] {
-    --thread-accent: #928575;
-}
-
-.legend .thread-filter i {
-    width: 10px;
-    height: 10px;
-    flex: none;
-}
-
+.legend .thread-filter[data-thread="experience"] { --thread-accent: #928575; }
+.legend .thread-filter i { width: 10px; height: 10px; flex: none; }
 .legend .thread-filter:hover,
-.legend .thread-filter[aria-pressed="true"] {
-    color: var(--ink);
-}
-
-.legend .thread-filter[aria-pressed="true"] {
-    border-bottom-color: var(--thread-accent);
-}
-
-.work-canvas.has-thread .connections,
-.work-canvas.has-thread .connection-label {
-    opacity: .12;
-}
-
+.legend .thread-filter[aria-pressed="true"] { color: var(--ink); }
+.legend .thread-filter[aria-pressed="true"] { border-bottom-color: var(--thread-accent); }
+.work-canvas.has-thread .connections { opacity: .12; }
+.work-canvas.has-thread .connection-label { opacity: .12; }
 .work-canvas.has-thread .work-card.thread-muted {
     transform: rotate(var(--turn)) scale(.89);
     filter: blur(3px);
     opacity: .22;
     pointer-events: none;
 }
-
 .work-canvas.has-thread .work-card:not(.thread-muted):not(.is-active) {
     z-index: 3;
     transform: rotate(0) scale(1.018);
@@ -2028,24 +2005,70 @@ footer>div {
     opacity: 1;
     box-shadow: 0 16px 34px #593e2718, 0 3px 8px #593e270a;
 }
-
 @media (max-width: 600px) {
-    .legend {
-        align-items: flex-start;
-        gap: 3px;
-    }
+    .legend { align-items: flex-start; gap: 3px; }
+    .legend .thread-filter { min-height: 36px; padding: 5px 0; font-size: 16px; }
+    .work-canvas.has-thread .work-card:not(.thread-muted) { order: 1; }
+    .work-canvas.has-thread .work-card.thread-muted { order: 2; }
+}
 
-    .legend .thread-filter {
-        min-height: 36px;
-        padding: 5px 0;
-        font-size: 16px;
-    }
 
-    .work-canvas.has-thread .work-card:not(.thread-muted) {
-        order: 1;
+/* Nine-card graph: flowing rows keep expanded cards from overlapping. */
+.work-canvas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 76px 46px;
+    align-items: start;
+    align-content: start;
+    padding: 24px 10px 80px;
+}
+.work-canvas .work-card {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    width: 100% !important;
+    max-width: none;
+}
+.work-canvas .card-fertrado,
+.work-canvas .card-polymarket,
+.work-canvas .card-zombie { margin-top: 24px; }
+.work-canvas .card-careergenie,
+.work-canvas .card-teleperformance,
+.work-canvas .card-gomoku { margin-top: 42px; }
+.work-canvas .label-one { top: 30%; left: 7%; }
+.work-canvas .label-two { top: 62%; right: 7%; }
+.work-canvas .label-three { top: 89%; left: 30%; }
+.work-canvas.has-focus .connection-label { opacity: 0; }
+.detail-list {
+    padding-left: 18px;
+    margin: 0 0 15px;
+    color: #63574b;
+    font-size: 14px;
+    line-height: 1.65;
+}
+.detail-list li + li { margin-top: 9px; }
+.detail-list strong { color: var(--ink); font-weight: 650; }
+@media (max-width: 900px) {
+    .work-canvas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 72px 42px;
     }
-
-    .work-canvas.has-thread .work-card.thread-muted {
-        order: 2;
+    .work-canvas .work-card { margin-top: 0; }
+    .work-canvas .work-card:nth-of-type(even) { margin-top: 30px; }
+    .work-canvas .connection-label { display: none; }
+}
+@media (max-width: 600px) {
+    .work-canvas {
+        display: flex;
+        flex-direction: column;
+        gap: 59px;
+        padding: 16px 0 53px;
     }
+    .work-canvas .work-card {
+        width: 91% !important;
+        max-width: 400px;
+        margin-top: 0 !important;
+    }
+    .detail-list { font-size: 14px; }
 }

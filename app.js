@@ -1,27 +1,31 @@
 (() => {
   "use strict";
-  const canvas = document.querySelector("#work-canvas");
+  const canvas =
+    [...document.querySelectorAll(".work-canvas")].find(
+      (element) =>
+        element.querySelector(".connections") &&
+        element.querySelector(".work-card"),
+    ) || document.querySelector("#work-canvas");
   const cards = [...canvas.querySelectorAll(".work-card")];
   const svg = canvas.querySelector(".connections");
   const reset = document.querySelector("#reset-focus");
   const announcement = document.querySelector("#focus-announcement");
   const about = document.querySelector("#about");
   const aboutToggle = document.querySelector(".about-toggle");
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const smallScreen = window.matchMedia("(max-width: 600px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const edges = [
-    ["openstudylm", "careergenie"],
-    ["openstudylm", "fertrado"],
-    ["openstudylm", "rover"],
-    ["careergenie", "sentiment"],
-    ["sentiment", "teleperformance"],
+    ["openbooklm", "fertrado"],
+    ["openbooklm", "adsa"],
+    ["adsa", "teleperformance"],
+    ["teleperformance", "polymarket"],
+    ["polymarket", "careergenie"],
+    ["rover", "zombie"],
+    ["zombie", "gomoku"],
   ];
   let active = null;
   let activeThread = null;
   let pinned = false;
-  let hoverTimer;
-  let leaveTimer;
   let resizeFrame;
 
   function showAbout(open) {
@@ -118,8 +122,6 @@
     });
   }
   function focusCard(id, pin = false, speak = false) {
-    clearTimeout(hoverTimer);
-    clearTimeout(leaveTimer);
     active = id;
     pinned = pin && Boolean(id);
     canvas.classList.toggle("has-focus", Boolean(id));
@@ -140,21 +142,9 @@
           ? `Showing the ${activeThread} thread.`
           : "Showing all projects and experiences.";
   }
+  // Cards open only when their button is clicked; moving the pointer does nothing.
   cards.forEach((card) => {
-    const trigger = card.querySelector(".card-trigger");
-    card.addEventListener("pointerenter", () => {
-      clearTimeout(leaveTimer);
-      if (!finePointer.matches || pinned) return;
-      hoverTimer = setTimeout(() => focusCard(card.dataset.node), 130);
-    });
-    card.addEventListener("pointerleave", () => {
-      clearTimeout(hoverTimer);
-      if (!finePointer.matches || pinned) return;
-      leaveTimer = setTimeout(() => {
-        if (!pinned) focusCard(null);
-      }, 160);
-    });
-    trigger.addEventListener("click", () => {
+    card.querySelector(".card-trigger").addEventListener("click", () => {
       const wasPinned = active === card.dataset.node && pinned;
       focusCard(wasPinned ? null : card.dataset.node, !wasPinned, true);
     });
@@ -198,9 +188,20 @@
     cancelAnimationFrame(resizeFrame);
     resizeFrame = requestAnimationFrame(drawConnections);
   });
-  const threadButtons = [...document.querySelectorAll(".thread-filter")];
 
+  const threadButtons = [...document.querySelectorAll(".thread-filter")];
+  function cardKind(card) {
+    if (card.classList.contains("project-card")) return "project";
+    if (card.classList.contains("experience-card")) return "experience";
+    const label = card
+      .querySelector(".card-type")
+      ?.textContent.trim()
+      .toLowerCase();
+    return label === "project" || label === "experience" ? label : null;
+  }
   function setThread(kind, closeCard = true) {
+    // A mismatched label must never turn every card blurry and inert.
+    if (kind && !cards.some((card) => cardKind(card) === kind)) kind = null;
     if (closeCard) focusCard(null);
     activeThread = kind;
     canvas.classList.toggle("has-thread", Boolean(kind));
@@ -212,9 +213,9 @@
         String(button.dataset.thread === kind),
       );
     });
-
     cards.forEach((card) => {
-      const muted = Boolean(kind) && !card.classList.contains(`${kind}-card`);
+      const type = cardKind(card);
+      const muted = Boolean(kind && type && type !== kind);
       card.classList.toggle("thread-muted", muted);
       card.inert = muted;
     });
@@ -232,9 +233,7 @@
       setThread(activeThread === kind ? null : kind);
     });
   });
-
   reset.addEventListener("click", () => setThread(null, false), true);
-
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape" || !activeThread) return;
     const button = threadButtons.find(
@@ -243,13 +242,11 @@
     setThread(null, false);
     button?.focus({ preventScroll: true });
   });
-
   canvas.addEventListener(
     "click",
     (event) => {
       const related = event.target.closest("[data-connect]");
       if (!related || !activeThread) return;
-
       const target = document.getElementById(related.dataset.connect);
       if (target && !target.classList.contains(`${activeThread}-card`)) {
         setThread(null, false);
@@ -257,8 +254,14 @@
     },
     true,
   );
+
+  // Start clean, including when the browser restores the page from its cache.
+  setThread(null);
+  announcement.textContent = "";
+  document.querySelectorAll('a[href="#work"]').forEach((link) => {
+    link.addEventListener("click", () => setThread(null));
+  });
   if (document.fonts) document.fonts.ready.then(drawConnections);
-  drawConnections();
 
   const emoteButton = document.querySelector(".emote-button");
   const emoteImage = emoteButton.querySelector(".emote-image");

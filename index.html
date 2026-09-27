@@ -10,8 +10,8 @@
   <title>Aryan Mishra — A little world of work</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./styles.css?v=1.2">
-  <script src="./app.js?v=1.2" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=1.3">
+  <script src="./app.js?v=1.3" defer></script>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
       <nav aria-label="Main navigation">
         <a href="#work">The work</a>
         <a href="#about" id="about-link">A bit about me</a>
-        <a href="./blog.html" target="_blank" rel="noopener noreferrer">Blogs</a>
+        <a href="./blog.html" target="_blank" rel="noopener noreferrer">Writing</a>
       </nav>
     </header>
     <main id="top">
@@ -88,7 +88,7 @@
             <li>Embedded Systems</li>
             <li>Docker &amp; Database</li>
             <li>LLM Orchestration &amp; APIs</li>
-            <li>Typescript &amp; Javascript</li>
+            <li>Typescript</li>
           </ul>
         </div>
         <div class="about-detail">
@@ -109,7 +109,7 @@
             <h2 id="work-title">Different paths.<br><em>Connected ideas.</em></h2>
           </div>
           <div class="work-context">
-            <p>A few things I’ve built,<br>and what they’ve taught me.</p>
+            <p style="font-weight: 500; color: #342b24;">A few things I’ve built,<br>and what they’ve taught me.</p>
             <div class="legend" role="group" aria-label="Filter work">
               <button class="thread-filter" type="button" data-thread="project" aria-pressed="false"
                 aria-controls="work-canvas"><i class="project-dot" aria-hidden="true"></i>Project</button>
@@ -118,172 +118,337 @@
             </div>
           </div>
         </div>
+
         <div class="canvas-tools">
-          <p class="interaction-hint"><span aria-hidden="true">✳</span><span class="desktop-hint">Hover to focus.
-              Click
-              to stay a while.</span><span class="mobile-hint">Tap a card to take a closer look.</span></p><button
-            class="reset-focus" id="reset-focus" type="button" hidden>Show all cards <span
+          <p class="interaction-hint"><span aria-hidden="true">✳</span><span class="desktop-hint"
+              style="font-weight: 600; color: #342b24;">Click a card to take a closer look.</span><span
+              class="mobile-hint">Tap a card to take a closer look.</span></p>
+          <button class="reset-focus" id="reset-focus" type="button" hidden>Show all cards <span
               aria-hidden="true">↗</span></button>
         </div>
         <div class="work-canvas" id="work-canvas">
           <svg class="connections" aria-hidden="true" preserveAspectRatio="none"></svg>
-          <div class="connection-label label-one" aria-hidden="true">knowledge → useful tools</div>
-          <div class="connection-label label-two" aria-hidden="true">learning by building</div>
-          <div class="connection-label label-three" aria-hidden="true">from data to decisions</div>
-          <article class="work-card card-study project-card" id="openstudylm" data-node="openstudylm"
+          <div class="connection-label label-one" aria-hidden="true">from knowledge to action</div>
+          <div class="connection-label label-two" aria-hidden="true">signals into decisions</div>
+          <div class="connection-label label-three" aria-hidden="true">agents in motion</div>
+          <article class="work-card project-card card-openbooklm" id="openbooklm" data-node="openbooklm"
             style="--turn:-2deg;--surface:#fffdf7;--accent:#8c4938">
-            <button class="card-trigger" aria-expanded="false" aria-controls="details-openstudylm" type="button"><span
-                class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">01</span></span><span
-                class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-openbooklm">
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">01</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M12 5c-3-2-7-2-10 0v15c3-2 7-2 10 0 3-2 7-2 10 0V5c-3-2-7-2-10 0Z" />
                     <path d="M12 5v15M5 8h3M5 11h3M16 8h3M16 11h3" />
-                  </svg></span><span class="card-field">LLMs / knowledge tools</span></span>
-              <h3>OpenbookLM</h3><span class="card-description">A space to turn a pile of documents into something you
-                can actually learn from.</span><span
-                class="tags"><span>Python</span><span>RAG</span><span>FAISS</span></span><span
-                class="card-bottom"><span>From information to understanding</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
+                  </svg></span><span class="card-field">Local AI / developer tools</span></span>
+              <h3>OpenbookLM</h3>
+              <span class="card-description">A local-first alternative to Google NotebookLM that goes beyond answering
+                questions - It will be your local private agent that reads documentation, understands your codebase, and
+                writes the code to implement it.</span>
+              <span
+                class="tags"><span>TypeScript</span><span>FastAPI</span><span>C++</span><span>GraphRAG</span><span>Llamaindex
+                  & Langchain</span><span>USearch</span><span>Llama.cpp</span></span>
+              <span class="card-bottom"><span>NotebookLM told you how it works; OpenbookLM builds it for
+                  you.</span><span class="card-arrow" aria-hidden="true">↗</span></span>
             </button>
-            <div class="card-details" id="details-openstudylm" hidden>
-              <h4>What I’m exploring and building</h4>
-              <p>An open-source document learning tool combining parsing, semantic retrieval, and user-selected
-                language
-                models.</p>
-              <p class="detail-skill">Hands-on with document processing, embeddings, and local model workflows.</p>
-              <div class="related"><span>CONNECTED THROUGH LLMs & RETRIEVAL</span><button data-connect="careergenie"
-                  type="button">CareerGenie ↗</button><button data-connect="fertrado" type="button">FERTRADO
+            <div class="card-details" id="details-openbooklm" hidden>
+              <p>OpenBookLM solves the privacy and fragmentation issues of modern technical work by providing a
+                local-first workspace that turns sensitive documentation, research papers, and codebases into actionable
+                engineering progress without cloud dependencies. It helps developers and researchers deeply understand
+                complex architectures through syntax-aware retrieval and other offline tools, while bridging the gap
+                between passive reading and real execution by autonomously writing, refactoring, and verifying code
+                directly within their local repositories.</p>
+              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL • AGENTS THAT WRITE CODE</span>
+                <button type="button" data-connect="fertrado" aria-label="Open FERTRADO: document retrieval">FERTRADO
+                  ↗</button>
+                <button type="button" data-connect="adsa" aria-label="Open A.D.S.A.: agents that write code">A.D.S.A.
                   ↗</button>
               </div>
             </div>
           </article>
-          <article class="work-card card-career experience-card" id="careergenie" data-node="careergenie"
-            style="--turn:2deg;--surface:#ead6c8;--accent:#7d402f">
-            <button class="card-trigger" aria-expanded="false" aria-controls="details-careergenie" type="button"><span
-                class="card-meta"><span class="card-type">EXPERIENCE</span><span
-                  class="card-number">02</span></span><span class="card-topline"><span class="card-icon"
-                  aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <rect x="3" y="7" width="18" height="14" rx="3" />
-                    <path d="M8 7V4h8v3M3 12c5 4 13 4 18 0M10 14h4" />
-                  </svg></span><span class="card-field">AI engineering / recruiting</span></span>
-              <h3>CareerGenie</h3><span class="role-label">AI Backend Engineer</span><span
-                class="card-description">Connecting public work to richer, evidence-based candidate
-                profiles.</span><span class="tags"><span>n8n</span><span>LLMs</span><span>APIs</span></span><span
-                class="card-bottom"><span>Making signals useful</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
-            </button>
-            <div class="card-details" id="details-careergenie" hidden>
-              <h4>The work</h4>
-              <p>Built workflows around LinkedIn activity and GitHub signals, combining deterministic analysis with
-                language models.</p>
-              <p class="detail-skill">Profile normalization, signal extraction, and structured outputs for downstream
-                use.</p>
-              <div class="related"><span>CONNECTED THROUGH AI APPLICATIONS</span><button data-connect="openstudylm"
-                  type="button">OpenbookLM ↗</button></div>
-            </div>
-          </article>
-          <article class="work-card card-rover project-card" id="rover" data-node="rover"
-            style="--turn:-2.4deg;--surface:#e4e7d6;--accent:#4d5d39">
-            <button class="card-trigger" aria-expanded="false" aria-controls="details-rover" type="button"><span
-                class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">03</span></span><span
-                class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <rect x="6" y="6" width="12" height="12" rx="2" />
-                    <path d="M9 1v5M15 1v5M9 18v5M15 18v5M1 9h5M1 15h5M18 9h5M18 15h5M10 10h4v4h-4z" />
-                  </svg></span><span class="card-field">Robotics / physical systems</span></span>
-              <h3>A little rover.<br>A lot of learning.</h3><span class="card-description">Taking intelligence off the
-                screen, one obstacle and wiring fix at a time.</span><span
-                class="tags"><span>Arduino</span><span>C++</span><span>Sensors</span></span><span
-                class="card-bottom"><span>4WD obstacle-avoidance experiment</span><span class="card-arrow"
-                  aria-hidden="true">↗</span></span>
-            </button>
-            <div class="card-details" id="details-rover" hidden>
-              <h4>On the workbench</h4>
-              <p>A four-wheel rover using an Arduino Uno, an ultrasonic sensor, a scanning servo, and an L298N motor
-                driver.</p>
-              <p class="detail-skill">Exploring sensing, motor control, power constraints, and state-based navigation.
-                An ongoing experiment.</p>
-              <div class="related"><span>CONNECTED THROUGH HANDS-ON LEARNING</span><button data-connect="openstudylm"
-                  type="button">OpenbookLM ↗</button></div>
-            </div>
-          </article>
-          <article class="work-card card-fertrado experience-card" id="fertrado" data-node="fertrado"
+          <article class="work-card experience-card card-fertrado" id="fertrado" data-node="fertrado"
             style="--turn:1.5deg;--surface:#e8e1d7;--accent:#705948">
-            <button class="card-trigger" aria-expanded="false" aria-controls="details-fertrado" type="button"><span
-                class="card-meta"><span class="card-type">EXPERIENCE</span><span
-                  class="card-number">04</span></span><span class="card-topline"><span class="card-icon"
-                  aria-hidden="true"><svg viewBox="0 0 24 24">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-fertrado">
+              <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">02</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6" />
-                  </svg></span><span class="card-field">RAG / regulatory information</span></span>
-              <h3>FERTRADO</h3><span class="role-label">AI Regulatory Navigator</span><span
-                class="card-description">Making complex EU fertiliser regulations easier to explore and
-                understand.</span><span class="tags"><span>Qwen</span><span>FAISS</span><span>Docling</span></span><span
-                class="card-bottom"><span>Knowledge with a real-world context</span><span class="card-arrow"
+                  </svg></span><span class="card-field">Regulatory AI / grounded search</span></span>
+              <h3>FERTRADO</h3><span class="role-label">AI Engineer</span>
+              <span class="card-description">Making complex EU fertilizer regulations easier to explore and
+                understand.</span>
+              <span
+                class="tags"><span>Python</span><span>FastAPI</span><span>FAISS</span><span>Ollama</span><span>Langchain</span><span>AWS</span><span>Docling</span></span>
+              <span class="card-bottom"><span>Grounded regulatory search & retrieval</span><span class="card-arrow"
                   aria-hidden="true">↗</span></span>
             </button>
             <div class="card-details" id="details-fertrado" hidden>
-              <h4>The work</h4>
-              <p>Worked on a retrieval-augmented tool for EU fertiliser regulations, including FPR, REACH, and CLP
-                source material.</p>
-              <p class="detail-skill">Document extraction, vector retrieval, and grounded responses with Qwen.</p>
-              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span><button data-connect="openstudylm"
-                  type="button">OpenbookLM ↗</button></div>
+              <p>Architected FERTRADO&#x27;s internal regulatory navigator by serving a high-parameter Qwen model
+                locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for
+                reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing to
+                ground the model strictly in parsed EU compliance material, delivering low-latency, hallucination-free
+                regulatory answers across the organization without third-party API dependencies. The underlying data
+                ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives, and
+                documentation to be added seamlessly as regulatory requirements expand.</p>
+              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span>
+                <button type="button" data-connect="openbooklm"
+                  aria-label="Open OpenbookLM: document retrieval">OpenbookLM ↗</button>
+              </div>
             </div>
           </article>
-          <article class="work-card card-sentiment project-card" id="sentiment" data-node="sentiment"
-            style="--turn:-1.4deg;--surface:#f4e8ce;--accent:#806037">
-            <button class="card-trigger" aria-expanded="false" aria-controls="details-sentiment" type="button"><span
-                class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">05</span></span><span
-                class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <path d="M3 3v18h18M7 16l4-5 4 2 6-8M17 5h4v4" />
-                  </svg></span><span class="card-field">Data science / language</span></span>
-              <h3>Reading between<br>the reviews.</h3><span class="card-description">Exploring what e-commerce reviews
-                can tell us beyond a star rating.</span><span
-                class="tags"><span>Python</span><span>NLP</span><span>Sentiment analysis</span></span><span
-                class="card-bottom"><span>E-commerce sentiment analysis</span><span class="card-arrow"
+          <article class="work-card experience-card card-careergenie" id="careergenie" data-node="careergenie"
+            style="--turn:2deg;--surface:#ead6c8;--accent:#7d402f">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-careergenie">
+              <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">03</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <rect x="3" y="7" width="18" height="14" rx="3" />
+                    <path d="M8 7V4h8v3M3 12c5 4 13 4 18 0M10 14h4" />
+                  </svg></span><span class="card-field">Recruiter intelligence / skill gaps</span></span>
+              <h3>CareerGenie</h3><span class="role-label">AI Engineer</span>
+              <span class="card-description">Turning real-world professional work into verifiable talent signals for
+                recruiters, while helping candidates identify and bridge the skill gaps needed for their target
+                roles.</span>
+              <span
+                class="tags"><span>n8n</span><span>JavaScript</span><span>LLMs</span><span>Laya/Jev</span><span>APIs</span></span>
+              <span class="card-bottom"><span>Evaluating signals & skill gaps</span><span class="card-arrow"
                   aria-hidden="true">↗</span></span>
             </button>
-            <div class="card-details" id="details-sentiment" hidden>
-              <h4>The question</h4>
-              <p>How can customer language become a useful signal? An academic project exploring sentiment in
-                e-commerce
-                reviews.</p>
-              <p class="detail-skill">Working with text, interpreting sentiment, and connecting analysis to a business
-                question.</p>
-              <div class="related"><span>CONNECTED THROUGH DATA ANALYSIS</span><button data-connect="teleperformance"
-                  type="button">Teleperformance ↗</button><button data-connect="careergenie" type="button">CareerGenie
-                  ↗</button></div>
+            <div class="card-details" id="details-careergenie" hidden>
+              <p>Built automated candidate signal and upskilling workflows using n8n, JavaScript, and LLMs, integrating
+                Laya/Jev for classification and external APIs for data ingestion.</p>
+              <ul class="detail-list">
+                <li><strong>GitHub Signal Engine.</strong> Turn repositories, commits and contributions into clear,
+                  verifiable technical hiring signals.</li>
+                <li><strong>Peer-benchmarked gap analysis.</strong> Compare candidates with professionals at their
+                  target role and seniority to identify concrete skill gaps and next steps.</li>
+                <li><strong>Data orchestration.</strong> Connected APIs, Laya/Jev and LLM prompt chains to clean,
+                  normalize, classify signals and deliver structured profile insights to downstream hiring tools.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH STRUCTURED SIGNAL PIPELINES</span>
+                <button type="button" data-connect="polymarket"
+                  aria-label="Open Polymarket Analyzer: structured signal pipelines">Polymarket Analyzer ↗</button>
+              </div>
             </div>
           </article>
-          <article class="work-card card-tele experience-card" id="teleperformance" data-node="teleperformance"
-            style="--turn:2.3deg;--surface:#f9f6ed;--accent:#6f6048">
-            <button class="card-trigger" aria-expanded="false" aria-controls="details-teleperformance"
-              type="button"><span class="card-meta"><span class="card-type">EXPERIENCE</span><span
-                  class="card-number">06</span></span><span class="card-topline"><span class="card-icon"
-                  aria-hidden="true"><svg viewBox="0 0 24 24">
+          <article class="work-card project-card card-adsa" id="adsa" data-node="adsa"
+            style="--turn:-1.4deg;--surface:#f0e5d9;--accent:#80543e">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-adsa">
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">04</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="3" />
+                    <path d="m8 10 3 2-3 2M13 15h4M8 2v2M16 2v2M8 20v2M16 20v2" />
+                  </svg></span><span class="card-field">Autonomous Data Science Agent</span></span>
+              <h3>A.D.S.A.</h3>
+              <span class="card-description">An open-source autonomous agent that plans, codes, and runs complete data
+                science workflows inside an isolated local sandbox.</span>
+              <span
+                class="tags"><span>Python</span><span>DeepAnalyze-8B</span><span>Docker</span><span>e2b</span><span>Ollama
+                  & APIs</span><span>Data Analysis</span></span>
+              <span class="card-bottom"><span>End to End Autonomous Data Science work in a secure sandbox </span><span
+                  class="card-arrow" aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-adsa" hidden>
+              <p>An open-source autonomous data science system inspired by DeepAnalyze-8B, designed to turn raw tabular
+                data into analytical reports without manual script writing.</p>
+              <ul class="detail-list">
+                <li><strong>End-to-end execution.</strong> Parse datasets, choose an analytical strategy and write code
+                  for EDA, cleaning, feature engineering and statistical modeling.</li>
+                <li><strong>Isolated iteration.</strong> Execute generated Python in a sandbox, inspect errors and
+                  revise scripts while blocking unsafe system calls.</li>
+                <li><strong>Readable outputs.</strong> Produce narrative technical reports with visualizations and key
+                  performance metrics.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH AGENTS THAT WRITE CODE · SANDBOXED DATA AGENTS</span>
+                <button type="button" data-connect="openbooklm"
+                  aria-label="Open OpenbookLM: agents that write code">OpenbookLM ↗</button>
+                <button type="button" data-connect="teleperformance"
+                  aria-label="Open Teleperformance: sandboxed data agents">Teleperformance ↗</button>
+              </div>
+            </div>
+          </article>
+          <article class="work-card experience-card card-teleperformance" id="teleperformance"
+            data-node="teleperformance" style="--turn:2.3deg;--surface:#f9f6ed;--accent:#6f6048">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-teleperformance">
+              <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">05</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
                     <path d="M4 20h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5" />
-                  </svg></span><span class="card-field">Analytics / business</span></span>
-              <h3>Teleperformance</h3><span class="role-label">Data Analyst Intern</span><span
-                class="card-description">Bringing a data science perspective into a working business
-                environment.</span><span class="tags"><span>Data analysis</span><span>Problem
-                  framing</span></span><span class="card-bottom"><span>Learning in practice · India</span><span
+                  </svg></span><span class="card-field">Data agents / forecasting</span></span>
+              <h3>Teleperformance</h3><span class="role-label">Data Analytics Intern</span>
+              <span class="card-description">Automating end-to-end data science workflows in sandboxed environments and
+                boosting time-series forecasting accuracy with zero-shot foundation models.</span>
+              <span
+                class="tags"><span>Python</span><span>TimesFM</span><span>Chronos</span><span>Docker</span><span>Time-Series</span><span>IBM-Granite</span><span>e2b</span><span>DeepAnalyze-8B</span></span>
+              <span class="card-bottom"><span>Autonomous analytics & foundation forecasting</span><span
                   class="card-arrow" aria-hidden="true">↗</span></span>
             </button>
             <div class="card-details" id="details-teleperformance" hidden>
-              <h4>The experience</h4>
-              <p>An on-site data analyst internship in India, connecting academic study with practical business work.
-              </p>
-              <p class="detail-skill">A place to develop analytical thinking and understand how data work fits into a
-                team.</p>
-              <div class="related"><span>CONNECTED THROUGH APPLIED ANALYTICS</span><button data-connect="sentiment"
-                  type="button">Sentiment analysis ↗</button></div>
+              <ul class="detail-list">
+                <li><strong>Data science agent.</strong> Implemented a DeepAnalyze-8B architecture that ingests raw
+                  data, plans and executes EDA, preprocessing and modeling, then compiles analytical reports inside an
+                  isolated sandbox.</li>
+                <li><strong>Zero-shot forecasts.</strong> Benchmarked and integrated Google TimesFM, Amazon Chronos and
+                  IBM Granite against the existing ensemble, reducing sMAPE by 32% across key internal metrics without
+                  retraining.</li>
+                <li><strong>Execution boundaries.</strong> Kept generated analytical code within strict local sandbox
+                  boundaries for privacy and controlled execution.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH SANDBOXED DATA AGENTS · PREDICTION AND VERIFICATION</span>
+                <button type="button" data-connect="adsa" aria-label="Open A.D.S.A.: sandboxed data agents">A.D.S.A.
+                  ↗</button>
+                <button type="button" data-connect="polymarket"
+                  aria-label="Open Polymarket Analyzer: prediction and verification">Polymarket Analyzer ↗</button>
+              </div>
+            </div>
+          </article>
+          <article class="work-card project-card card-polymarket" id="polymarket" data-node="polymarket"
+            style="--turn:-1.7deg;--surface:#f4e8ce;--accent:#806037">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-polymarket">
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">06</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M3 3v18h18M7 16l4-5 4 2 6-8M17 5h4v4" />
+                  </svg></span><span class="card-field">Prediction markets / investing</span></span>
+              <h3>Polymarket Analyzer</h3>
+              <span class="card-description">Tracking Polymarket events, filtering market news strictly for our specific
+                equity holdings, and generating daily trading reports tied to real stock movements.</span>
+              <span class="tags"><span>Python</span><span>Github Actions</span><span>Supabase</span><span>Polymarket
+                  API</span><span>APIs (Groq & Gemini)</span><span>Polymarket & Yahoo Finance API</span><span>bs4 &
+                  Selenium</span></span>
+              <span class="card-bottom"><span>Automated market pipeline & backtesting</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-polymarket" hidden>
+              <p>Built an automated, scheduled data pipeline to evaluate whether prediction markets offer an early
+                trading edge on specific equity holdings:</p>
+              <ul class="detail-list">
+                <li><strong>Scheduled ingestion.</strong> Use GitHub Actions on intervals from 5 minutes to 5 hours to
+                  collect Polymarket contracts and scraped news with Beautiful Soup or Selenium.</li>
+                <li><strong>Focused daily reports.</strong> Combine holdings-specific odds with Tavily news and FMP
+                  analyst targets, using Groq or Gemini LLMs to produce structured Markdown reports without unrelated
+                  market noise.</li>
+                <li><strong>Verify and cache.</strong> Compare resolved contracts with Yahoo Finance price history;
+                  store signals, holdings and reports in Supabase junction tables, with a 6-hour cache for deep-dive
+                  queries.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH STRUCTURED SIGNAL PIPELINES · PREDICTION AND
+                  VERIFICATION</span>
+                <button type="button" data-connect="careergenie"
+                  aria-label="Open CareerGenie: structured signal pipelines">CareerGenie ↗</button>
+                <button type="button" data-connect="teleperformance"
+                  aria-label="Open Teleperformance: prediction and verification">Teleperformance ↗</button>
+              </div>
+            </div>
+          </article>
+          <article class="work-card project-card card-rover" id="rover" data-node="rover"
+            style="--turn:-2.4deg;--surface:#e4e7d6;--accent:#4d5d39">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-rover">
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">07</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="2" />
+                    <path d="M9 1v5M15 1v5M9 18v5M15 18v5M1 9h5M1 15h5M18 9h5M18 15h5M10 10h4v4h-4z" />
+                  </svg></span><span class="card-field">Robotics / embedded systems</span></span>
+              <h3>Autonomous 4WD Rover</h3>
+              <span class="card-description">Implementing real-time perception, spatial scanning, and state-based
+                navigation on resource-constrained embedded hardware.</span>
+              <span class="tags"><span>C++</span><span>Arduino</span><span>Ultrasonic
+                  HC-SR04</span><span>L298N</span><span>Servo Control</span><span>Embedded Systems</span></span>
+              <span class="card-bottom"><span>Autonomous navigation & control logic</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-rover" hidden>
+              <p>Built a real-time autonomous 4-wheel mobile rover driven by a deterministic perception —> decision —>
+                action pipeline:</p>
+              <ul class="detail-list">
+                <li><strong>Active scanning.</strong> Mount an HC-SR04 ultrasonic sensor on a micro-servo to scan left
+                  and right when an obstacle crosses the distance threshold.</li>
+                <li><strong>State-based navigation.</strong> Use C++ logic to compare available paths and trigger
+                  evasive maneuvers through an L298N dual H-bridge motor driver.</li>
+                <li><strong>Embedded constraints.</strong> Manage power distribution, motor back-EMF and hardware
+                  interrupts to support stable sensor polling and locomotion.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT</span>
+                <button type="button" data-connect="zombie"
+                  aria-label="Open Zombie Shooter AI: agents that sense and act">Zombie Shooter AI ↗</button>
+              </div>
+            </div>
+          </article>
+          <article class="work-card project-card card-zombie" id="zombie" data-node="zombie"
+            style="--turn:1.3deg;--surface:#e7e5d7;--accent:#5e6547">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-zombie">
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">08</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M4 8h16l2 10H2L4 8ZM8 5v3M16 5v3M8 13h4M10 11v4M17 12v3M15.5 13.5h3" />
+                  </svg></span><span class="card-field">Q-learning / 2D game AI</span></span>
+              <h3>Zombie Shooter AI</h3>
+              <span class="card-description">Trained a tabular reinforcement learning agent to balance evasion,
+                targeting, and survival in a custom 2D arcade environment.</span>
+              <span
+                class="tags"><span>Python</span><span>Pygame</span><span>Q-Learning</span><span>NumPy</span><span>Jupyter
+                  Notebook</span><span>Reinforcement Learning</span></span>
+              <span class="card-bottom"><span>RL training pipeline & game engine</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-zombie" hidden>
+              <p>Built and trained a discrete reinforcement learning agent from scratch to master a custom-built 2D
+                survival arcade game:</p>
+              <ul class="detail-list">
+                <li><strong>Model the environment.</strong> Translate screen position, nearby zombies and directional
+                  alignment into a discrete state space.</li>
+                <li><strong>Train the policy.</strong> Implement Bellman updates and epsilon-greedy exploration across
+                  more than 5,000 episodes, rewarding survival and eliminations while penalizing damage.</li>
+                <li><strong>Inspect the learning.</strong> Run headless training or real-time visual sessions; log NumPy
+                  .npz metrics and inspect reward curves and policy heatmaps in Jupyter.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT · GAME AGENT DECISIONS</span>
+                <button type="button" data-connect="rover"
+                  aria-label="Open Autonomous 4WD Rover: agents that sense and act">Autonomous 4WD Rover ↗</button>
+                <button type="button" data-connect="gomoku"
+                  aria-label="Open Gomoku Game AI: game agent decisions">Gomoku Game AI ↗</button>
+              </div>
+            </div>
+          </article>
+          <article class="work-card project-card card-gomoku" id="gomoku" data-node="gomoku"
+            style="--turn:-1.8deg;--surface:#eee3da;--accent:#765a50">
+            <button class="card-trigger" type="button" aria-expanded="false" aria-controls="details-gomoku">
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">09</span></span>
+              <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+                    <path d="M4 4h16v16H4zM9 4v16M15 4v16M4 9h16M4 15h16M6 6l2 2M8 6 6 8M17 17l2 2M19 17l-2 2" />
+                  </svg></span><span class="card-field">Adversarial search / game AI</span></span>
+              <h3>Gomoku Game AI</h3>
+              <span class="card-description">A competitive board game engine using minimax, threat-space pruning, and
+                pattern heuristics to outplay humans and adversarial agents under strict turn timers.</span>
+              <span class="tags"><span>Python</span><span>Alpha-Beta
+                  Pruning</span><span>Minimax</span><span>Threat-Space Search</span><span>Heuristic
+                  Evaluation</span><span>Game Theory</span><span>Algorithms</span></span>
+              <span class="card-bottom"><span>Minimax game engine & search logic</span><span class="card-arrow"
+                  aria-hidden="true">↗</span></span>
+            </button>
+            <div class="card-details" id="details-gomoku" hidden>
+              <p>Engineered a competitive AI game agent capable of playing Gomoku (Five-in-a-Row) against both human
+                players and opponent algorithms within a strict 10-second turn limit:</p>
+              <ul class="detail-list">
+                <li><strong>Search efficiently.</strong> Use depth-variable minimax with alpha-beta pruning and
+                  iterative deepening, respecting a 10-second cutoff per turn.</li>
+                <li><strong>Limit the branching.</strong> Consider moves near existing stones instead of evaluating
+                  every empty space on the board.</li>
+                <li><strong>Score the threats.</strong> Apply positional heuristics to five-in-a-row, open and blocked
+                  fours, and other sequences across horizontal, vertical and diagonal lines.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH GAME AGENT DECISIONS</span>
+                <button type="button" data-connect="zombie"
+                  aria-label="Open Zombie Shooter AI: game agent decisions">Zombie Shooter AI ↗</button>
+              </div>
             </div>
           </article>
         </div>
-        <p class="graph-footnote"><span class="line-sample" aria-hidden="true"></span>Lines connect shared skills and
-          interests.</p>
+        <p class="graph-footnote" style="font-weight: 500; color: #342b24;"><span class="line-sample"
+            aria-hidden="true"></span>Lines connect shared methods and
+          ideas.</p>
       </section>
     </main>
     <footer><a class="footer-name" href="#top">Always a work <em>in progress.</em></a>
-      <div><span>Aryan Mishra</span><span>Portfolio concept · 2026</span></div>
+      <div><span style="font-weight: 600; color: #342b24;">Aryan Mishra</span><span
+          style="font-weight: 500; color: #342b24;">Portfolio concept · 2026</span>
+      </div>
     </footer>
   </div>
   <div class="sr-only" aria-live="polite" id="focus-announcement"></div>

@@ -74,15 +74,14 @@
     <button class="aryan-chatbot-launcher" type="button" data-action="open"
       aria-label="Open Ask Aryan, an interactive guide to Aryan's portfolio"
       aria-controls="aryan-chatbot-dialog" aria-expanded="false">
-      <span class="aryan-chatbot-launcher-picture" aria-hidden="true"></span>
-      <span class="aryan-chatbot-launcher-label">Ask Aryan ↗</span>
+      <span class="aryan-chatbot-launcher-prompt">Don't feel like reading about me?</span>
+      <span class="aryan-chatbot-launcher-label">ASK ARYAN</span>
     </button>
     <button class="aryan-chatbot-backdrop" type="button" data-action="minimize"
       aria-label="Minimize Ask Aryan" tabindex="-1"></button>
     <section class="aryan-chatbot-panel" id="aryan-chatbot-dialog" role="dialog"
       aria-modal="true" aria-labelledby="aryan-chatbot-title" aria-hidden="true" tabindex="-1" data-tab="chat">
       <header class="aryan-chatbot-header">
-        <span class="aryan-chatbot-avatar" aria-hidden="true"></span>
         <div class="aryan-chatbot-heading">
           <h2 id="aryan-chatbot-title">Ask Aryan<span aria-hidden="true">.</span></h2>
           <p>Interactive portfolio · questions into connections</p>

@@ -1,7 +1,7 @@
 [
   {
     "question": "Tell me about Aryan",
-    "answer": "Aryan works across AI and autonomous systems, from grounded search and data agents to embedded robotics. Here's a little more about him.",
+    "answer": "Aryan works across Gen AI, LLM's and autonomous systems, from grounded search and data agents to embedded robotics. Here's a little more about him.",
     "action": "message",
     "items": ["about"]
   },

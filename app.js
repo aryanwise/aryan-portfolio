@@ -35,6 +35,31 @@
   let detailOpen = null;
   let connectionPath = [];
   let resizeFrame;
+  let escapeFocusTarget = null;
+
+  function clearEscapeFocus() {
+    escapeFocusTarget?.classList.remove("is-escape-focus");
+    escapeFocusTarget = null;
+  }
+
+  function suppressEscapeOutline(target) {
+    clearEscapeFocus();
+    if (!target) return;
+    escapeFocusTarget = target;
+    target.classList.add("is-escape-focus");
+  }
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key !== "Escape") clearEscapeFocus();
+    },
+    true,
+  );
+  document.addEventListener("pointerdown", clearEscapeFocus, true);
+  document.addEventListener("focusin", (event) => {
+    if (event.target !== escapeFocusTarget) clearEscapeFocus();
+  });
 
   function showAbout(open) {
     about.hidden = !open;
@@ -62,14 +87,36 @@
   }
   function drawConnections() {
     updateCanvasHeight();
+    // Keep decorative labels in the actual gaps as card heights change.
+    if (innerWidth > 900 && cards.length >= 6) {
+      const labels = [...canvas.querySelectorAll(".connection-label")];
+      const rows = [];
+      for (let i = 0; i < cards.length; i += 3)
+        rows.push(cards.slice(i, i + 3));
+      const rowBottom = (row) =>
+        Math.max(...row.map((card) => card.offsetTop + card.offsetHeight));
+      const rowTop = (row) => Math.min(...row.map((card) => card.offsetTop));
+      [0, 1].forEach((index) => {
+        if (!labels[index] || !rows[index + 1]) return;
+        const gapStart = rowBottom(rows[index]);
+        const gapEnd = rowTop(rows[index + 1]);
+        labels[index].style.top =
+          `${Math.round(gapStart + (gapEnd - gapStart - labels[index].offsetHeight) / 2)}px`;
+      });
+      if (labels[2] && rows[2]) {
+        const gapStart = rowBottom(rows[1]);
+        const gapEnd = rowTop(rows[2]);
+        labels[2].style.top = `${Math.round(gapStart + (gapEnd - gapStart - labels[2].offsetHeight) * 0.28)}px`;
+      }
+    }
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
     svg.replaceChildren();
     const pathEdges = new Set(
-      connectionPath.slice(1).map((id, index) =>
-        [connectionPath[index], id].sort().join("::"),
-      ),
+      connectionPath
+        .slice(1)
+        .map((id, index) => [connectionPath[index], id].sort().join("::")),
     );
     edges.forEach(([from, to]) => {
       const a = document.getElementById(from);
@@ -158,16 +205,25 @@
       card.classList.toggle("is-active", selected);
       card.classList.toggle(
         "is-in-thread",
-        !selected && connectionPath.length > 1 && connectionPath.includes(card.dataset.node),
+        !selected &&
+          connectionPath.length > 1 &&
+          connectionPath.includes(card.dataset.node),
       );
       card.classList.toggle("is-details-open", reading);
-      card.querySelector(".card-trigger").setAttribute("aria-pressed", String(selected));
-      card.querySelector(".card-read-more").setAttribute("aria-expanded", String(reading));
+      card
+        .querySelector(".card-trigger")
+        .setAttribute("aria-pressed", String(selected));
+      card
+        .querySelector(".card-read-more")
+        .setAttribute("aria-expanded", String(reading));
       card.querySelector(".card-details").hidden = !reading;
     });
     drawConnections();
     if (speak) {
-      const title = cardById.get(active)?.querySelector("h3").textContent.trim();
+      const title = cardById
+        .get(active)
+        ?.querySelector("h3")
+        .textContent.trim();
       announcement.textContent = detailOpen
         ? `${title} details open. Use the connection buttons to follow a thread, or close details.`
         : active
@@ -189,7 +245,10 @@
     canvas.classList.toggle("has-thread", Boolean(kind));
     canvas.dataset.thread = kind || "";
     threadButtons.forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.thread === kind));
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.thread === kind),
+      );
     });
     cards.forEach((card) => {
       const muted = Boolean(kind && cardKind(card) !== kind);
@@ -197,9 +256,10 @@
       card.inert = muted;
     });
     render(false);
-    if (speak) announcement.textContent = kind
-      ? `Showing ${kind} cards. Choose a card to focus it.`
-      : "Showing all projects and experiences.";
+    if (speak)
+      announcement.textContent = kind
+        ? `Showing ${kind} cards. Choose a card to focus it.`
+        : "Showing all projects and experiences.";
   }
 
   function closeDetails(returnFocus = true) {
@@ -207,7 +267,8 @@
     const card = cardById.get(detailOpen);
     detailOpen = null;
     render(true);
-    if (returnFocus) card.querySelector(".card-read-more").focus({ preventScroll: true });
+    if (returnFocus)
+      card.querySelector(".card-read-more").focus({ preventScroll: true });
   }
 
   // The supplied card content stays in the HTML; only the close control is added.
@@ -245,7 +306,8 @@
       render(true);
     });
     card.querySelector(".card-read-more").addEventListener("click", () => {
-      if (activeThread && cardKind(card) !== activeThread) setThread(null, false, false);
+      if (activeThread && cardKind(card) !== activeThread)
+        setThread(null, false, false);
       active = card.dataset.node;
       connectionPath = connectionPath.at(-1) === active ? connectionPath : [];
       detailOpen = active;
@@ -262,7 +324,8 @@
       const to = connection.dataset.connect;
       const target = cardById.get(to);
       if (!from || !target) return;
-      if (activeThread && cardKind(target) !== activeThread) setThread(null, false, false);
+      if (activeThread && cardKind(target) !== activeThread)
+        setThread(null, false, false);
       const previous = connectionPath.at(-1) === from ? connectionPath : [from];
       connectionPath = [...previous, to];
       active = to;
@@ -295,14 +358,22 @@
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
     if (detailOpen) {
+      const readMore = cardById
+        .get(detailOpen)
+        ?.querySelector(".card-read-more");
       closeDetails();
+      suppressEscapeOutline(readMore);
       return;
     }
     if (active || activeThread) {
       const previous = cardById.get(active);
-      const filter = threadButtons.find((button) => button.dataset.thread === activeThread);
+      const filter = threadButtons.find(
+        (button) => button.dataset.thread === activeThread,
+      );
       setThread(null);
-      (previous?.querySelector(".card-trigger") || filter)?.focus({ preventScroll: true });
+      const target = previous?.querySelector(".card-trigger") || filter;
+      target?.focus({ preventScroll: true });
+      suppressEscapeOutline(target);
     }
   });
   window.addEventListener("resize", () => {
@@ -319,5 +390,4 @@
     link.addEventListener("click", () => setThread(null));
   });
   if (document.fonts) document.fonts.ready.then(drawConnections);
-
 })();

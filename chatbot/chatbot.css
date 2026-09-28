@@ -68,7 +68,7 @@
 .aryan-chatbot-avatar {
   display: block;
   flex: none;
-  background: #e6d3bf url('./assets/portrait.webp') center / cover no-repeat;
+  background: none;
   overflow: hidden;
 }
 
@@ -909,5 +909,140 @@
   .aryan-chatbot-panel,
   .aryan-chatbot-card {
     transition-duration: .01ms;
+  }
+}
+
+/* workroom */
+.aryan-chatbot-launcher-picture,
+.aryan-chatbot-avatar {
+  display: none;
+  background-image: none;
+}
+
+.aryan-chatbot-launcher {
+  --aryan-chatbot-ink: #342b24;
+  --aryan-chatbot-rust: #984935;
+  width: min(240px, calc(100vw - 24px));
+  min-height: 154px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #c9b5a3;
+  border-radius: 12px;
+  background: #fffcf6;
+  box-shadow: 0 4px 0 #decfbc, 0 11px 22px #4d352b1a;
+  text-align: left;
+  transition: transform 160ms ease, box-shadow 160ms ease,
+    background-color 160ms ease, opacity 160ms ease;
+}
+
+.aryan-chatbot-launcher::after {
+  content: "Don't feel like reading about me?";
+  order: 1;
+  display: block;
+  max-width: 100%;
+  color: var(--aryan-chatbot-ink);
+  font-family: var(--serif, Georgia, serif);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -.015em;
+  white-space: normal;
+}
+
+/* If the new JS prompt was already added, show it only once. */
+.aryan-chatbot-launcher-prompt {
+  display: none;
+}
+
+/* The old arrow label stays in the markup but has no visual size. */
+.aryan-chatbot-launcher .aryan-chatbot-launcher-label {
+  order: 2;
+  display: block;
+  width: 100%;
+  padding: 11px 0 0;
+  border: 0;
+  border-top: 1px solid #d8c8b9;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--aryan-chatbot-ink);
+  font-size: 0;
+  line-height: 0;
+  white-space: normal;
+}
+
+.aryan-chatbot-launcher .aryan-chatbot-launcher-label::after {
+  content: 'ASK ARYAN';
+  display: block;
+  color: var(--aryan-chatbot-ink);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: .055em;
+}
+
+.aryan-chatbot-launcher:not(.aryan-chatbot-launcher-open):hover {
+  background: #fffefb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #decfbc, 0 15px 26px #4d352b20;
+}
+
+.aryan-chatbot-launcher:not(.aryan-chatbot-launcher-open):active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #decfbc, 0 6px 14px #4d352b18;
+}
+
+@media (min-width: 1024px) {
+  .aryan-chatbot-intro .aryan-chatbot-launcher {
+    width: 240px;
+    min-height: 166px;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .aryan-chatbot-intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .aryan-chatbot-launcher,
+  .aryan-chatbot-intro .aryan-chatbot-launcher {
+    position: fixed;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    width: min(232px, calc(100vw - 24px - env(safe-area-inset-right, 0px)));
+    min-height: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 9px;
+    padding: 13px 15px;
+    border-radius: 10px;
+    transform-origin: bottom right;
+  }
+
+  .aryan-chatbot-launcher::after {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  .aryan-chatbot-launcher .aryan-chatbot-launcher-label {
+    padding-top: 8px;
+  }
+
+  .aryan-chatbot-launcher .aryan-chatbot-launcher-label::after {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aryan-chatbot-launcher {
+    transition: none;
   }
 }

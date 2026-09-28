@@ -5,7 +5,7 @@
 }
 
 :root {
-    --cream: #f6f2e9;
+    --cream: #faf8f3;
     --ink: #342b24;
     --muted: #71665b;
     --rust: #984935;
@@ -2369,4 +2369,85 @@ footer>div {
     .site-header nav a:last-child {
         display: inline;
     }
+}
+
+/* Give every project and experience card a roomier, consistent action area. */
+.work-canvas .work-card>.card-trigger {
+    padding-bottom: 24px;
+}
+
+.work-canvas .work-card .tags {
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.work-canvas .work-card .tags>span {
+    padding: 6px 10px;
+    border-radius: 7px;
+    line-height: 1.35;
+    font-weight: 550;
+}
+
+.work-canvas .work-card>.card-trigger .card-bottom {
+    min-height: 50px;
+    align-items: center;
+    padding: 14px 155px 0 0;
+}
+
+.work-canvas .work-card>.card-trigger .card-bottom>span:first-child {
+    padding-right: 0;
+    font-weight: 600;
+}
+
+.work-canvas .work-card>.card-read-more {
+    right: 24px;
+    bottom: 22px;
+    min-height: 40px;
+    padding: 9px 13px;
+    border-radius: 8px;
+    font-size: 13px;
+    box-shadow: 0 2px 7px #49382c15;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.work-canvas .work-card>.card-read-more:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1050px) {
+    .work-canvas .work-card>.card-trigger .card-bottom {
+        min-height: 0;
+        padding-right: 0;
+        padding-bottom: 58px;
+    }
+
+    .work-canvas .work-card>.card-read-more {
+        right: 20px;
+        bottom: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+    .work-canvas .work-card>.card-trigger {
+        padding-bottom: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .work-canvas .work-card>.card-read-more {
+        transition: none;
+    }
+}
+
+.legend .thread-filter:focus-visible {
+    outline: none;
+    text-decoration: underline;
+    text-decoration-color: var(--thread-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 7px;
+}
+
+.work-section button.is-escape-focus:focus-visible {
+    outline: none;
+    text-decoration: none;
 }

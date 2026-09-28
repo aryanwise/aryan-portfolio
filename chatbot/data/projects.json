@@ -1,0 +1,202 @@
+[
+  {
+    "id": "openbooklm",
+    "title": "OpenbookLM",
+    "field": "Local AI / developer tools",
+    "description": "A local-first alternative to Google NotebookLM that goes beyond answering questions - It will be your local private agent that reads documentation, understands your codebase, and writes the code to implement it.",
+    "technologies": [
+      "TypeScript",
+      "FastAPI",
+      "C++",
+      "GraphRAG",
+      "Llamaindex & Langchain",
+      "USearch",
+      "Llama.cpp"
+    ],
+    "details": [
+      "OpenBookLM solves the privacy and fragmentation issues of modern technical work by providing a local-first workspace that turns sensitive documentation, research papers, and codebases into actionable engineering progress without cloud dependencies. It helps developers and researchers deeply understand complex architectures through syntax-aware retrieval and other offline tools, while bridging the gap between passive reading and real execution by autonomously writing, refactoring, and verifying code directly within their local repositories."
+    ],
+    "highlights": [],
+    "related": [
+      "fertrado",
+      "adsa"
+    ],
+    "searchTerms": [
+      "OpenStudyLM",
+      "NotebookLM",
+      "local AI",
+      "RAG",
+      "document AI",
+      "document search",
+      "coding agent"
+    ]
+  },
+  {
+    "id": "adsa",
+    "title": "A.D.S.A.",
+    "field": "Autonomous Data Science Agent",
+    "description": "An open-source autonomous agent that plans, codes, and runs complete data science workflows inside an isolated local sandbox.",
+    "technologies": [
+      "Python",
+      "DeepAnalyze-8B",
+      "Docker",
+      "e2b",
+      "Ollama & APIs",
+      "Data Analysis"
+    ],
+    "details": [
+      "An open-source autonomous data science system inspired by DeepAnalyze-8B, designed to turn raw tabular data into analytical reports without manual script writing."
+    ],
+    "highlights": [
+      "End-to-end execution. Parse datasets, choose an analytical strategy and write code for EDA, cleaning, feature engineering and statistical modeling.",
+      "Isolated iteration. Execute generated Python in a sandbox, inspect errors and revise scripts while blocking unsafe system calls.",
+      "Readable outputs. Produce narrative technical reports with visualizations and key performance metrics."
+    ],
+    "related": [
+      "openbooklm",
+      "teleperformance"
+    ],
+    "searchTerms": [
+      "autonomous data science",
+      "data science agent",
+      "sandbox",
+      "DeepAnalyze",
+      "data analysis"
+    ]
+  },
+  {
+    "id": "polymarket",
+    "title": "Polymarket Analyzer",
+    "field": "Prediction markets / investing",
+    "description": "Tracking Polymarket events, filtering market news strictly for our specific equity holdings, and generating daily trading reports tied to real stock movements.",
+    "technologies": [
+      "Python",
+      "Github Actions",
+      "Supabase",
+      "Polymarket API",
+      "APIs (Groq & Gemini)",
+      "Polymarket & Yahoo Finance API",
+      "bs4 & Selenium"
+    ],
+    "details": [
+      "Built an automated, scheduled data pipeline to evaluate whether prediction markets offer an early trading edge on specific equity holdings:"
+    ],
+    "highlights": [
+      "Scheduled ingestion. Use GitHub Actions on intervals from 5 minutes to 5 hours to collect Polymarket contracts and scraped news with Beautiful Soup or Selenium.",
+      "Focused daily reports. Combine holdings-specific odds with Tavily news and FMP analyst targets, using Groq or Gemini LLMs to produce structured Markdown reports without unrelated market noise.",
+      "Verify and cache. Compare resolved contracts with Yahoo Finance price history; store signals, holdings and reports in Supabase junction tables, with a 6-hour cache for deep-dive queries."
+    ],
+    "related": [
+      "careergenie",
+      "teleperformance"
+    ],
+    "searchTerms": [
+      "prediction markets",
+      "stocks",
+      "trading",
+      "Supabase",
+      "GitHub Actions"
+    ]
+  },
+  {
+    "id": "rover",
+    "title": "Autonomous 4WD Rover",
+    "field": "Robotics / embedded systems",
+    "description": "Implementing real-time perception, spatial scanning, and state-based navigation on resource-constrained embedded hardware.",
+    "technologies": [
+      "C++",
+      "Arduino",
+      "Ultrasonic HC-SR04",
+      "L298N",
+      "Servo Control",
+      "Embedded Systems"
+    ],
+    "details": [
+      "Built a real-time autonomous 4-wheel mobile rover driven by a deterministic perception —> decision —> action pipeline:"
+    ],
+    "highlights": [
+      "Active scanning. Mount an HC-SR04 ultrasonic sensor on a micro-servo to scan left and right when an obstacle crosses the distance threshold.",
+      "State-based navigation. Use C++ logic to compare available paths and trigger evasive maneuvers through an L298N dual H-bridge motor driver.",
+      "Embedded constraints. Manage power distribution, motor back-EMF and hardware interrupts to support stable sensor polling and locomotion."
+    ],
+    "related": [
+      "zombie"
+    ],
+    "searchTerms": [
+      "robot",
+      "robotics",
+      "autonomous systems",
+      "hardware",
+      "Arduino",
+      "embedded",
+      "ultrasonic",
+      "person follow"
+    ]
+  },
+  {
+    "id": "zombie",
+    "title": "Zombie Shooter AI",
+    "field": "Q-learning / 2D game AI",
+    "description": "Trained a tabular reinforcement learning agent to balance evasion, targeting, and survival in a custom 2D arcade environment.",
+    "technologies": [
+      "Python",
+      "Pygame",
+      "Q-Learning",
+      "NumPy",
+      "Jupyter Notebook",
+      "Reinforcement Learning"
+    ],
+    "details": [
+      "Built and trained a discrete reinforcement learning agent from scratch to master a custom-built 2D survival arcade game:"
+    ],
+    "highlights": [
+      "Model the environment. Translate screen position, nearby zombies and directional alignment into a discrete state space.",
+      "Train the policy. Implement Bellman updates and epsilon-greedy exploration across more than 5,000 episodes, rewarding survival and eliminations while penalizing damage.",
+      "Inspect the learning. Run headless training or real-time visual sessions; log NumPy .npz metrics and inspect reward curves and policy heatmaps in Jupyter."
+    ],
+    "related": [
+      "rover",
+      "gomoku"
+    ],
+    "searchTerms": [
+      "reinforcement learning",
+      "RL",
+      "Q learning",
+      "Pygame",
+      "game AI"
+    ]
+  },
+  {
+    "id": "gomoku",
+    "title": "Gomoku Game AI",
+    "field": "Adversarial search / game AI",
+    "description": "A competitive board game engine using minimax, threat-space pruning, and pattern heuristics to outplay humans and adversarial agents under strict turn timers.",
+    "technologies": [
+      "Python",
+      "Alpha-Beta Pruning",
+      "Minimax",
+      "Threat-Space Search",
+      "Heuristic Evaluation",
+      "Game Theory",
+      "Algorithms"
+    ],
+    "details": [
+      "Engineered a competitive AI game agent capable of playing Gomoku (Five-in-a-Row) against both human players and opponent algorithms within a strict 10-second turn limit:"
+    ],
+    "highlights": [
+      "Search efficiently. Use depth-variable minimax with alpha-beta pruning and iterative deepening, respecting a 10-second cutoff per turn.",
+      "Limit the branching. Consider moves near existing stones instead of evaluating every empty space on the board.",
+      "Score the threats. Apply positional heuristics to five-in-a-row, open and blocked fours, and other sequences across horizontal, vertical and diagonal lines."
+    ],
+    "related": [
+      "zombie"
+    ],
+    "searchTerms": [
+      "minimax",
+      "adversarial search",
+      "game AI",
+      "alpha beta",
+      "board game"
+    ]
+  }
+]

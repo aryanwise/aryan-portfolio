@@ -1,0 +1,11 @@
+{
+  "name": "Aryan Mishra",
+  "introduction": "I work across machine learning and autonomous systems, building models that reason over complex information and physical machines that can act on their own.",
+  "about": "My portfolio spans generative AI, machine learning, LLM systems, autonomous systems and robotics. My experience includes candidate skill-gap workflows at CareerGenie, regulatory search at FERTRADO, and data agents and forecasting at Teleperformance.",
+  "interests": [
+    "Autonomous intelligent systems",
+    "Researching and prototyping new tech",
+    "Shipping useful open-source tech"
+  ],
+  "hobbies": ["Swimming laps", "Reading books", "Touching grass"]
+}

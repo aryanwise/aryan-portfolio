@@ -11,7 +11,9 @@
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css?v=2.0">
+  <link rel="stylesheet" href="./chatbot/chatbot.css">
   <script src="./app.js?v=2.0" defer></script>
+  <script src="./chatbot/chatbot.js" defer></script>
 </head>
 
 <body>
@@ -27,7 +29,7 @@
       </nav>
     </header>
     <main id="top">
-      <section class="intro" aria-labelledby="intro-title">
+      <section class="intro aryan-chatbot-intro" aria-labelledby="intro-title">
         <div class="intro-copy">
           <p class="eyebrow">
             <span class="little-rule" aria-hidden="true"></span>SIC<span
@@ -43,22 +45,6 @@
               <span style="font-size: 1.15rem; font-weight: 500;">Read a little more</span>
             </button>
           </div>
-        </div>
-        <div class="portrait-column">
-          <figure class="portrait">
-            <div class="portrait-art portrait-art--emotes">
-              <button class="emote-button" type="button" data-emote="smile"
-                aria-label="Aryan's illustrated portrait: a relaxed smile. Activate for another expression.">
-                <span class="emote-image" aria-hidden="true"></span>
-                <span class="emote-cue" aria-hidden="true">✳</span>
-              </button>
-            </div>
-            <figcaption>
-              <span style="font-weight: 600; color: #342b24;">click for an emote.</span>
-              <span class="caption-note" id="emote-caption" aria-live="polite"
-                style="font-weight: 600;">nonchalant</span>
-            </figcaption>
-          </figure>
         </div>
       </section>
       <section class="about-panel" id="about" aria-labelledby="about-heading" hidden>

@@ -1,0 +1,99 @@
+[
+  {
+    "id": "fertrado",
+    "title": "FERTRADO",
+    "field": "Regulatory AI / grounded search",
+    "description": "Making complex EU fertilizer regulations easier to explore and understand.",
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "FAISS",
+      "Ollama",
+      "Langchain",
+      "AWS",
+      "Docling"
+    ],
+    "details": [
+      "Architected FERTRADO's internal regulatory navigator by serving a high-parameter Qwen model locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing to ground the model strictly in parsed EU compliance material, delivering low-latency, hallucination-free regulatory answers across the organization without third-party API dependencies. The underlying data ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives, and documentation to be added seamlessly as regulatory requirements expand."
+    ],
+    "highlights": [],
+    "related": [
+      "openbooklm"
+    ],
+    "searchTerms": [
+      "fertilizer",
+      "fertiliser",
+      "EU regulations",
+      "compliance",
+      "regulatory",
+      "retrieval",
+      "RAG"
+    ]
+  },
+  {
+    "id": "careergenie",
+    "title": "CareerGenie",
+    "field": "Recruiter intelligence / skill gaps",
+    "description": "Turning real-world professional work into verifiable talent signals for recruiters, while helping candidates identify and bridge the skill gaps needed for their target roles.",
+    "technologies": [
+      "n8n",
+      "JavaScript",
+      "LLMs",
+      "Laya/Jev",
+      "APIs"
+    ],
+    "details": [
+      "Built automated candidate signal and upskilling workflows using n8n, JavaScript, and LLMs, integrating Laya/Jev for classification and external APIs for data ingestion."
+    ],
+    "highlights": [
+      "GitHub Signal Engine. Turn repositories, commits and contributions into clear, verifiable technical hiring signals.",
+      "Peer-benchmarked gap analysis. Compare candidates with professionals at their target role and seniority to identify concrete skill gaps and next steps.",
+      "Data orchestration. Connected APIs, Laya/Jev and LLM prompt chains to clean, normalize, classify signals and deliver structured profile insights to downstream hiring tools."
+    ],
+    "related": [
+      "polymarket"
+    ],
+    "searchTerms": [
+      "hiring",
+      "recruitment",
+      "candidate",
+      "skill gaps",
+      "LinkedIn",
+      "GitHub signals"
+    ]
+  },
+  {
+    "id": "teleperformance",
+    "title": "Teleperformance",
+    "field": "Data agents / forecasting",
+    "description": "Automating end-to-end data science workflows in sandboxed environments and boosting time-series forecasting accuracy with zero-shot foundation models.",
+    "technologies": [
+      "Python",
+      "TimesFM",
+      "Chronos",
+      "Docker",
+      "Time-Series",
+      "IBM-Granite",
+      "e2b",
+      "DeepAnalyze-8B"
+    ],
+    "details": [],
+    "highlights": [
+      "Data science agent. Implemented a DeepAnalyze-8B architecture that ingests raw data, plans and executes EDA, preprocessing and modeling, then compiles analytical reports inside an isolated sandbox.",
+      "Zero-shot forecasts. Benchmarked and integrated Google TimesFM, Amazon Chronos and IBM Granite against the existing ensemble, reducing sMAPE by 32% across key internal metrics without retraining.",
+      "Execution boundaries. Kept generated analytical code within strict local sandbox boundaries for privacy and controlled execution."
+    ],
+    "related": [
+      "adsa",
+      "polymarket"
+    ],
+    "searchTerms": [
+      "forecasting",
+      "time series",
+      "data analyst",
+      "agentic analytics",
+      "TimesFM",
+      "Chronos"
+    ]
+  }
+]

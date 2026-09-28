@@ -1,0 +1,18 @@
+{
+  "core": [
+    "Python & C++",
+    "PyTorch & JAX",
+    "Agentic AI & Tool Calling",
+    "RAG & Vector Search",
+    "Autonomous Systems & Robotics",
+    "FastAPI",
+    "Embedded Systems",
+    "Docker & Database",
+    "LLM Orchestration & APIs",
+    "TypeScript"
+  ],
+  "toolsFromPortfolio": [
+    "FAISS", "Ollama", "Supabase", "GitHub Actions", "n8n", "TimesFM",
+    "Chronos", "Arduino", "Pygame", "Llama.cpp"
+  ]
+}

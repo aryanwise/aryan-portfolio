@@ -1,0 +1,56 @@
+[
+  {
+    "question": "Tell me about Aryan",
+    "answer": "Aryan works across AI and autonomous systems, from grounded search and data agents to embedded robotics. Here's a little more about him.",
+    "action": "message",
+    "items": ["about"]
+  },
+  {
+    "question": "What does Aryan work on?",
+    "answer": "His work spans AI systems, analytics and robotics. Explore the projects that bring those areas together.",
+    "action": "show_projects"
+  },
+  {
+    "question": "Show me his projects",
+    "answer": "Here are Aryan's projects. Select one to read its details and follow its connections.",
+    "action": "show_projects"
+  },
+  {
+    "question": "What's his experience?",
+    "answer": "Aryan's experience includes FERTRADO, CareerGenie and Teleperformance.",
+    "action": "show_experience"
+  },
+  {
+    "question": "What's his tech stack?",
+    "answer": "Python, C++, TypeScript and FastAPI feature in the portfolio, alongside AI, search, data and embedded tools. Here's the full skills view.",
+    "action": "show_skills"
+  },
+  {
+    "question": "What are his main interests?",
+    "answer": "Aryan is drawn to autonomous intelligent systems, prototyping new technology and shipping useful open-source work.",
+    "action": "message",
+    "items": ["about"]
+  },
+  {
+    "question": "Show me his AI projects",
+    "answer": "OpenbookLM and A.D.S.A. are two projects focused on local AI and autonomous data science.",
+    "action": "show_projects",
+    "items": ["openbooklm", "adsa"]
+  },
+  {
+    "question": "Show me his robotics work",
+    "answer": "The Autonomous 4WD Rover explores sensing, scanning and navigation on embedded hardware.",
+    "action": "open_project",
+    "items": ["rover"]
+  },
+  {
+    "question": "What is he currently building?",
+    "answer": "These are the projects on Aryan's portfolio. A live status for each project is not listed yet.",
+    "action": "show_projects"
+  },
+  {
+    "question": "Where did Aryan study?",
+    "answer": "Aryan is studying for a BSc in Data Science, AI & Digital Business at GISMA University of Applied Sciences.",
+    "action": "show_education"
+  }
+]

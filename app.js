@@ -320,47 +320,4 @@
   });
   if (document.fonts) document.fonts.ready.then(drawConnections);
 
-  const emoteButton = document.querySelector(".emote-button");
-  const emoteImage = emoteButton.querySelector(".emote-image");
-  const emoteCaption = document.querySelector("#emote-caption");
-  const emotes = [
-    { key: "smile", label: "a relaxed smile", caption: "nonchalant" },
-    { key: "wink", label: "a wink", caption: "a little wink ✳" },
-    { key: "wave", label: "a friendly wave", caption: "hey, there!" },
-    {
-      key: "thinking",
-      label: "thinking it through",
-      caption: "thinking it through...",
-    },
-    { key: "laugh", label: "a happy laugh", caption: "this made my day" },
-    {
-      key: "surprised",
-      label: "a pleasant surprise",
-      caption: "oh, interesting!",
-    },
-  ];
-  let emoteIndex = 0;
-
-  emoteButton.addEventListener("click", () => {
-    emoteIndex = (emoteIndex + 1) % emotes.length;
-    const emote = emotes[emoteIndex];
-
-    emoteButton.dataset.emote = emote.key;
-    emoteButton.setAttribute(
-      "aria-label",
-      `Aryan's illustrated portrait: ${emote.label}. Activate for another expression.`,
-    );
-    emoteCaption.textContent = emote.caption;
-
-    if (!reducedMotion.matches && emoteImage.animate) {
-      emoteImage.animate(
-        [
-          { transform: "translateY(2px) scale(.98)" },
-          { transform: "translateY(-7px) scale(1.035)" },
-          { transform: "translateY(0) scale(1)" },
-        ],
-        { duration: 370, easing: "cubic-bezier(.2,.7,.2,1)" },
-      );
-    }
-  });
 })();

@@ -21,6 +21,10 @@
   if (location.hash === "#about") showAbout(true);
   if (!board) return;
 
+  const workSection = board.closest(".work-section");
+  const launchButton = document.querySelector("#open-work");
+  const closeWorkButton = document.querySelector("#close-work");
+  const openControls = document.querySelector(".work-open-controls");
   const modes = [...document.querySelectorAll(".work-mode-button")];
   const entries = [...board.querySelectorAll(".work-entry")];
   const entryById = new Map(entries.map((entry) => [entry.dataset.node, entry]));
@@ -35,6 +39,12 @@
   function clearEscapeFocus() {
     escapeFocusTarget?.classList.remove("is-escape-focus");
     escapeFocusTarget = null;
+  }
+
+  function suppressEscapeOutline(target) {
+    clearEscapeFocus();
+    escapeFocusTarget = target;
+    target.classList.add("is-escape-focus");
   }
 
   document.addEventListener("pointerdown", clearEscapeFocus, true);
@@ -76,6 +86,41 @@
     }
   }
 
+  function openWork(focusMode = true, scrollToWork = true) {
+    if (workSection.classList.contains("is-open")) return;
+    setMode("experience", false);
+    workSection.classList.add("is-open");
+    board.inert = false;
+    board.removeAttribute("aria-hidden");
+    launchButton.hidden = true;
+    launchButton.setAttribute("aria-expanded", "true");
+    openControls.hidden = false;
+    if (focusMode) modes[0].focus({ preventScroll: true });
+    if (scrollToWork) {
+      requestAnimationFrame(() => {
+        workSection.scrollIntoView({
+          behavior: reducedMotion.matches ? "instant" : "smooth",
+          block: "start",
+        });
+      });
+    }
+    if (announcement) announcement.textContent = "Work window open. Showing experience.";
+  }
+
+  function closeWork(viaEscape = false) {
+    if (!workSection.classList.contains("is-open")) return;
+    closeEntry();
+    workSection.classList.remove("is-open");
+    board.inert = true;
+    board.setAttribute("aria-hidden", "true");
+    openControls.hidden = true;
+    launchButton.hidden = false;
+    launchButton.setAttribute("aria-expanded", "false");
+    launchButton.focus({ preventScroll: true });
+    if (viaEscape) suppressEscapeOutline(launchButton);
+    if (announcement) announcement.textContent = "Work window closed.";
+  }
+
   function scrollEntryIntoBoard(entry) {
     requestAnimationFrame(() => {
       if (openId !== entry.dataset.node) return;
@@ -91,6 +136,7 @@
   }
 
   function openEntry(entry, focusTrigger = false) {
+    if (!workSection.classList.contains("is-open")) openWork(false, false);
     if (entry.hidden) setMode(entry.dataset.kind, false);
     closeEntry();
     openId = entry.dataset.node;
@@ -123,6 +169,9 @@
     });
   });
 
+  launchButton.addEventListener("click", () => openWork());
+  closeWorkButton.addEventListener("click", () => closeWork());
+
   board.addEventListener("click", (event) => {
     const link = event.target.closest("[data-connect]");
     if (!link) return;
@@ -132,16 +181,19 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || !openId) return;
-    const trigger = entryById.get(openId).querySelector(".work-entry-trigger");
-    closeEntry(true);
-    clearEscapeFocus();
-    escapeFocusTarget = trigger;
-    trigger.classList.add("is-escape-focus");
-    if (announcement) announcement.textContent = "Details closed.";
+    if (event.key !== "Escape" || !workSection.classList.contains("is-open")) return;
+    if (openId) {
+      const trigger = entryById.get(openId).querySelector(".work-entry-trigger");
+      closeEntry(true);
+      suppressEscapeOutline(trigger);
+      if (announcement) announcement.textContent = "Details closed.";
+    } else {
+      closeWork(true);
+    }
     event.preventDefault();
   });
 
   setMode("experience", false);
+  board.inert = true;
   if (announcement) announcement.textContent = "";
 })();

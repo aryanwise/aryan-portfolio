@@ -1,0 +1,10 @@
+[
+  {
+    "file": "testing-equations-and-autonomy.md",
+    "title": "Testing Equations and Autonomous Logic",
+    "tag": "Autonomy / Math",
+    "date": "Sep 26, 2026",
+    "readTime": "4 min read",
+    "summary": "A look into verification math, path-planning constraints, and handling non-deterministic failures in autonomous intelligent agents."
+  }
+]

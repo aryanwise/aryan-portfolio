@@ -10,7 +10,7 @@
     <title>Aryan's Notebook</title>
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="./styles.css?v=1.1">
+    <link rel="stylesheet" href="../styles.css">
     <style>
         .writing-shell {
             max-width: 820px;
@@ -195,12 +195,12 @@
 <body>
     <div class="page-shell">
         <header class="site-header">
-            <a class="wordmark" href="./index.html" aria-label="Aryan Mishra home">
+            <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
                 <span class="wordmark-symbol">am<span>·</span></span>
                 <span>Aryan Mishra</span>
             </a>
             <nav aria-label="Main navigation">
-                <a class="nav-back-link" href="./index.html">← Back to portfolio</a>
+                <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
             </nav>
         </header>
 
@@ -214,25 +214,7 @@
                 </p>
             </header>
 
-            <section class="posts-feed" aria-label="Articles list">
-                <!-- Post 01 -->
-                <article class="post-card">
-                    <a class="post-overlay-link" href="./post.html?file=testing-equations-and-autonomy.md"
-                        aria-label="Read Testing Equations and Autonomous Logic"></a>
-                    <div class="post-meta-top">
-                        <span class="post-tag">Autonomy / Math</span>
-                        <span class="post-date-read">Sep 26, 2026 · 4 min read</span>
-                    </div>
-                    <h2>Testing Equations and Autonomous Logic</h2>
-                    <p class="post-summary">
-                        A look into verification math, path-planning constraints, and handling non-deterministic
-                        failures in autonomous intelligent agents.
-                    </p>
-                    <div class="post-action">
-                        <span>Read dispatch</span>
-                        <span class="arrow" aria-hidden="true">↗</span>
-                    </div>
-                </article>
+            <section class="posts-feed" id="posts-feed" aria-label="Articles list">
             </section>
         </main>
 
@@ -240,6 +222,47 @@
             <div><span>Aryan Mishra</span><span>Portfolio · 2026</span></div>
         </footer>
     </div>
+    <script>
+        async function renderPostsFeed() {
+            const feedContainer = document.getElementById('posts-feed');
+
+            try {
+                // Fetch the manifest from the root posts folder
+                const response = await fetch('../posts/posts.json');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const posts = await response.json();
+
+                if (!posts.length) {
+                    feedContainer.innerHTML = '<p style="color: var(--muted, #71665b);">No dispatches published yet.</p>';
+                    return;
+                }
+
+                feedContainer.innerHTML = posts.map(post => `
+                    <article class="post-card">
+                        <a class="post-overlay-link" href="./post.html?file=${encodeURIComponent(post.file)}"
+                            aria-label="Read ${post.title}"></a>
+                        <div class="post-meta-top">
+                            <span class="post-tag">${post.tag}</span>
+                            <span class="post-date-read">${post.date} · ${post.readTime}</span>
+                        </div>
+                        <h2>${post.title}</h2>
+                        <p class="post-summary">${post.summary}</p>
+                        <div class="post-action">
+                            <span>Read dispatch</span>
+                            <span class="arrow" aria-hidden="true">↗</span>
+                        </div>
+                    </article>
+                `).join('');
+            } catch (error) {
+                feedContainer.innerHTML = '<p style="color: var(--muted, #71665b);">Failed to load posts feed.</p>';
+                console.error('Error loading posts manifest:', error);
+            }
+        }
+
+        renderPostsFeed();
+    </script>
+</body>
 </body>
 
 </html>

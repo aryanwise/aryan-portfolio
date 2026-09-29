@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f9f6ef">
     <title>Article — Aryan Mishra</title>
-    <link rel="stylesheet" href="./styles.css?v=1.1">
+    <link rel="stylesheet" href="../styles.css">
 
     <!-- KaTeX CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
@@ -142,17 +142,17 @@
 <body>
     <div class="page-shell">
         <header class="site-header">
-            <a class="wordmark" href="./index.html" aria-label="Aryan Mishra home">
+            <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
                 <span class="wordmark-symbol">am<span>·</span></span>
                 <span>Aryan Mishra</span>
             </a>
             <nav aria-label="Main navigation">
-                <a class="nav-back-link" href="./index.html">← Back to portfolio</a>
+                <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
             </nav>
         </header>
 
         <main class="article-shell">
-            <a class="back-nav" href="./blog.html">← Back to blogs</a>
+            <a class="back-nav" href="./index.html">← Back to blogs</a>
             <div id="content" class="article-content">Loading...</div>
         </main>
 
@@ -174,7 +174,7 @@
         if (!fileName) {
             document.getElementById('content').innerHTML = '<p>No article specified.</p>';
         } else {
-            fetch(`./posts/${fileName}`)
+            fetch(`../posts/${fileName}`)
                 .then(res => {
                     if (!res.ok) throw new Error('Post not found');
                     return res.text();

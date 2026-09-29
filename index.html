@@ -22,7 +22,7 @@
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css?v=2.0">
   <link rel="stylesheet" href="./chatbot/chatbot.css?v=3">
-  <script src="./app.js?v=2.0" defer></script>
+  <script src="./app.js?v=2.1" defer></script>
   <script src="./chatbot/chatbot.js?v=3" defer></script>
 </head>
 
@@ -128,69 +128,76 @@
           <div class="connection-label label-one" aria-hidden="true">from knowledge to action</div>
           <div class="connection-label label-two" aria-hidden="true">signals into decisions</div>
           <div class="connection-label label-three" aria-hidden="true">agents in motion</div>
-          <article class="work-card project-card card-openbooklm" id="openbooklm" data-node="openbooklm"
-            style="--turn:-2deg;--surface:#fffdf7;--accent:#8c4938">
+          <article class="work-card experience-card card-teleperformance" id="teleperformance"
+            data-node="teleperformance" style="--turn:0.5deg;--surface:#f9f6ed;--accent:#6f6048">
             <button class="card-trigger" type="button" aria-pressed="false">
-              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">01</span></span>
+              <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
+                  class="card-number">01</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <path d="M12 5c-3-2-7-2-10 0v15c3-2 7-2 10 0 3-2 7-2 10 0V5c-3-2-7-2-10 0Z" />
-                    <path d="M12 5v15M5 8h3M5 11h3M16 8h3M16 11h3" />
-                  </svg></span><span class="card-field">Local AI / developer tools</span></span>
-              <h3>OpenbookLM</h3>
-              <span class="card-description">A local-first alternative to Google NotebookLM that goes beyond answering
-                questions - It will be your local private agent that reads documentation, understands your codebase, and
-                writes the code to implement it.</span>
+                    <path d="M4 20h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5" />
+                  </svg></span><span class="card-field">Data agents / forecasting</span></span>
+              <h3>Teleperformance</h3><span class="role-label">Data Analytics Intern</span>
+              <span class="card-description">Automating end-to-end data science workflows in sandboxed environments and
+                boosting time-series forecasting accuracy with zero-shot foundation models.</span>
               <span
-                class="tags"><span>TypeScript</span><span>FastAPI</span><span>C++</span><span>GraphRAG</span><span>Llamaindex
-                  & Langchain</span><span>USearch</span><span>Llama.cpp</span></span>
-              <span class="card-bottom"><span>NotebookLM told you how it works; OpenbookLM builds it for
-                  you.</span></span>
+                class="tags"><span>Python</span><span>TimesFM</span><span>Chronos</span><span>Docker</span><span>Time-Series</span><span>IBM-Granite</span><span>e2b</span><span>DeepAnalyze-8B</span></span>
+              <span class="card-bottom"><span>Autonomous analytics & foundation forecasting</span></span>
             </button>
-            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-openbooklm"
-              aria-label="Read more about OpenbookLM">Read more <span aria-hidden="true">↗</span></button>
-            <div class="card-details" id="details-openbooklm" hidden>
-              <p>OpenBookLM solves the privacy and fragmentation issues of modern technical work by providing a
-                local-first workspace that turns sensitive documentation, research papers, and codebases into actionable
-                engineering progress without cloud dependencies. It helps developers and researchers deeply understand
-                complex architectures through syntax-aware retrieval and other offline tools, while bridging the gap
-                between passive reading and real execution by autonomously writing, refactoring, and verifying code
-                directly within their local repositories.</p>
-              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL • AGENTS THAT WRITE CODE</span>
-                <button type="button" data-connect="fertrado" aria-label="Go to FERTRADO: document retrieval">FERTRADO
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-teleperformance"
+              aria-label="Read more about Teleperformance">Read more <span aria-hidden="true">↗</span></button>
+            <div class="card-details" id="details-teleperformance" hidden>
+              <ul class="detail-list">
+                <li><strong>Data science agent.</strong> Implemented a DeepAnalyze-8B architecture that ingests raw
+                  data, plans and executes EDA, preprocessing and modeling, then compiles analytical reports inside an
+                  isolated sandbox.</li>
+                <li><strong>Zero-shot forecasts.</strong> Benchmarked and integrated Google TimesFM, Amazon Chronos and
+                  IBM Granite against the existing ensemble, reducing sMAPE by 32% across key internal metrics without
+                  retraining.</li>
+                <li><strong>Execution boundaries.</strong> Kept generated analytical code within strict local sandbox
+                  boundaries for privacy and controlled execution.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH SANDBOXED DATA AGENTS · PREDICTION AND VERIFICATION</span>
+                <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: sandboxed data agents">A.D.S.A.
                   ↗</button>
-                <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: agents that write code">A.D.S.A.
-                  ↗</button>
+                <button type="button" data-connect="polymarket"
+                  aria-label="Go to Polymarket Analyzer: prediction and verification">Polymarket Analyzer ↗</button>
               </div>
             </div>
           </article>
-          <article class="work-card experience-card card-fertrado" id="fertrado" data-node="fertrado"
-            style="--turn:1.5deg;--surface:#e8e1d7;--accent:#705948">
+          <article class="work-card project-card card-adsa" id="adsa" data-node="adsa"
+            style="--turn:-1.4deg;--surface:#f0e5d9;--accent:#80543e">
             <button class="card-trigger" type="button" aria-pressed="false">
-              <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
-                  class="card-number">02</span></span>
+              <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">02</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6" />
-                  </svg></span><span class="card-field">Regulatory AI / grounded search</span></span>
-              <h3>FERTRADO</h3><span class="role-label">AI Engineer</span>
-              <span class="card-description">Making complex EU fertilizer regulations easier to explore and
-                understand.</span>
+                    <rect x="4" y="4" width="16" height="16" rx="3" />
+                    <path d="m8 10 3 2-3 2M13 15h4M8 2v2M16 2v2M8 20v2M16 20v2" />
+                  </svg></span><span class="card-field">Autonomous Data Science Agent</span></span>
+              <h3>A.D.S.A.</h3>
+              <span class="card-description">An open-source autonomous agent that plans, codes, and runs complete data
+                science workflows inside an isolated local sandbox.</span>
               <span
-                class="tags"><span>Python</span><span>FastAPI</span><span>FAISS</span><span>Ollama</span><span>Langchain</span><span>AWS</span><span>Docling</span></span>
-              <span class="card-bottom"><span>Grounded regulatory search & retrieval</span></span>
+                class="tags"><span>Python</span><span>DeepAnalyze-8B</span><span>Docker</span><span>e2b</span><span>Ollama
+                  & APIs</span><span>Data Analysis</span></span>
+              <span class="card-bottom"><span>End to End Autonomous Data Science work in a secure sandbox </span></span>
             </button>
-            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-fertrado"
-              aria-label="Read more about FERTRADO">Read more <span aria-hidden="true">↗</span></button>
-            <div class="card-details" id="details-fertrado" hidden>
-              <p>Architected FERTRADO&#x27;s internal regulatory navigator by serving a high-parameter Qwen model
-                locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for
-                reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing to
-                ground the model strictly in parsed EU compliance material, delivering low-latency, hallucination-free
-                regulatory answers across the organization without third-party API dependencies. The underlying data
-                ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives, and
-                documentation to be added seamlessly as regulatory requirements expand.</p>
-              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-adsa"
+              aria-label="Read more about A.D.S.A.">Read more <span aria-hidden="true">↗</span></button>
+            <div class="card-details" id="details-adsa" hidden>
+              <p>An open-source autonomous data science system inspired by DeepAnalyze-8B, designed to turn raw tabular
+                data into analytical reports without manual script writing.</p>
+              <ul class="detail-list">
+                <li><strong>End-to-end execution.</strong> Parse datasets, choose an analytical strategy and write code
+                  for EDA, cleaning, feature engineering and statistical modeling.</li>
+                <li><strong>Isolated iteration.</strong> Execute generated Python in a sandbox, inspect errors and
+                  revise scripts while blocking unsafe system calls.</li>
+                <li><strong>Readable outputs.</strong> Produce narrative technical reports with visualizations and key
+                  performance metrics.</li>
+              </ul>
+              <div class="related"><span>CONNECTED THROUGH AGENTS THAT WRITE CODE · SANDBOXED DATA AGENTS</span>
                 <button type="button" data-connect="openbooklm"
-                  aria-label="Go to OpenbookLM: document retrieval">OpenbookLM ↗</button>
+                  aria-label="Go to OpenbookLM: agents that write code">OpenbookLM ↗</button>
+                <button type="button" data-connect="teleperformance"
+                  aria-label="Go to Teleperformance: sandboxed data agents">Teleperformance ↗</button>
               </div>
             </div>
           </article>
@@ -230,76 +237,69 @@
               </div>
             </div>
           </article>
-          <article class="work-card project-card card-adsa" id="adsa" data-node="adsa"
-            style="--turn:-1.4deg;--surface:#f0e5d9;--accent:#80543e">
+          <article class="work-card project-card card-openbooklm" id="openbooklm" data-node="openbooklm"
+            style="--turn:-2deg;--surface:#fffdf7;--accent:#8c4938">
             <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">PROJECT</span><span class="card-number">04</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <rect x="4" y="4" width="16" height="16" rx="3" />
-                    <path d="m8 10 3 2-3 2M13 15h4M8 2v2M16 2v2M8 20v2M16 20v2" />
-                  </svg></span><span class="card-field">Autonomous Data Science Agent</span></span>
-              <h3>A.D.S.A.</h3>
-              <span class="card-description">An open-source autonomous agent that plans, codes, and runs complete data
-                science workflows inside an isolated local sandbox.</span>
+                    <path d="M12 5c-3-2-7-2-10 0v15c3-2 7-2 10 0 3-2 7-2 10 0V5c-3-2-7-2-10 0Z" />
+                    <path d="M12 5v15M5 8h3M5 11h3M16 8h3M16 11h3" />
+                  </svg></span><span class="card-field">Local AI / developer tools</span></span>
+              <h3>OpenbookLM</h3>
+              <span class="card-description">A local-first alternative to Google NotebookLM that goes beyond answering
+                questions - It will be your local private agent that reads documentation, understands your codebase, and
+                writes the code to implement it.</span>
               <span
-                class="tags"><span>Python</span><span>DeepAnalyze-8B</span><span>Docker</span><span>e2b</span><span>Ollama
-                  & APIs</span><span>Data Analysis</span></span>
-              <span class="card-bottom"><span>End to End Autonomous Data Science work in a secure sandbox </span></span>
+                class="tags"><span>TypeScript</span><span>FastAPI</span><span>C++</span><span>GraphRAG</span><span>Llamaindex
+                  & Langchain</span><span>USearch</span><span>Llama.cpp</span></span>
+              <span class="card-bottom"><span>NotebookLM told you how it works; OpenbookLM builds it for
+                  you.</span></span>
             </button>
-            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-adsa"
-              aria-label="Read more about A.D.S.A.">Read more <span aria-hidden="true">↗</span></button>
-            <div class="card-details" id="details-adsa" hidden>
-              <p>An open-source autonomous data science system inspired by DeepAnalyze-8B, designed to turn raw tabular
-                data into analytical reports without manual script writing.</p>
-              <ul class="detail-list">
-                <li><strong>End-to-end execution.</strong> Parse datasets, choose an analytical strategy and write code
-                  for EDA, cleaning, feature engineering and statistical modeling.</li>
-                <li><strong>Isolated iteration.</strong> Execute generated Python in a sandbox, inspect errors and
-                  revise scripts while blocking unsafe system calls.</li>
-                <li><strong>Readable outputs.</strong> Produce narrative technical reports with visualizations and key
-                  performance metrics.</li>
-              </ul>
-              <div class="related"><span>CONNECTED THROUGH AGENTS THAT WRITE CODE · SANDBOXED DATA AGENTS</span>
-                <button type="button" data-connect="openbooklm"
-                  aria-label="Go to OpenbookLM: agents that write code">OpenbookLM ↗</button>
-                <button type="button" data-connect="teleperformance"
-                  aria-label="Go to Teleperformance: sandboxed data agents">Teleperformance ↗</button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-openbooklm"
+              aria-label="Read more about OpenbookLM">Read more <span aria-hidden="true">↗</span></button>
+            <div class="card-details" id="details-openbooklm" hidden>
+              <p>OpenBookLM solves the privacy and fragmentation issues of modern technical work by providing a
+                local-first workspace that turns sensitive documentation, research papers, and codebases into actionable
+                engineering progress without cloud dependencies. It helps developers and researchers deeply understand
+                complex architectures through syntax-aware retrieval and other offline tools, while bridging the gap
+                between passive reading and real execution by autonomously writing, refactoring, and verifying code
+                directly within their local repositories.</p>
+              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL • AGENTS THAT WRITE CODE</span>
+                <button type="button" data-connect="fertrado" aria-label="Go to FERTRADO: document retrieval">FERTRADO
+                  ↗</button>
+                <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: agents that write code">A.D.S.A.
+                  ↗</button>
               </div>
             </div>
           </article>
-          <article class="work-card experience-card card-teleperformance" id="teleperformance"
-            data-node="teleperformance" style="--turn:2.3deg;--surface:#f9f6ed;--accent:#6f6048">
+          <article class="work-card experience-card card-fertrado" id="fertrado" data-node="fertrado"
+            style="--turn:1.5deg;--surface:#e8e1d7;--accent:#705948">
             <button class="card-trigger" type="button" aria-pressed="false">
               <span class="card-meta"><span class="card-type">EXPERIENCE</span><span
                   class="card-number">05</span></span>
               <span class="card-topline"><span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
-                    <path d="M4 20h16M6 16V9h3v7M11 16V4h3v12M16 16v-5h3v5" />
-                  </svg></span><span class="card-field">Data agents / forecasting</span></span>
-              <h3>Teleperformance</h3><span class="role-label">Data Analytics Intern</span>
-              <span class="card-description">Automating end-to-end data science workflows in sandboxed environments and
-                boosting time-series forecasting accuracy with zero-shot foundation models.</span>
+                    <path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6" />
+                  </svg></span><span class="card-field">Regulatory AI / grounded search</span></span>
+              <h3>FERTRADO</h3><span class="role-label">AI Engineer</span>
+              <span class="card-description">Making complex EU fertilizer regulations easier to explore and
+                understand.</span>
               <span
-                class="tags"><span>Python</span><span>TimesFM</span><span>Chronos</span><span>Docker</span><span>Time-Series</span><span>IBM-Granite</span><span>e2b</span><span>DeepAnalyze-8B</span></span>
-              <span class="card-bottom"><span>Autonomous analytics & foundation forecasting</span></span>
+                class="tags"><span>Python</span><span>FastAPI</span><span>FAISS</span><span>Ollama</span><span>Langchain</span><span>AWS</span><span>Docling</span></span>
+              <span class="card-bottom"><span>Grounded regulatory search & retrieval</span></span>
             </button>
-            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-teleperformance"
-              aria-label="Read more about Teleperformance">Read more <span aria-hidden="true">↗</span></button>
-            <div class="card-details" id="details-teleperformance" hidden>
-              <ul class="detail-list">
-                <li><strong>Data science agent.</strong> Implemented a DeepAnalyze-8B architecture that ingests raw
-                  data, plans and executes EDA, preprocessing and modeling, then compiles analytical reports inside an
-                  isolated sandbox.</li>
-                <li><strong>Zero-shot forecasts.</strong> Benchmarked and integrated Google TimesFM, Amazon Chronos and
-                  IBM Granite against the existing ensemble, reducing sMAPE by 32% across key internal metrics without
-                  retraining.</li>
-                <li><strong>Execution boundaries.</strong> Kept generated analytical code within strict local sandbox
-                  boundaries for privacy and controlled execution.</li>
-              </ul>
-              <div class="related"><span>CONNECTED THROUGH SANDBOXED DATA AGENTS · PREDICTION AND VERIFICATION</span>
-                <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: sandboxed data agents">A.D.S.A.
-                  ↗</button>
-                <button type="button" data-connect="polymarket"
-                  aria-label="Go to Polymarket Analyzer: prediction and verification">Polymarket Analyzer ↗</button>
+            <button class="card-read-more" type="button" aria-expanded="false" aria-controls="details-fertrado"
+              aria-label="Read more about FERTRADO">Read more <span aria-hidden="true">↗</span></button>
+            <div class="card-details" id="details-fertrado" hidden>
+              <p>Architected FERTRADO&#x27;s internal regulatory navigator by serving a high-parameter Qwen model
+                locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for
+                reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing to
+                ground the model strictly in parsed EU compliance material, delivering low-latency, hallucination-free
+                regulatory answers across the organization without third-party API dependencies. The underlying data
+                ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives, and
+                documentation to be added seamlessly as regulatory requirements expand.</p>
+              <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL</span>
+                <button type="button" data-connect="openbooklm"
+                  aria-label="Go to OpenbookLM: document retrieval">OpenbookLM ↗</button>
               </div>
             </div>
           </article>

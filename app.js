@@ -131,25 +131,37 @@
       };
       const dx = bc.x - ac.x,
         dy = bc.y - ac.y;
+      // Use actual vertical overlap to tell a shared row from a link to the next row.
+      // A large horizontal distance alone can still connect two different rows.
+      const overlapY =
+        Math.min(a.offsetTop + a.offsetHeight, b.offsetTop + b.offsetHeight) -
+        Math.max(a.offsetTop, b.offsetTop);
+      const sameRow =
+        !smallScreen.matches &&
+        overlapY > Math.min(a.offsetHeight, b.offsetHeight) * 0.35;
       let sx, sy, ex, ey, c1x, c1y, c2x, c2y;
-      if (Math.abs(dx) > Math.abs(dy) * 0.65 && !smallScreen.matches) {
+      if (sameRow) {
         const sign = Math.sign(dx);
-        sx = ac.x + (sign * a.offsetWidth) / 2;
+        sx = ac.x + sign * (a.offsetWidth / 2 + 4);
         sy = ac.y;
-        ex = bc.x - (sign * b.offsetWidth) / 2;
+        ex = bc.x - sign * (b.offsetWidth / 2 + 4);
         ey = bc.y;
-        const bend = Math.max(40, Math.abs(ex - sx) * 0.5);
+        const bend = Math.min(70, Math.max(12, Math.abs(ex - sx) * 0.4));
         c1x = sx + sign * bend;
         c1y = sy;
         c2x = ex - sign * bend;
         c2y = ey;
       } else {
         const sign = Math.sign(dy) || 1;
-        sx = ac.x;
-        sy = ac.y + (sign * a.offsetHeight) / 2;
-        ex = bc.x;
-        ey = bc.y - (sign * b.offsetHeight) / 2;
-        const bend = Math.max(35, Math.abs(ey - sy) * 0.5);
+        // Spread diagonal links along the lower/upper edges so several
+        // connections to the same card do not pile up at one point.
+        const portSpread = Math.min(46, Math.abs(dx) * 0.12);
+        const sideways = Math.sign(dx) * portSpread;
+        sx = ac.x + sideways;
+        sy = ac.y + sign * (a.offsetHeight / 2 + 4);
+        ex = bc.x - sideways;
+        ey = bc.y - sign * (b.offsetHeight / 2 + 4);
+        const bend = Math.max(28, Math.abs(ey - sy) * 0.5);
         c1x = sx;
         c1y = sy + sign * bend;
         c2x = ex;

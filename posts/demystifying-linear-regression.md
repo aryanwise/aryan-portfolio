@@ -124,7 +124,3 @@ print(f"Optimal parameters: w = {w:.4f}, b = {b:.4f}")
 After 1,000 iterations, the model converges to roughly $w \approx 0.81$ and $b \approx 2.05$.
 
 This 13-line loop contains the foundational algorithm driving modern deep learning: forward pass, error measurement, backpropagation via analytical gradients, and weight updates.
-
-```
-
-```

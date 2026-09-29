@@ -1,4 +1,12 @@
 [
+    {
+    "file": "demystifying-linear-regression.md",
+    "title": "Demystifying Linear Regression: From Math to 13 Lines of Python",
+    "tag": "Machine Learning / Math",
+    "date": "Sep 30, 2026",
+    "readTime": "5 min read",
+    "summary": "Building linear regression from first principles without external libraries. Deriving gradients, Mean Squared Error, and implementing vanilla gradient descent."
+  },
   {
     "file": "testing-equations-and-autonomy.md",
     "title": "Testing Equations and Autonomous Logic",
@@ -6,13 +14,5 @@
     "date": "Sep 26, 2026",
     "readTime": "4 min read",
     "summary": "A look into verification math, path-planning constraints, and handling non-deterministic failures in autonomous intelligent agents."
-  },
-  {
-    "file": "demystifying-linear-regression.md",
-    "title": "Demystifying Linear Regression: From Math to 13 Lines of Python",
-    "tag": "Machine Learning / Math",
-    "date": "Sep 30, 2026",
-    "readTime": "5 min read",
-    "summary": "Building linear regression from first principles without external libraries. Deriving gradients, Mean Squared Error, and implementing vanilla gradient descent."
   }
 ]

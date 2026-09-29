@@ -86,6 +86,11 @@
     }
   }
 
+  function scrollToWorkControls(behavior) {
+    const top = window.scrollY + openControls.getBoundingClientRect().top - 18;
+    window.scrollTo({ top: Math.max(0, top), behavior });
+  }
+
   function openWork(focusMode = true, scrollToWork = true) {
     if (workSection.classList.contains("is-open")) return;
     setMode("experience", false);
@@ -97,12 +102,19 @@
     openControls.hidden = false;
     if (focusMode) modes[0].focus({ preventScroll: true });
     if (scrollToWork) {
-      requestAnimationFrame(() => {
-        workSection.scrollIntoView({
-          behavior: reducedMotion.matches ? "instant" : "smooth",
-          block: "start",
-        });
-      });
+      const behavior = reducedMotion.matches ? "instant" : "smooth";
+      requestAnimationFrame(() => scrollToWorkControls(behavior));
+      if (!reducedMotion.matches) {
+        const finishOpening = (event) => {
+          if (event.target !== board || event.propertyName !== "height") return;
+          board.removeEventListener("transitionend", finishOpening);
+          if (workSection.classList.contains("is-open") &&
+              Math.abs(openControls.getBoundingClientRect().top - 18) > 12) {
+            scrollToWorkControls("smooth");
+          }
+        };
+        board.addEventListener("transitionend", finishOpening);
+      }
     }
     if (announcement) announcement.textContent = "Work window open. Showing experience.";
   }

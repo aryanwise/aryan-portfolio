@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f9f6ef">
+    <meta name="theme-color" content="#F3EFE6">
+    <script src="../theme.js"></script>
     <title>Article — Aryan Mishra</title>
     <link rel="stylesheet" href="../styles.css">
 
@@ -20,7 +21,7 @@
 
     <style>
         .article-shell {
-            max-width: 680px;
+            max-width: 820px;
             margin: 60px auto 100px;
         }
 
@@ -137,17 +138,22 @@
             color: var(--rust);
         }
     </style>
+    <link rel="stylesheet" href="../theme.css">
 </head>
 
 <body>
     <div class="page-shell">
-        <header class="site-header">
+        <header class="site-header blog-header">
             <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
                 <span class="wordmark-symbol">am<span>·</span></span>
                 <span>Aryan Mishra</span>
             </a>
             <nav aria-label="Main navigation">
                 <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
+                <button class="theme-toggle" type="button" data-theme-toggle
+                    aria-label="Light mode is on; switch to dark mode" aria-pressed="false"><span
+                        class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light
+                        mode</span></button>
             </nav>
         </header>
 

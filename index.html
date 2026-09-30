@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f6f2e9">
+  <meta name="theme-color" content="#F3EFE6">
+  <script src="./theme.js"></script>
   <!-- Standard SEO -->
   <title>Aryan</title>
   <meta name="description" content="Aryan Mishra - Software Engineer">
@@ -19,11 +20,14 @@
   <meta name="twitter:title" content="Aryan">
   <meta name="twitter:description" content="Aryan Mishra - Software Engineer">
   <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23D97757'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23090A0A'%3Ea%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css?v=3.2">
   <link rel="stylesheet" href="./chatbot/chatbot.css?v=3">
+  <link rel="stylesheet" href="./theme.css">
   <script src="./app.js?v=3.2" defer></script>
   <script src="./chatbot/chatbot.js?v=3" defer></script>
+  <link rel="stylesheet" href="./mobile-nav.css?v=1">
+  <script src="./mobile-nav.js?v=1" defer></script>
 </head>
 
 <body>
@@ -36,6 +40,9 @@
         <a href="#work">The work</a>
         <a href="#about" id="about-link">A bit about me</a>
         <a href="blog/index.html" rel="noopener noreferrer">Blogs</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Light mode is on; switch to dark mode"
+          aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span
+            class="theme-toggle-text">Light mode</span></button>
       </nav>
     </header>
     <main id="top">
@@ -106,7 +113,7 @@
             <h2 id="work-title">Different paths.<br><em>Connected ideas.</em></h2>
           </div>
           <div class="work-context">
-            <p style="font-weight: 500; color: #342b24;">A few things I’ve built,<br>and what they’ve taught me.</p>
+            <p style="font-weight: 500;">A few things I’ve built,<br>and what they’ve taught me.</p>
             <button class="work-launch-button" id="open-work" type="button" aria-expanded="false"
               aria-controls="work-board">Click to view my work <span aria-hidden="true">↗</span></button>
             <div class="work-open-controls" hidden>
@@ -145,8 +152,7 @@
           </div>
           <div class="work-entry-list">
             <!-- Add future entries here with data-kind="experience" or data-kind="project". -->
-            <article class="work-entry" id="teleperformance" data-node="teleperformance" data-kind="experience"
-              style="--surface:#f9f6ed;--accent:#6f6048">
+            <article class="work-entry" id="teleperformance" data-node="teleperformance" data-kind="experience">
               <button class="work-entry-trigger" type="button" aria-expanded="false"
                 aria-controls="details-teleperformance">
                 <span class="work-entry-overview">
@@ -194,8 +200,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="adsa" data-node="adsa" data-kind="project"
-              style="--surface:#f0e5d9;--accent:#80543e" hidden>
+            <article class="work-entry" id="adsa" data-node="adsa" data-kind="project" hidden>
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-adsa">
                 <span class="work-entry-overview">
                   <h3 id="title-adsa">A.D.S.A.</h3>
@@ -241,8 +246,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="careergenie" data-node="careergenie" data-kind="experience"
-              style="--surface:#ead6c8;--accent:#7d402f">
+            <article class="work-entry" id="careergenie" data-node="careergenie" data-kind="experience">
               <button class="work-entry-trigger" type="button" aria-expanded="false"
                 aria-controls="details-careergenie">
                 <span class="work-entry-overview">
@@ -288,8 +292,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="openbooklm" data-node="openbooklm" data-kind="project"
-              style="--surface:#fffdf7;--accent:#8c4938" hidden>
+            <article class="work-entry" id="openbooklm" data-node="openbooklm" data-kind="project" hidden>
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-openbooklm">
                 <span class="work-entry-overview">
                   <h3 id="title-openbooklm">OpenbookLM</h3>
@@ -333,8 +336,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="fertrado" data-node="fertrado" data-kind="experience"
-              style="--surface:#e8e1d7;--accent:#705948">
+            <article class="work-entry" id="fertrado" data-node="fertrado" data-kind="experience">
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-fertrado">
                 <span class="work-entry-overview">
                   <h3 id="title-fertrado">FERTRADO</h3>
@@ -376,8 +378,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="polymarket" data-node="polymarket" data-kind="project"
-              style="--surface:#f4e8ce;--accent:#806037" hidden>
+            <article class="work-entry" id="polymarket" data-node="polymarket" data-kind="project" hidden>
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-polymarket">
                 <span class="work-entry-overview">
                   <h3 id="title-polymarket">Polymarket Analyzer</h3>
@@ -430,8 +431,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="rover" data-node="rover" data-kind="project"
-              style="--surface:#e4e7d6;--accent:#4d5d39" hidden>
+            <article class="work-entry" id="rover" data-node="rover" data-kind="project" hidden>
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-rover">
                 <span class="work-entry-overview">
                   <h3 id="title-rover">Autonomous 4WD Rover</h3>
@@ -472,8 +472,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="zombie" data-node="zombie" data-kind="project"
-              style="--surface:#e7e5d7;--accent:#5e6547" hidden>
+            <article class="work-entry" id="zombie" data-node="zombie" data-kind="project" hidden>
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-zombie">
                 <span class="work-entry-overview">
                   <h3 id="title-zombie">Zombie Shooter AI</h3>
@@ -520,8 +519,7 @@
 
               </div>
             </article>
-            <article class="work-entry" id="gomoku" data-node="gomoku" data-kind="project"
-              style="--surface:#eee3da;--accent:#765a50" hidden>
+            <article class="work-entry" id="gomoku" data-node="gomoku" data-kind="project" hidden>
               <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-gomoku">
                 <span class="work-entry-overview">
                   <h3 id="title-gomoku">Gomoku Game AI</h3>
@@ -569,9 +567,51 @@
         </div>
       </section>
     </main>
-    <footer><a class="footer-name" href="#top">Always a work <em>in progress.</em></a>
-      <div><span style="font-weight: 600; color: #342b24;"> Built and designed by Aryan Mishra.</span><span
-          style="font-weight: 500; color: #342b24;">All rights reserved. &copy;</span>
+    <footer class="site-footer">
+      <div class="footer-bottom">
+        <div class="footer-connect">
+          <span class="footer-connect-label">LET'S CONNECT</span>
+          <div class="social-links-bar" aria-label="Social links">
+            <!-- Gmail -->
+            <a href="mailto:aryanmishraa12@gmail.com" class="social-link" aria-label="Send an email" title="Gmail">
+              <svg viewBox="0 0 24 24" class="social-icon icon-email" fill="currentColor">
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 3.5l8 5 8-5V6l-8 5-8-5v1.5z" />
+              </svg>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/aryanwise" target="_blank" rel="noopener noreferrer" class="social-link"
+              aria-label="GitHub profile" title="GitHub">
+              <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor">
+                <path
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/aryan-mishra-9540a1250/" target="_blank" rel="noopener noreferrer"
+              class="social-link" aria-label="LinkedIn profile" title="LinkedIn">
+              <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z" />
+              </svg>
+            </a>
+
+            <!-- Blogs -->
+            <a href="blog/index.html" class="social-link" aria-label="Aryan's Blogs" title="Blogs">
+              <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor">
+                <path
+                  d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83zM2 22h20v2H2v-2z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-credits">
+          <span style="font-weight: 600;">Built and designed by Aryan Mishra.</span>
+          <span style="font-weight: 500;">All rights reserved. &copy;</span>
+        </div>
       </div>
     </footer>
   </div>

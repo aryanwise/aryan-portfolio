@@ -541,21 +541,33 @@
     return true;
   }
   function focusPortfolioCard(id) {
-    const card = [...document.querySelectorAll(".work-card[data-node]")].find(
+    const card = [...document.querySelectorAll(".work-entry[data-node]")].find(
       (element) => element.dataset.node === id,
     );
     if (!card) return false;
+
+    const work = card.closest(".work-section");
+    const trigger = card.querySelector(".work-entry-trigger");
+    const modeButton = document.querySelector(
+      '.work-mode-button[data-mode="' + card.dataset.kind + '"]',
+    );
+    if (!work || !trigger || !modeButton) return false;
+
     close(false, false);
-    if (card.inert) {
-      document.querySelector('.thread-filter[aria-pressed="true"]')?.click();
+
+    const wasOpen = work.classList.contains("is-open");
+    if (!wasOpen) document.querySelector("#open-work")?.click();
+    if (modeButton.getAttribute("aria-pressed") !== "true") modeButton.click();
+    if (trigger.getAttribute("aria-expanded") !== "true") trigger.click();
+
+    if (wasOpen) {
+      document.querySelector(".work-open-controls")?.scrollIntoView({
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+        block: "start",
+      });
     }
-    const trigger = card.querySelector(".card-trigger");
-    if (trigger?.getAttribute("aria-pressed") !== "true") trigger?.click();
-    card.scrollIntoView({
-      behavior: reduceMotion.matches ? "instant" : "smooth",
-      block: "center",
-    });
-    trigger?.focus({ preventScroll: true });
+
+    trigger.focus({ preventScroll: true });
     return true;
   }
 

@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f9f6ef">
+    <meta name="theme-color" content="#F3EFE6">
     <meta name="description"
         content="Technical notes, research breakdowns, and autonomous systems logs by Aryan Mishra.">
+    <script src="../theme.js"></script>
     <title>Aryan's Notebook</title>
     <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23984935'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23faf5ea'%3Ea%3C/text%3E%3C/svg%3E">
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23D97757'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23090A0A'%3Ea%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="../styles.css">
     <style>
         .writing-shell {
@@ -190,17 +191,22 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="../theme.css">
 </head>
 
 <body>
     <div class="page-shell">
-        <header class="site-header">
+        <header class="site-header blog-header">
             <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
                 <span class="wordmark-symbol">am<span>·</span></span>
                 <span>Aryan Mishra</span>
             </a>
             <nav aria-label="Main navigation">
                 <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
+                <button class="theme-toggle" type="button" data-theme-toggle
+                    aria-label="Light mode is on; switch to dark mode" aria-pressed="false"><span
+                        class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light
+                        mode</span></button>
             </nav>
         </header>
 
@@ -258,7 +264,6 @@
 
         renderPostsFeed();
     </script>
-</body>
 </body>
 
 </html>

@@ -27,7 +27,9 @@
   const openControls = document.querySelector(".work-open-controls");
   const modes = [...document.querySelectorAll(".work-mode-button")];
   const entries = [...board.querySelectorAll(".work-entry")];
-  const entryById = new Map(entries.map((entry) => [entry.dataset.node, entry]));
+  const entryById = new Map(
+    entries.map((entry) => [entry.dataset.node, entry]),
+  );
   const boardHeader = board.querySelector(".work-board-header");
   const boardTitle = board.querySelector("#work-board-title");
   const boardCount = board.querySelector("#work-board-count");
@@ -48,9 +50,13 @@
   }
 
   document.addEventListener("pointerdown", clearEscapeFocus, true);
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") clearEscapeFocus();
-  }, true);
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key !== "Escape") clearEscapeFocus();
+    },
+    true,
+  );
   document.addEventListener("focusin", (event) => {
     if (event.target !== escapeFocusTarget) clearEscapeFocus();
   });
@@ -108,15 +114,18 @@
         const finishOpening = (event) => {
           if (event.target !== board || event.propertyName !== "height") return;
           board.removeEventListener("transitionend", finishOpening);
-          if (workSection.classList.contains("is-open") &&
-              Math.abs(openControls.getBoundingClientRect().top - 18) > 12) {
+          if (
+            workSection.classList.contains("is-open") &&
+            Math.abs(openControls.getBoundingClientRect().top - 18) > 12
+          ) {
             scrollToWorkControls("smooth");
           }
         };
         board.addEventListener("transitionend", finishOpening);
       }
     }
-    if (announcement) announcement.textContent = "Work window open. Showing experience.";
+    if (announcement)
+      announcement.textContent = "Work window open. Showing experience.";
   }
 
   function closeWork(viaEscape = false) {
@@ -136,10 +145,12 @@
   function scrollEntryIntoBoard(entry) {
     requestAnimationFrame(() => {
       if (openId !== entry.dataset.node) return;
-      const offset = entry.getBoundingClientRect().top
-        - board.getBoundingClientRect().top
-        + board.scrollTop
-        - boardHeader.offsetHeight - 15;
+      const offset =
+        entry.getBoundingClientRect().top -
+        board.getBoundingClientRect().top +
+        board.scrollTop -
+        boardHeader.offsetHeight -
+        15;
       board.scrollTo({
         top: Math.max(0, offset),
         behavior: reducedMotion.matches ? "instant" : "smooth",
@@ -159,8 +170,7 @@
     if (focusTrigger) trigger.focus({ preventScroll: true });
     scrollEntryIntoBoard(entry);
     if (announcement) {
-      announcement.textContent =
-        `${entry.querySelector("h3").textContent.trim()} details open.`;
+      announcement.textContent = `${entry.querySelector("h3").textContent.trim()} details open.`;
     }
   }
 
@@ -182,6 +192,28 @@
   });
 
   launchButton.addEventListener("click", () => openWork());
+  document
+    .querySelector('.site-header nav a[href="#work"]')
+    ?.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      if (workSection.classList.contains("is-open")) {
+        scrollToWorkControls(reducedMotion.matches ? "auto" : "smooth");
+      } else {
+        openWork();
+      }
+    });
+  function openWorkFromLink() {
+    if (
+      location.hash === "#work" &&
+      !workSection.classList.contains("is-open")
+    ) {
+      openWork();
+    }
+  }
+
+  window.addEventListener("hashchange", openWorkFromLink);
+  if (location.hash === "#work") requestAnimationFrame(openWorkFromLink);
   closeWorkButton.addEventListener("click", () => closeWork());
 
   board.addEventListener("click", (event) => {
@@ -193,9 +225,12 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || !workSection.classList.contains("is-open")) return;
+    if (event.key !== "Escape" || !workSection.classList.contains("is-open"))
+      return;
     if (openId) {
-      const trigger = entryById.get(openId).querySelector(".work-entry-trigger");
+      const trigger = entryById
+        .get(openId)
+        .querySelector(".work-entry-trigger");
       closeEntry(true);
       suppressEscapeOutline(trigger);
       if (announcement) announcement.textContent = "Details closed.";

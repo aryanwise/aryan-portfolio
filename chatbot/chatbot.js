@@ -197,6 +197,49 @@
       return [];
     }
   }
+  function appendAssistantMarkdown(container, source) {
+    function addInline(target, text) {
+      for (const part of text.split(/(\*\*[^*\n]+\*\*)/g)) {
+        if (!part) continue;
+
+        if (part.startsWith("**") && part.endsWith("**")) {
+          target.append(el("strong", "", part.slice(2, -2)));
+        } else {
+          target.append(document.createTextNode(part));
+        }
+      }
+    }
+
+    let list = null;
+
+    for (const raw of String(source).replace(/\r\n?/g, "\n").split("\n")) {
+      const line = raw.trim();
+      if (!line) {
+        list = null;
+        continue;
+      }
+
+      const bullet = line.match(/^[-*]\s+(.+)/);
+      const number = line.match(/^\d+[.)]\s+(.+)/);
+
+      if (bullet || number) {
+        const tag = number ? "ol" : "ul";
+        if (!list || list.localName !== tag) {
+          list = el(tag);
+          container.append(list);
+        }
+
+        const item = el("li");
+        addInline(item, (bullet || number)[1]);
+        list.append(item);
+      } else {
+        list = null;
+        const paragraph = el("p");
+        addInline(paragraph, line);
+        container.append(paragraph);
+      }
+    }
+  }
   function addMessage(role, message, remember = true) {
     const row = el("div", `aryan-chatbot-message aryan-chatbot-${role}`);
     row.append(
@@ -206,7 +249,18 @@
         role === "user" ? "You" : "Ask Aryan",
       ),
     );
-    row.append(el("p", "aryan-chatbot-message-text", message));
+    const content = el(
+      role === "assistant" ? "div" : "p",
+      "aryan-chatbot-message-text",
+    );
+
+    if (role === "assistant") {
+      appendAssistantMarkdown(content, message);
+    } else {
+      content.textContent = String(message);
+    }
+
+    row.append(content);
     log.append(row);
     log.scrollTop = log.scrollHeight;
     if (remember) {

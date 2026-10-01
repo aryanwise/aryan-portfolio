@@ -137,6 +137,16 @@
         .nav-back-link:hover {
             color: var(--rust);
         }
+
+        @media (max-width: 700px) {
+            .site-header .wordmark>span:not(.wordmark-symbol) {
+                display: none !important;
+            }
+
+            .site-header .wordmark>.wordmark-symbol {
+                display: inline-block !important;
+            }
+        }
     </style>
     <link rel="stylesheet" href="../theme.css">
 </head>

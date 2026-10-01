@@ -948,41 +948,96 @@
       recentMessages: state.history.slice(-6),
     };
   }
+  function trollReply(question) {
+    const q = normalize(question);
+    const targeted = (text) => /\b(aryan|he|him|his)\b/.test(text);
+    const insult = (text) =>
+      /\b(stupid|dumb|dumbass|idiot|moron|loser|useless|incompetent|fucker|fuck|asshole|trash|pathetic|clown)\b/.test(
+        text,
+      );
+
+    // ask() has already saved the current user message at this point.
+    const userMessages = state.history.filter((entry) => entry.role === "user");
+    const previous = normalize(userMessages.at(-2)?.text);
+
+    if (/^(why|why not|how come)$/.test(q) && targeted(previous)) {
+      if (/\b(gay|sexuality|orientation)\b/.test(previous)) {
+        return "Because someone's sexuality isn't a measure of their work. Aryan's projects are right here—pick one and bring a real question.";
+      }
+      if (insult(previous)) {
+        return "Because an insult isn't an argument. Aryan brought the projects; you can at least bring a critique.";
+      }
+    }
+
+    if (!targeted(q)) return null;
+
+    if (/\bnigg(?:a|er)\b/.test(q)) {
+      return "Using a slur through Aryan's own chatbot is a bold strategy. His work is right here—try arguing with that instead.";
+    }
+
+    if (/\b(gay|sexuality|orientation)\b/.test(q)) {
+      return "If that's supposed to be a roast, it missed. Aryan's work is right here—pick a project and ask something worth answering.";
+    }
+
+    if (/\bstupid\b/.test(q)) {
+      return "Calling Aryan stupid through a chatbot he built is a bold strategy. Pick a project and try that argument again.";
+    }
+
+    if (insult(q)) {
+      return "Calling Aryan names through a chatbot he built is a bold strategy. He brought the projects; you brought an insult. Pick a card and try again.";
+    }
+
+    return null;
+  }
   async function ask(question, directFaq = null) {
     if (!state.data || state.busy) return;
     const text = String(question).trim().slice(0, 500);
     if (!text) return;
     addMessage("user", text);
     input.value = "";
-    const faq = directFaq || findFaq(text);
-    let result = faq || searchLocal(text);
-    if (!result) {
-      if (!endpoint)
-        result = {
-          answer:
-            "I can show you what is in the portfolio, but the more open-ended assistant is not connected yet. Try a project, a skill or a suggested question.",
-          action: "message",
-          suggestions: [
-            "Show me his projects",
-            "What's his experience?",
-            "What's his tech stack?",
-          ],
-        };
-      else {
-        setBusy(true);
-        try {
-          result = await askExternalAssistant(text, externalContext(text));
-        } catch {
-          result = {
+    const comeback = trollReply(text);
+    if (comeback) {
+      addMessage("assistant", comeback);
+      return;
+    }
+    const exactFaq =
+      directFaq ||
+      state.data.faq.find(
+        (entry) => normalize(entry.question) === normalize(text),
+      );
+    let result = exactFaq;
+
+    if (!result && endpoint) {
+      setBusy(true);
+
+      try {
+        const remote = await askExternalAssistant(text, externalContext(text));
+
+        // A classified jab takes priority over a local project match.
+        // Genuine questions still use the existing local actions when available.
+        result =
+          remote.kind === "jab" || remote.kind === "identity"
+            ? remote
+            : findFaq(text) || searchLocal(text) || remote;
+      } catch {
+        result = findFaq(text) ||
+          searchLocal(text) || {
             answer:
-              "The online assistant could not respond right now. The portfolio and instant answers still work — try a specific project or skill.",
+              "The online assistant could not respond right now. Try a specific project or skill.",
             action: "message",
-            suggestions: ["Show me his projects", "Show me his robotics work"],
           };
-        } finally {
-          setBusy(false);
-        }
+      } finally {
+        setBusy(false);
       }
+    }
+
+    if (!result) {
+      result = findFaq(text) ||
+        searchLocal(text) || {
+          answer:
+            "I can show you what is in the portfolio, but the open-ended assistant is not connected yet.",
+          action: "message",
+        };
     }
     addMessage("assistant", String(result.answer).slice(0, 1400));
     handleAssistantAction(result);

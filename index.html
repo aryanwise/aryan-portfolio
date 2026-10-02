@@ -224,18 +224,20 @@
                       Laya/Jev for classification and external APIs for data ingestion.</p>
 
                     <ul class="detail-list">
-                      <li><strong>GitHub Signal Engine.</strong> Turn repositories, commits and contributions into
-                        clear,
-                        verifiable technical hiring signals.</li>
-                      <li><strong>Peer-benchmarked gap analysis.</strong> Compare candidates with professionals at their
-                        target role and seniority to identify concrete skill gaps and next steps.</li>
-                      <li><strong>Data orchestration.</strong> Connected APIs, Laya/Jev and LLM prompt chains to clean,
-                        normalize, classify signals and deliver structured profile insights to downstream hiring tools.
+                      <li><strong>GitHub Signal Engine.</strong> Built an ingestion pipeline via the GitHub REST API to
+                        turn raw commit histories, pull requests, and repository depth into measurable hiring signals.
+                        Replacing a third-party API and cutting tooling costs by 10%.</li>
+                      <li><strong>Peer-benchmarked gap analysis.</strong> Engineered an automated evaluation engine that
+                        measures an applicant’s technical profile against target roles and seniority baselines,
+                        pinpointing exact skill deficits to generate custom learning roadmaps.</li>
+                      <li><strong>Data orchestration.</strong> Built end-to-end automation pipelines using n8n,
+                        JavaScript, and LLM chains to clean, classify, and normalize messy external data into structured
+                        profiles for downstream hiring workflows.
                       </li>
                     </ul>
                   </div>
                   <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Recruiter intelligence / skill gaps</span>
+                    <span class="work-entry-small-label">FIELD / Recruiter intelligence / Skill gaps</span>
                     <span class="work-entry-small-label">TECH STACK</span>
                     <div class="tags">
                       <span>n8n</span><span>JavaScript</span><span>LLMs</span><span>Laya/Jev</span><span>APIs</span>
@@ -265,23 +267,21 @@
                 <div class="work-entry-detail-grid">
                   <div class="work-entry-story">
                     <ul class="detail-list">
-                      <li><strong>Data science agent.</strong> Implemented a DeepAnalyze-8B architecture that ingests
-                        raw
-                        data, plans and executes EDA, preprocessing and modeling, then compiles analytical reports
-                        inside an
-                        isolated sandbox.</li>
-                      <li><strong>Zero-shot forecasts.</strong> Benchmarked and integrated Google TimesFM, Amazon
-                        Chronos and
-                        IBM Granite against the existing ensemble, reducing sMAPE by 32% across key internal metrics
-                        without
-                        retraining.</li>
-                      <li><strong>Execution boundaries.</strong> Kept generated analytical code within strict local
-                        sandbox
-                        boundaries for privacy and controlled execution.</li>
+                      <li><strong>Data science agent.</strong> Implemented the DeepAnalyze-8B framework into an
+                        autonomous agent that inspects datasets, executes
+                        end-to-end data science pipelines within an isolated sandbox, and synthesizes results into
+                        comprehensive
+                        reports.</li>
+                      <li><strong>Zero-shot forecasts.</strong> Implemented a zero-shot forecasting pipeline for
+                        workforce management using TimesFM, reducing sMAPE
+                        by 32% compared to the internal ensemble baseline without requiring retraining.</li>
+                      <li><strong>Execution boundaries.</strong> Isolated all LLM-generated code execution inside secure
+                        containerized environments (Docker/e2b), enforcing strict runtime boundaries and privacy
+                        controls while auto-compiling final analytical reports.</li>
                     </ul>
                   </div>
                   <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Data agents / forecasting</span>
+                    <span class="work-entry-small-label">FIELD / Data agents / Forecasting</span>
                     <span class="work-entry-small-label">TECH STACK</span>
                     <div class="tags">
                       <span>Python</span><span>TimesFM</span><span>Chronos</span><span>Docker</span><span>Time-Series</span><span>IBM-Granite</span><span>e2b</span><span>DeepAnalyze-8B</span>
@@ -355,18 +355,15 @@
                 hidden>
                 <div class="work-entry-detail-grid">
                   <div class="work-entry-story">
-                    <p>Architected FERTRADO's internal regulatory navigator by serving a high-parameter Qwen model
-                      locally via Ollama, containerizing the entire application, and deploying it onto AWS
-                      infrastructure for
-                      reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing
-                      to
-                      ground the model strictly in parsed EU compliance material, delivering low-latency,
-                      hallucination-free
-                      regulatory answers across the organization without third-party API dependencies. The underlying
-                      data
-                      ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives,
-                      and
-                      documentation to be added seamlessly as regulatory requirements expand.</p>
+                    <li><strong>Local-First Model Serving:</strong> Served an open-source Qwen model locally using
+                      Ollama and containerized the service with Docker for AWS deployment, avoiding third-party API
+                      dependencies and external data leaks.</li>
+                    <li><strong>Document Parsing & Ingestion:</strong> Used Docling to parse complex, layout-heavy EU
+                      regulatory PDFs, preserving structural hierarchy and table data for clean vector indexing.</li>
+                    <li><strong>Grounded Policy Retrieval:</strong> Built an internal retrieval pipeline using a FastAPI
+                      backend and FAISS vector search to ground responses strictly in verified policy clauses with
+                      direct citations.</li>
+
                   </div>
                   <aside class="work-entry-stack" aria-label="Technologies used">
                     <span class="work-entry-small-label">FIELD / Regulatory AI / grounded search</span>

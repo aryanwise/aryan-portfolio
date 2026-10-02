@@ -3032,3 +3032,17 @@ footer>div {
 .work-section .work-context>p {
     padding-left: 22px;
 }
+
+.project-github-link {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.project-github-link:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}

@@ -31,17 +31,19 @@
         ["Work", "#work"],
         ["About me", "#about"],
         ["Blogs", "blog/index.html"],
+        ["Resume", "resume/index.html"],
       ]
     : [
         ["Work", "../index.html#work"],
         ["About me", "../index.html#about"],
         ["Blogs", "index.html"],
+        ["Resume", "../resume/index.html"],
       ];
 
   items.forEach(([label, href], index) => {
     const link = document.createElement("a");
     link.href = href;
-    link.dataset.navTarget = ["work", "about", "blogs"][index];
+    link.dataset.navTarget = ["work", "about", "blogs", "resume"][index];
 
     const number = document.createElement("span");
     number.className = "mobile-site-menu-number";

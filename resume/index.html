@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090A0A">
+  <meta name="description" content="View or download Aryan Mishra's resume.">
+  <title>Resume — Aryan Mishra</title>
+  <script>
+    (() => {
+      const key = 'aryan-portfolio-theme';
+      const root = document.documentElement;
+      let saved;
+      try { saved = localStorage.getItem(key); } catch {}
+      const initial = saved === 'light' || saved === 'dark' ? saved : 'dark';
+
+      function applyTheme(theme) {
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === 'dark' ? '#090A0A' : '#F3EFE6';
+        const toggle = document.querySelector('[data-theme-toggle]');
+        if (!toggle) return;
+        const next = theme === 'dark' ? 'light' : 'dark';
+        toggle.setAttribute('aria-label', `Switch to ${next} mode`);
+        toggle.setAttribute('aria-pressed', String(theme === 'dark'));
+        toggle.querySelector('.theme-toggle-icon').textContent = theme === 'dark' ? '☀' : '☾';
+        toggle.querySelector('.theme-toggle-text').textContent = `${next[0].toUpperCase()}${next.slice(1)} mode`;
+      }
+
+      applyTheme(initial);
+      document.addEventListener('DOMContentLoaded', () => {
+        applyTheme(root.dataset.theme);
+        document.querySelector('[data-theme-toggle]').addEventListener('click', () => {
+          const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          try { localStorage.setItem(key, next); } catch {}
+          applyTheme(next);
+        });
+      });
+    })();
+  </script>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    .resume-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: clamp(44px, 6vw, 82px) 0 96px;
+    }
+
+    .resume-hero {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-bottom: 38px;
+    }
+
+    .resume-eyebrow,
+    .resume-window-label {
+      color: var(--text-secondary, #AAA69E);
+      font: 500 11px/1.4 var(--mono, monospace);
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .resume-eyebrow { margin: 0 0 15px; }
+    .resume-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 15px;
+      height: 2px;
+      margin-right: 10px;
+      vertical-align: middle;
+      background: var(--accent, #FF4D3D);
+    }
+
+    .resume-title {
+      margin: 0;
+      color: var(--text, #F1EDE4);
+      font: 500 clamp(42px, 6vw, 74px)/1 var(--serif, Arial, sans-serif);
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+
+    .resume-title em { color: var(--accent, #FF4D3D); font-style: normal; }
+
+    .resume-description {
+      max-width: 53ch;
+      margin: 16px 0 0;
+      color: var(--text-secondary, #AAA69E);
+      font-size: clamp(14px, 1.5vw, 17px);
+      line-height: 1.65;
+    }
+
+    .resume-actions { display: flex; flex-wrap: wrap; gap: 13px; padding-bottom: 5px; }
+
+    .resume-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 11px 17px;
+      border: 1px solid var(--border, #32302D);
+      border-radius: 5px;
+      background: var(--surface, #111313);
+      color: var(--text, #F1EDE4);
+      font: 650 12px/1.2 var(--mono, monospace);
+      white-space: nowrap;
+      transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+    }
+
+    .resume-action:hover { background: var(--surface-hover, #1C1F1E); transform: translateY(-2px); }
+    .resume-action-primary {
+      border-color: var(--accent, #FF4D3D);
+      background: var(--accent, #FF4D3D);
+      color: var(--on-accent, #090A0A);
+      box-shadow: 4px 4px 0 var(--mint, #59E6BA);
+    }
+    .resume-action-primary:hover {
+      background: var(--accent-hover, #FF685A);
+      box-shadow: 6px 6px 0 var(--mint, #59E6BA);
+    }
+
+    .resume-window {
+      overflow: hidden;
+      border: 1px solid var(--border, #32302D);
+      border-radius: 8px;
+      background: var(--surface, #111313);
+      box-shadow: 0 18px 50px var(--shadow, rgba(0, 0, 0, .3));
+    }
+
+    .resume-window-bar {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--border, #32302D);
+      background: var(--surface-elevated, #171919);
+    }
+
+    .resume-window-dots { display: inline-flex; gap: 6px; }
+    .resume-window-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent, #FF4D3D); }
+    .resume-window-dots i:nth-child(2) { background: var(--traffic-yellow, #E8B759); }
+    .resume-window-dots i:nth-child(3) { background: var(--mint, #59E6BA); }
+    .resume-window-label { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+    .resume-frame {
+      display: block;
+      width: 100%;
+      height: min(78dvh, 960px);
+      min-height: 520px;
+      border: 0;
+      background: #e8e8e8;
+    }
+
+    .resume-placeholder {
+      display: grid;
+      place-content: center;
+      min-height: 430px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .resume-placeholder strong { color: var(--text, #F1EDE4); font-size: 19px; font-weight: 650; }
+    .resume-placeholder p { margin: 10px auto 0; max-width: 42ch; color: var(--text-secondary, #AAA69E); }
+    .resume-placeholder code { color: var(--accent, #FF4D3D); }
+    .resume-note { margin: 16px 0 0; color: var(--text-secondary, #AAA69E); font-size: 12px; }
+
+    @media (max-width: 680px) {
+      .resume-shell { padding: 42px 0 65px; }
+      .resume-hero { gap: 23px; margin-bottom: 29px; }
+      .resume-actions { width: 100%; }
+      .resume-action { flex: 1; }
+      .resume-frame { height: 72dvh; min-height: 430px; }
+    }
+
+    @media (max-width: 390px) {
+      .resume-actions { flex-direction: column; }
+      .resume-action { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .resume-action { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
+        <span class="wordmark-symbol">am<span>·</span></span>
+        <span>Aryan Mishra</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light mode"
+          aria-pressed="true"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span
+            class="theme-toggle-text">Light mode</span></button>
+      </nav>
+    </header>
+
+    <main class="resume-shell">
+      <div class="resume-hero">
+        <div>
+          <p class="resume-eyebrow">EXPERIENCE / PROJECTS / SKILLS</p>
+          <h1 class="resume-title">The <em>resume.</em></h1>
+          <p class="resume-description">A quick look at my experience, the things I’ve built, and the tools I use.</p>
+        </div>
+        <div class="resume-actions" id="resume-actions" hidden>
+          <a class="resume-action resume-action-primary" id="resume-open" href="./resume.pdf" target="_blank"
+            rel="noopener noreferrer">Open PDF ↗</a>
+          <a class="resume-action" id="resume-download" href="./resume.pdf" download="Aryan_Mishra_Resume.pdf">Download PDF ↓</a>
+        </div>
+      </div>
+
+      <section class="resume-window" aria-label="Resume document">
+        <div class="resume-window-bar" aria-hidden="true">
+          <span class="resume-window-dots"><i></i><i></i><i></i></span>
+          <span class="resume-window-label">ARYAN_MISHRA_RESUME.PDF</span>
+        </div>
+        <div class="resume-placeholder" id="resume-placeholder" role="status">
+          <div>
+            <strong id="resume-status-title">Loading the resume…</strong>
+            <p id="resume-status-message">Checking for the PDF.</p>
+          </div>
+        </div>
+        <iframe class="resume-frame" id="resume-frame" title="Aryan Mishra resume PDF" hidden></iframe>
+      </section>
+      <p class="resume-note">If your browser can’t display PDFs here, use “Open PDF” above.</p>
+      <noscript><p class="resume-note">JavaScript is off. <a href="./resume.pdf">Open the resume PDF directly.</a></p></noscript>
+    </main>
+  </div>
+  <script>
+    (async () => {
+      const placeholder = document.getElementById('resume-placeholder');
+      const frame = document.getElementById('resume-frame');
+      const file = './resume.pdf';
+      try {
+        const response = await fetch(file, { method: 'HEAD' });
+        if (!response.ok || (response.headers.get('content-type') || '').includes('text/html')) {
+          throw new Error('PDF missing');
+        }
+        frame.src = `${file}#view=FitH`;
+        frame.hidden = false;
+        placeholder.hidden = true;
+        document.getElementById('resume-actions').hidden = false;
+      } catch {
+        document.getElementById('resume-status-title').textContent = 'Resume coming soon.';
+        document.getElementById('resume-status-message').innerHTML =
+          'Add your PDF as <code>resume/resume.pdf</code> to show it here.';
+      }
+    })();
+  </script>
+</body>
+
+</html>

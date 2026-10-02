@@ -95,5 +95,46 @@
       "TimesFM",
       "Chronos"
     ]
-  }
+  },
+  {
+  "id": "infovirgin",
+  "title": "Infovirgin Technology Solutions Pvt. Ltd.",
+  "role": "Data Science & AI Intern",
+  "dates": "April 2026 – July 2026",
+  "field": "Data science / BI / forecasting",
+  "description": "Automated reporting, built executive BI dashboards, and improved revenue and workload forecasting for operational decisions.",
+  "technologies": [
+    "Python",
+    "Pandas",
+    "NumPy",
+    "SQL",
+    "KNN Imputation",
+    "ARIMA",
+    "Moving Averages",
+    "Randomized Search"
+  ],
+  "details": [
+    "Data Science & AI Intern · April 2026 – July 2026"
+  ],
+  "highlights": [
+    "Automated data pipelines. Architected and deployed a Python ETL pipeline with Pandas, NumPy, and KNN imputation, reducing weekly reporting data preparation time by 75% and eliminating manual data entry discrepancies across departmental databases.",
+    "Executive BI dashboards. Designed and launched real-time interactive dashboards to replace static monthly Excel spreadsheets, giving leadership instant visibility into sales funnels, client acquisition, and operational KPIs.",
+    "Forecasting and resource allocation. Built ARIMA and moving-average models for revenue and workload forecasts. Replaced nested grid search with randomized search and rolling windows, cutting script runtimes from hours to minutes and reducing engineering bench time.",
+    "Data governance and architecture. Restructured operational analytics tables into a dimensional star schema and standardized Sales and Operations milestone definitions through unified SQL CASE logic, establishing a single source of truth across 45+ attributes."
+  ],
+  "related": [
+    "teleperformance"
+  ],
+  "searchTerms": [
+    "Infovirgin",
+    "data science intern",
+    "ETL",
+    "business intelligence",
+    "dashboards",
+    "forecasting",
+    "star schema",
+    "revenue",
+    "KNN imputation"
+  ]
+}
 ]

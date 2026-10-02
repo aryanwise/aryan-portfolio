@@ -830,7 +830,7 @@
     ) {
       return {
         answer:
-          "Explore Aryan’s work at FERTRADO, CareerGenie and Teleperformance.",
+          "Explore Aryan’s work at CareerGenie, Teleperformance, FERTRADO and Infovirgin Technology Solutions",
         action: "show_experience",
       };
     }

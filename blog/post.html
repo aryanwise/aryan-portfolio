@@ -2,235 +2,216 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#F3EFE6">
-    <script src="../theme.js"></script>
-    <title>Article — Aryan Mishra</title>
-    <link rel="stylesheet" href="../styles.css">
-
-    <!-- KaTeX CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-
-    <!-- KaTeX JS (Load synchronously to prevent race conditions) -->
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-
-    <!-- Marked.js + Official Marked KaTeX Extension -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
-
-    <style>
-        .article-shell {
-            max-width: 820px;
-            margin: 60px auto 100px;
-        }
-
-        .article-content {
-            font-size: 17px;
-            line-height: 1.8;
-            color: var(--ink);
-        }
-
-        .article-content h1 {
-            font-size: clamp(38px, 5vw, 54px);
-            line-height: 1.1;
-            margin-bottom: 24px;
-        }
-
-        .article-content h2 {
-            margin-top: 48px;
-            margin-bottom: 16px;
-            font-size: 28px;
-        }
-
-        .article-content pre {
-            background: #eee8dc;
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-
-        .article-content code {
-            font-family: monospace;
-            font-size: 14px;
-        }
-
-        /* KaTeX equation display spacing */
-        .katex-display {
-            margin: 1.5em 0 !important;
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 4px 0;
-        }
-
-        .back-nav {
-            margin-bottom: 30px;
-            display: inline-block;
-            font-size: 14px;
-            color: var(--muted);
-            border-bottom: 1px solid var(--line);
-            padding-bottom: 2px;
-        }
-
-        .back-nav:hover {
-            color: var(--rust);
-        }
-
-        /* Wrapper & Copy Button */
-        .code-block-wrapper {
-            position: relative;
-            margin: 28px 0;
-        }
-
-        .code-block-wrapper pre {
-            margin: 0;
-            background: #eee8dc;
-            padding: 38px 20px 20px;
-            /* Top padding leaves room for the button */
-            border-radius: 8px;
-            overflow-x: auto;
-            border: 1px solid #e1d7c7;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            font-family: var(--sans);
-            font-size: 11px;
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            background: #e3dbc9;
-            color: var(--muted);
-            border: 1px solid #cfc2ae;
-            border-radius: 4px;
-            padding: 3px 8px;
-            cursor: pointer;
-            transition: all .2s ease;
-        }
-
-        .copy-btn:hover {
-            background: #dad0bc;
-            color: var(--ink);
-        }
-
-        .copy-btn.copied {
-            background: var(--rust);
-            border-color: var(--rust);
-            color: #fff;
-        }
-
-        .nav-back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-family: var(--sans);
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--ink);
-            text-decoration: none;
-            border-bottom: none;
-            padding: 10px 0;
-            transition: color 0.2s ease;
-        }
-
-        .nav-back-link:hover {
-            color: var(--rust);
-        }
-
-        @media (max-width: 700px) {
-            .site-header .wordmark>span:not(.wordmark-symbol) {
-                display: none !important;
-            }
-
-            .site-header .wordmark>.wordmark-symbol {
-                display: inline-block !important;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="../theme.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090A0A">
+  <meta name="description" content="A note from Aryan Mishra's notebook.">
+  <script src="../theme.js"></script>
+  <title>Article — Aryan Mishra</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    .entry-shell { max-width: 850px; margin: 0 auto; padding: clamp(35px, 6vw, 70px) 0 95px; }
+    .entry-back { display: inline-block; margin-bottom: 35px; color: var(--text-secondary); font: 550 12px/1.4 var(--mono, monospace); }
+    .entry-back:hover, .entry-series a:hover { color: var(--accent); }
+    .entry-context {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 8px 18px; padding: 13px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      color: var(--text-secondary); font: 500 12px/1.4 var(--mono, monospace);
+    }
+    .entry-kind { color: var(--accent); text-transform: uppercase; letter-spacing: .07em; }
+    .entry-content { margin-top: 39px; color: var(--text); font-size: 17px; line-height: 1.78; overflow-wrap: anywhere; }
+    .entry-content > :first-child { margin-top: 0; }
+    .entry-content h1, .entry-content h2, .entry-content h3 {
+      color: var(--text); font-family: var(--serif, sans-serif); font-weight: 550; line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+    .entry-content h1 { font-size: clamp(38px, 5vw, 58px); margin-bottom: 23px; }
+    .entry-content h2 { font-size: clamp(27px, 3vw, 35px); margin: 48px 0 15px; }
+    .entry-content h3 { font-size: 22px; margin: 32px 0 11px; }
+    .entry-content p, .entry-content ul, .entry-content ol, .entry-content blockquote { margin: 0 0 21px; }
+    .entry-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .entry-content blockquote { margin-left: 0; padding: 4px 0 4px 20px; border-left: 3px solid var(--accent); color: var(--text-secondary); }
+    .entry-content img { max-width: 100%; height: auto; border-radius: 6px; }
+    .entry-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+    .entry-content th, .entry-content td { padding: 8px 12px; border: 1px solid var(--border); }
+    .entry-content :not(pre) > code {
+      padding: 2px 5px; border-radius: 3px; background: var(--bg-secondary);
+      font-size: .88em;
+    }
+    .entry-content pre {
+      margin: 0; padding: 38px 20px 20px; overflow-x: auto; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--code-surface, var(--bg-secondary));
+      color: var(--text); font-size: 14px; line-height: 1.55;
+    }
+    .entry-code { position: relative; margin: 26px 0; }
+    .entry-code button {
+      position: absolute; top: 8px; right: 10px; padding: 5px 9px; border: 1px solid var(--border);
+      border-radius: 4px; background: var(--surface-elevated); color: var(--text-secondary);
+      font: 500 11px/1.2 var(--mono, monospace); cursor: pointer;
+    }
+    .entry-code button:hover { color: var(--text); border-color: var(--accent); }
+    .katex-display { margin: 1.4em 0 !important; overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
+    .entry-series { margin-top: 54px; padding-top: 25px; border-top: 1px solid var(--border); }
+    .entry-series h2 { margin: 0 0 17px; color: var(--text); font: 550 24px/1.2 var(--serif, sans-serif); }
+    .entry-series p { color: var(--text-secondary); margin: 0 0 17px; }
+    .entry-series-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .entry-series-links a {
+      display: block; min-height: 90px; padding: 15px; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--surface); color: var(--text);
+      font-size: 14px; line-height: 1.45;
+    }
+    .entry-series-links a span { display: block; margin-bottom: 6px; color: var(--accent); font: 500 11px/1.4 var(--mono, monospace); text-transform: uppercase; }
+    .entry-series .entry-course-link { display: inline-block; margin-top: 20px; color: var(--accent); font: 550 12px/1.4 var(--mono, monospace); }
+    .entry-shell :is(a, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (max-width: 700px) {
+      .site-header .wordmark > span:not(.wordmark-symbol) { display: none !important; }
+      .entry-shell { padding: 40px 0 65px; }
+      .entry-content { margin-top: 30px; font-size: 16px; }
+      .entry-series-links { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="page-shell">
-        <header class="site-header blog-header">
-            <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
-                <span class="wordmark-symbol">am<span>·</span></span>
-                <span>Aryan Mishra</span>
-            </a>
-            <nav aria-label="Main navigation">
-                <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
-                <button class="theme-toggle" type="button" data-theme-toggle
-                    aria-label="Light mode is on; switch to dark mode" aria-pressed="false"><span
-                        class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light
-                        mode</span></button>
-            </nav>
-        </header>
+  <div class="page-shell">
+    <header class="site-header blog-header">
+      <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
+        <span class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" aria-pressed="false">
+          <span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light mode</span>
+        </button>
+      </nav>
+    </header>
 
-        <main class="article-shell">
-            <a class="back-nav" href="./index.html">← Back to blogs</a>
-            <div id="content" class="article-content">Loading...</div>
-        </main>
-    </div>
+    <main class="entry-shell">
+      <a class="entry-back" id="entry-back" href="./index.html">← Back to notebook</a>
+      <div class="entry-context" id="entry-context" hidden>
+        <span class="entry-kind" id="entry-kind"></span>
+        <span id="entry-meta"></span>
+      </div>
+      <article class="entry-content" id="content" aria-label="Article"><p>Loading the article…</p></article>
+      <nav class="entry-series" id="entry-series" aria-label="Course navigation" hidden>
+        <h2 id="entry-series-title"></h2>
+        <p id="entry-series-description"></p>
+        <div class="entry-series-links" id="entry-series-links"></div>
+        <a class="entry-course-link" id="entry-course-link" href="./index.html">Explore the full course ↗</a>
+      </nav>
+    </main>
+  </div>
 
-    <script>
-        // Register the KaTeX extension with marked
-        marked.use(markedKatex({
-            throwOnError: false,
-            nonStandard: true
-        }));
-
-        const params = new URLSearchParams(window.location.search);
-        const fileName = params.get('file');
-
-        if (!fileName) {
-            document.getElementById('content').innerHTML = '<p>No article specified.</p>';
-        } else {
-            fetch(`../posts/${fileName}`)
-                .then(res => {
-                    if (!res.ok) throw new Error('Post not found');
-                    return res.text();
-                })
-                .then(md => {
-                    const content = document.getElementById('content');
-                    content.innerHTML = marked.parse(md);
-
-                    // Find all rendered <pre> blocks and wrap them with a copy button
-                    content.querySelectorAll('pre').forEach(pre => {
-                        const wrapper = document.createElement('div');
-                        wrapper.className = 'code-block-wrapper';
-
-                        const button = document.createElement('button');
-                        button.className = 'copy-btn';
-                        button.type = 'button';
-                        button.textContent = 'Copy';
-
-                        button.addEventListener('click', async () => {
-                            const code = pre.querySelector('code')?.innerText || pre.innerText;
-                            try {
-                                await navigator.clipboard.writeText(code);
-                                button.textContent = 'Copied!';
-                                button.classList.add('copied');
-                                setTimeout(() => {
-                                    button.textContent = 'Copy';
-                                    button.classList.remove('copied');
-                                }, 1800);
-                            } catch (err) {
-                                button.textContent = 'Failed';
-                                setTimeout(() => { button.textContent = 'Copy'; }, 1800);
-                            }
-                        });
-
-                        pre.parentNode.insertBefore(wrapper, pre);
-                        wrapper.appendChild(pre);
-                        wrapper.appendChild(button);
-                    });
-                })
-                .catch(err => {
-                    document.getElementById('content').innerHTML = `<p>${err.message}</p>`;
-                });
+  <script>
+    (() => {
+      "use strict";
+      const content = document.getElementById("content");
+      const file = new URLSearchParams(location.search).get("file");
+      const metadataPattern = /^\uFEFF?<!--\s*portfolio-post\s*\r?\n[\s\S]*?\r?\n-->\s*/;
+      function el(tag, className, text) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (text != null) element.textContent = text;
+        return element;
+      }
+      function showError(message) {
+        content.replaceChildren(el("p", "", message));
+      }
+      function niceDate(iso) {
+        return new Intl.DateTimeFormat("en-US", {
+          month: "short", day: "numeric", year: "numeric", timeZone: "UTC",
+        }).format(new Date(iso + "T12:00:00Z"));
+      }
+      function addCodeButtons() {
+        content.querySelectorAll("pre").forEach((pre) => {
+          const wrapper = el("div", "entry-code");
+          const button = el("button", "", "Copy");
+          button.type = "button";
+          button.setAttribute("aria-label", "Copy code block");
+          button.addEventListener("click", async () => {
+            try {
+              await navigator.clipboard.writeText(pre.querySelector("code")?.textContent || pre.textContent);
+              button.textContent = "Copied";
+              setTimeout(() => { button.textContent = "Copy"; }, 1600);
+            } catch {
+              button.textContent = "Unavailable";
+              setTimeout(() => { button.textContent = "Copy"; }, 1600);
+            }
+          });
+          pre.replaceWith(wrapper);
+          wrapper.append(pre, button);
+        });
+      }
+      function renderSeries(post, catalog) {
+        if (post.kind !== "course") return;
+        const course = catalog.courses.find((item) => item.id === post.course);
+        if (!course) return;
+        const lessons = catalog.posts.filter((item) => item.course === post.course)
+          .sort((a, b) => a.lesson - b.lesson);
+        const position = lessons.findIndex((item) => item.file === post.file);
+        const series = document.getElementById("entry-series");
+        series.hidden = false;
+        document.getElementById("entry-series-title").textContent = course.title;
+        document.getElementById("entry-series-description").textContent =
+          "Lesson " + post.lesson + " · " + lessons.length +
+          (lessons.length === 1 ? " lesson published." : " lessons published.");
+        const links = document.getElementById("entry-series-links");
+        for (const [item, label] of [
+          [lessons[position - 1], "← Previous lesson"],
+          [lessons[position + 1], "Next lesson →"],
+        ]) {
+          if (!item) continue;
+          const link = el("a", "");
+          link.href = "post.html?file=" + encodeURIComponent(item.file);
+          link.append(el("span", "", label), document.createTextNode(item.title));
+          links.append(link);
         }
-    </script>
+        document.getElementById("entry-course-link").href = "index.html?course=" + encodeURIComponent(course.id);
+      }
+      async function load() {
+        if (!file) return showError("Choose a post from the notebook to read it here.");
+        try {
+          const catalogResponse = await fetch("../posts/posts.json", { cache: "no-cache" });
+          if (!catalogResponse.ok) throw new Error("Cannot load the posts catalog");
+          const catalog = await catalogResponse.json();
+          if (!Array.isArray(catalog.posts)) throw new Error("Invalid posts catalog");
+          const post = catalog.posts.find((item) => item.file === file);
+          if (!post) return showError("This post is not listed in the notebook.");
+          const response = await fetch("../posts/" + post.file);
+          if (!response.ok) throw new Error("The Markdown file could not be loaded.");
+          let markdown = (await response.text()).replace(metadataPattern, "");
+          if (!window.marked) throw new Error("The Markdown renderer did not load. Try refreshing the page.");
+          if (window.markedKatex && window.katex) {
+            marked.use(markedKatex({ throwOnError: false, nonStandard: true }));
+          }
+          content.innerHTML = marked.parse(markdown);
+          if (!content.querySelector("h1")) content.prepend(el("h1", "", post.title));
+          addCodeButtons();
+          const course = catalog.courses.find((item) => item.id === post.course);
+          document.getElementById("entry-kind").textContent = post.kind === "course"
+            ? (course?.title || "Course") + " / Lesson " + String(post.lesson).padStart(2, "0")
+            : ({ daily: "Daily note", essay: "Essay", "project-log": "Project log" })[post.kind] || "Note";
+          document.getElementById("entry-meta").textContent =
+            niceDate(post.date) + " · " + post.readMinutes + " min read";
+          document.getElementById("entry-context").hidden = false;
+          document.getElementById("entry-back").href = post.kind === "course"
+            ? "index.html?course=" + encodeURIComponent(post.course)
+            : "index.html?view=daily";
+          document.title = post.title + " — Aryan's Notebook";
+          document.querySelector('meta[name="description"]').content = post.summary;
+          renderSeries(post, catalog);
+        } catch (error) {
+          showError(error.message || "This post could not be loaded.");
+        }
+      }
+      load();
+    })();
+  </script>
 </body>
 
 </html>

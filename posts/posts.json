@@ -1,18 +1,35 @@
-[
+{
+  "version": 1,
+  "courses": [
     {
-    "file": "demystifying-linear-regression.md",
-    "title": "Demystifying Linear Regression: From Math to 13 Lines of Python",
-    "tag": "Machine Learning / Math",
-    "date": "Sep 30, 2026",
-    "readTime": "5 min read",
-    "summary": "Building linear regression from first principles without external libraries. Deriving gradients, Mean Squared Error, and implementing vanilla gradient descent."
-  },
-  {
-    "file": "testing-equations-and-autonomy.md",
-    "title": "Testing Equations and Autonomous Logic",
-    "tag": "Autonomy / Math",
-    "date": "Sep 26, 2026",
-    "readTime": "4 min read",
-    "summary": "A look into verification math, path-planning constraints, and handling non-deterministic failures in autonomous intelligent agents."
-  }
-]
+      "id": "intro-to-machine-learning",
+      "title": "Intro to Machine Learning",
+      "description": "Short lessons that build the ideas and math behind machine learning from first principles.",
+      "lessonCount": 1
+    }
+  ],
+  "posts": [
+    {
+      "file": "demystifying-linear-regression.md",
+      "title": "Demystifying Linear Regression: From Math to 13 Lines of Python",
+      "kind": "daily",
+      "course": null,
+      "lesson": null,
+      "date": "2026-09-30",
+      "summary": "Building linear regression from first principles without external libraries. Deriving gradients, Mean Squared Error, and implementing vanilla gradient descent.",
+      "tags": ["Machine Learning", "Math"],
+      "readMinutes": 5
+    },
+    {
+      "file": "testing-equations-and-autonomy.md",
+      "title": "Testing Equations and Autonomous Logic",
+      "kind": "daily",
+      "course": null,
+      "lesson": null,
+      "date": "2026-09-26",
+      "summary": "A look into verification math, path-planning constraints, and handling non-deterministic failures in autonomous intelligent agents.",
+      "tags": ["Autonomy", "Math"],
+      "readMinutes": 4
+    }
+  ]
+}

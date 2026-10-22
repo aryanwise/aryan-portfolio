@@ -1,52 +1,31 @@
-# Aryan's notebook — drop-in blog update
+# Aryan's Logs
 
 This keeps your portfolio as a static GitHub Pages site. Daily notes, longer articles,
 and course lessons all live as Markdown files. A small Node script reads their metadata
 and generates the listing that `blog/index.html` displays. The browser loads a full
 Markdown file only after someone opens that post.
 
-## Add this to your existing repository
+## Add or update writing
 
-Copy the contents of this package into the **root of your portfolio repository**,
-keeping the folder names. Replace these four existing files:
+1. Save your Markdown file inside `posts/` with the metadata comment shown below.
+2. From the repository root, run:
 
-- `blog/index.html`
-- `blog/post.html`
-- `posts/posts.json`
-- `posts/post_format.json`
+   ```sh
+   node scripts/build-posts.mjs
+   ```
 
-Add `posts/POST_TEMPLATE.md`, `scripts/build-posts.mjs`, and
-`.github/workflows/pages.yml`. Keep your existing root `index.html`, CSS, JS,
-`theme.js`, assets, resume, and **all existing Markdown files in `posts/`**.
-In particular, the starter catalog points to
-`posts/demystifying-linear-regression.md` and
-`posts/testing-equations-and-autonomy.md`; those files must already be in your
-repository. Their writing is not in this package. If their actual names differ,
-correct the `file` paths in `posts/posts.json` before the first build.
+3. Preview the page, then commit or upload both the Markdown file and the
+   regenerated `posts/posts.json` with your normal site updates.
 
-The existing linear regression article is provisionally **lesson 1 of Intro to
-Machine Learning**. The autonomy article is provisionally a **daily note**.
-You can reclassify either by changing that entry in `posts/posts.json` once, or by
-adding the metadata comment described below to the Markdown file.
-
-## One-time publishing setup
-
-1. If your default branch is not `main`, edit the `branches: [main]` line in
-   `.github/workflows/pages.yml` to match it.
-2. In your GitHub repository, open **Settings → Pages → Build and deployment →
-   Source**, then choose **GitHub Actions**.
-3. Commit and push these files. Check the **Actions** tab for the `Publish
-   portfolio and notebook` run.
-
-The workflow builds the catalog in its deploy artifact; it does not commit a
-generated file back to your branch. It also deploys your unchanged portfolio files.
-You do not need a database, npm installation, or a blog API.
+The catalog build discovers new notes, courses, and lessons automatically. This
+checkout does not include a publishing workflow, so run the command after changing
+your writing. You do not need a database, npm installation, or a blog API.
 
 ## Publish one daily note
 
 Copy `posts/POST_TEMPLATE.md` to a descriptive lowercase filename, for example
 `posts/2026-10-09-rover-tests.md`. Edit the JSON comment at the top and write
-below it. Then commit and push **that Markdown file**. Date is `YYYY-MM-DD`.
+below it. Then run the catalog command above. Date is `YYYY-MM-DD`.
 
 ```md
 <!-- portfolio-post
@@ -111,13 +90,13 @@ For lesson 2 and later, use the **same course ID as a string**:
 Put that JSON inside the same `<!-- portfolio-post` / `-->` wrapper and add
 your Markdown beneath it. For a different course, choose a new lowercase ID,
 declare its title and description in its first lesson, and use that ID in later
-lessons. The course appears as a series on the main page; its lessons also appear
-in **Everything** and **Courses**. Each lesson links to its series and its
-previous/next lesson automatically.
+lessons. The course appears in **Everything** and **Courses**. Its overview lists
+lessons in reading order. Each lesson links to its course and its previous/next
+lesson automatically.
 
-For your **existing Intro to Machine Learning** series, the linear regression
-article is already lesson 1. To add its next post, set
-`"course": "intro-to-machine-learning"` and `"lesson": 2` in the new
+Your **existing Intro to Machine Learning** series has four lessons. To add its
+next lesson, set
+`"course": "intro-to-machine-learning"` and `"lesson": 5` in the new
 Markdown file. You do not need to repeat the title or description.
 
 You can use `"kind": "essay"` or `"kind": "project-log"` for other writing.
@@ -142,13 +121,8 @@ python3 -m http.server 8000
 Open `http://localhost:8000/blog/`. Your VS Code Live Server also works after
 running the build command. Do not open `blog/index.html` directly as a `file:`
 URL; the browser needs HTTP to fetch the JSON and Markdown. Node 20 or newer
-is sufficient; the workflow uses Node 22. A local build updates `posts/posts.json`
-in your working tree. You may leave that generated diff uncommitted; the GitHub
-Actions build generates it again for the published site.
-
-If you choose to keep **Deploy from a branch** instead of switching to Actions,
-run the build locally and commit the updated `posts/posts.json` together with
-each Markdown post. That is the manual fallback, not the one-file workflow above.
+is sufficient. A local build updates `posts/posts.json` in your working tree;
+include that generated file with your Markdown changes when publishing.
 
 ## A couple of practical details
 
@@ -162,5 +136,6 @@ each Markdown post. That is the manual fallback, not the one-file workflow above
   `portfolio-post` comment at the very top. The site strips it from the article
   view. Until then, those two entries keep their migrated metadata from the
   starter catalog.
-- For an error during publishing, read the **Generate notebook catalog** step
-  in the Actions run. It reports the filename and a specific metadata issue.
+- README documentation and `POST_TEMPLATE.md` are excluded from the catalog.
+- If the catalog build fails, read its terminal output. It reports the filename
+  and a specific metadata issue; the last valid catalog stays intact.

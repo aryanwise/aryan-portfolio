@@ -1292,7 +1292,7 @@ footer>div {
         font-size: 12px
     }
 
-    nav a:last-child {
+    .site-header nav a:last-child {
         display: none
     }
 

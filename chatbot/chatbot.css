@@ -1069,3 +1069,36 @@
 .aryan-chatbot-message-text strong {
   font-weight: 700;
 }
+/* Shared assistant state and phone ergonomics. */
+.aryan-chatbot-message {
+  border-bottom-color: var(--aryan-chatbot-line);
+}
+
+.aryan-chatbot-root button:disabled {
+  cursor: wait;
+  opacity: .55;
+}
+
+.aryan-chatbot-input {
+  overflow-y: auto;
+}
+
+@media (max-width: 680px) {
+  .aryan-chatbot-input {
+    font-size: 16px !important;
+  }
+
+  .aryan-chatbot-header-actions .aryan-chatbot-icon-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .aryan-chatbot-heading p {
+    font-size: 10px;
+    letter-spacing: .035em;
+  }
+
+  .aryan-chatbot-detail-top {
+    flex-wrap: wrap;
+  }
+}

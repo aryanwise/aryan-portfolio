@@ -2,6 +2,8 @@
   {
     "id": "fertrado",
     "title": "FERTRADO",
+    "role": "AI Engineer Intern",
+    "dates": "September 2025 – November 2025",
     "field": "Regulatory AI / grounded search",
     "description": "Making complex EU fertilizer regulations easier to explore and understand.",
     "technologies": [
@@ -14,7 +16,7 @@
       "Docling"
     ],
     "details": [
-      "Architected FERTRADO's internal regulatory navigator by serving a high-parameter Qwen model locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing to ground the model strictly in parsed EU compliance material, delivering low-latency, hallucination-free regulatory answers across the organization without third-party API dependencies. The underlying data ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives, and documentation to be added seamlessly as regulatory requirements expand."
+      "Architected FERTRADO's internal regulatory navigator by serving a high-parameter Qwen model locally via Ollama, containerizing the entire application, and deploying it onto AWS infrastructure for reliable, production-grade access. The system couples a FastAPI backend with FAISS vector indexing to ground the model in parsed EU compliance material, delivering source-grounded regulatory answers with citations across the organization without third-party API dependencies. The underlying data ingestion and indexing architecture is fully scalable, allowing new policy frameworks, directives, and documentation to be added seamlessly as regulatory requirements expand."
     ],
     "highlights": [],
     "related": [
@@ -33,6 +35,8 @@
   {
     "id": "careergenie",
     "title": "CareerGenie",
+    "role": "AI Engineer",
+    "dates": "January 2026 – Present",
     "field": "Recruiter intelligence / skill gaps",
     "description": "Turning real-world professional work into verifiable talent signals for recruiters, while helping candidates identify and bridge the skill gaps needed for their target roles.",
     "technologies": [
@@ -46,7 +50,7 @@
       "Built automated candidate signal and upskilling workflows using n8n, JavaScript, and LLMs, integrating Laya/Jev for classification and external APIs for data ingestion."
     ],
     "highlights": [
-      "GitHub Signal Engine. Turn repositories, commits and contributions into clear, verifiable technical hiring signals.",
+      "GitHub Signal Engine. Turn repositories, commits and contributions into clear, verifiable technical hiring signals using the GitHub REST API, reducing overall tooling expenses by 10% by replacing a paid third-party API.",
       "Peer-benchmarked gap analysis. Compare candidates with professionals at their target role and seniority to identify concrete skill gaps and next steps.",
       "Data orchestration. Connected APIs, Laya/Jev and LLM prompt chains to clean, normalize, classify signals and deliver structured profile insights to downstream hiring tools."
     ],
@@ -65,6 +69,8 @@
   {
     "id": "teleperformance",
     "title": "Teleperformance",
+    "role": "Data Analytics Intern",
+    "dates": "June 2026 – September 2026",
     "field": "Data agents / forecasting",
     "description": "Automating end-to-end data science workflows in sandboxed environments and boosting time-series forecasting accuracy with zero-shot foundation models.",
     "technologies": [
@@ -100,7 +106,7 @@
   "id": "infovirgin",
   "title": "Infovirgin Technology Solutions Pvt. Ltd.",
   "role": "Data Science & AI Intern",
-  "dates": "April 2026 – July 2026",
+  "dates": "March 2025 – May 2025",
   "field": "Data science / BI / forecasting",
   "description": "Automated reporting, built executive BI dashboards, and improved revenue and workload forecasting for operational decisions.",
   "technologies": [
@@ -114,7 +120,7 @@
     "Randomized Search"
   ],
   "details": [
-    "Data Science & AI Intern · April 2026 – July 2026"
+    "Data Science & AI Intern · March 2025 – May 2025"
   ],
   "highlights": [
     "Automated data pipelines. Architected and deployed a Python ETL pipeline with Pandas, NumPy, and KNN imputation, reducing weekly reporting data preparation time by 75% and eliminating manual data entry discrepancies across departmental databases.",

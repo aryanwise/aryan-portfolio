@@ -1,9 +1,51 @@
 [
   {
+    "question": "What has Aryan built?",
+    "answer": "Six projects across AI, data, and robotics:\n- **A.D.S.A.** — an agent that plans and runs data science workflows.\n- **OpenbookLM** — a local AI workspace and coding agent (work in progress).\n- **Polymarket Analyzer** — an automated prediction-market research pipeline.\n- **Autonomous 4WD Rover** — sensing and navigation on embedded hardware.\n- **Zombie Shooter AI** — a Q-learning agent trained over 5,000+ episodes.\n- **Gomoku Game AI** — minimax and threat-space search within a 10-second turn limit.",
+    "action": "show_projects",
+    "items": [
+      "adsa",
+      "openbooklm",
+      "polymarket",
+      "rover",
+      "zombie",
+      "gomoku"
+    ]
+  },
+  {
+    "question": "Where has Aryan worked?",
+    "answer": "Aryan’s experience spans AI engineering and data science:\n- **CareerGenie** — AI Engineer, January 2026–present; candidate signals and skill-gap workflows.\n- **Teleperformance** — Data Analytics Intern, June–September 2026; data agents and forecasting, with a 32% reduction in sMAPE.\n- **FERTRADO** — AI Engineer Intern, September–November 2025; grounded search over EU fertilizer regulations.\n- **Infovirgin Technology Solutions** — Data Science & AI Intern, March–May 2025; ETL, BI, and forecasting, with 75% less reporting preparation time.",
+    "action": "show_experience",
+    "items": [
+      "careergenie",
+      "teleperformance",
+      "fertrado",
+      "infovirgin"
+    ]
+  },
+  {
+    "question": "What tools does Aryan use?",
+    "answer": "Aryan works primarily with **Python, C++, and TypeScript**. For AI systems, he uses PyTorch, JAX, FastAPI, RAG and vector search, Ollama, and LLM orchestration. His projects also use Docker, FAISS, GitHub Actions, n8n, and Arduino. Explore the skills view, résumé, and GitHub for examples of those tools in practice.",
+    "action": "show_skills",
+    "items": [
+      "skills"
+    ]
+  },
+  {
+    "question": "How can I contact Aryan?",
+    "answer": "Email **aryanmishraa12@gmail.com** or connect with Aryan on **LinkedIn**. You can also browse his open-source projects on **GitHub** using the links below.",
+    "action": "message",
+    "items": [
+      "contact"
+    ]
+  },
+  {
     "question": "Tell me about Aryan",
     "answer": "Aryan works across Gen AI, LLM's and autonomous systems, from grounded search and data agents to embedded robotics. Here's a little more about him.",
     "action": "message",
-    "items": ["about"]
+    "items": [
+      "about"
+    ]
   },
   {
     "question": "What does Aryan work on?",
@@ -17,36 +59,56 @@
   },
   {
     "question": "What's his experience?",
-    "answer": "Aryan's experience includes CareerGenie, Teleperformance, FERTRADO and Infovirgin Technology Solutions",
-    "action": "show_experience"
+    "answer": "Aryan’s experience spans AI engineering and data science:\n- **CareerGenie** — AI Engineer, January 2026–present; candidate signals and skill-gap workflows.\n- **Teleperformance** — Data Analytics Intern, June–September 2026; data agents and forecasting, with a 32% reduction in sMAPE.\n- **FERTRADO** — AI Engineer Intern, September–November 2025; grounded search over EU fertilizer regulations.\n- **Infovirgin Technology Solutions** — Data Science & AI Intern, March–May 2025; ETL, BI, and forecasting, with 75% less reporting preparation time.",
+    "action": "show_experience",
+    "items": [
+      "careergenie",
+      "teleperformance",
+      "fertrado",
+      "infovirgin"
+    ]
   },
   {
     "question": "What's his tech stack?",
-    "answer": "Python, C++, TypeScript and FastAPI feature in the portfolio, alongside AI, search, data and embedded tools. Here's the full skills view.",
-    "action": "show_skills"
+    "answer": "Aryan works primarily with **Python, C++, and TypeScript**. For AI systems, he uses PyTorch, JAX, FastAPI, RAG and vector search, Ollama, and LLM orchestration. His projects also use Docker, FAISS, GitHub Actions, n8n, and Arduino. Explore the skills view, résumé, and GitHub for examples of those tools in practice.",
+    "action": "show_skills",
+    "items": [
+      "skills"
+    ]
   },
   {
     "question": "What are his main interests?",
     "answer": "Aryan is drawn to autonomous intelligent systems, prototyping new technology and shipping useful open-source work.",
     "action": "message",
-    "items": ["about"]
+    "items": [
+      "about"
+    ]
   },
   {
     "question": "Show me his AI projects",
-    "answer": "OpenbookLM and A.D.S.A. are two projects focused on local AI and autonomous data science.",
+    "answer": "Three projects to explore:\n- **A.D.S.A.** — autonomous data science workflows.\n- **OpenbookLM** — a local AI workspace and coding agent (work in progress).\n- **Zombie Shooter AI** — reinforcement learning with Q-learning over 5,000+ episodes.",
     "action": "show_projects",
-    "items": ["openbooklm", "adsa"]
+    "items": [
+      "adsa",
+      "openbooklm",
+      "zombie"
+    ]
   },
   {
     "question": "Show me his robotics work",
     "answer": "The Autonomous 4WD Rover explores sensing, scanning and navigation on embedded hardware.",
     "action": "open_project",
-    "items": ["rover"]
+    "items": [
+      "rover"
+    ]
   },
   {
     "question": "What is he currently building?",
-    "answer": "These are the projects on Aryan's portfolio. A live status for each project is not listed yet.",
-    "action": "show_projects"
+    "answer": "**OpenbookLM** is marked as a work in progress: a local AI workspace and coding agent for private documentation and codebases.",
+    "action": "open_project",
+    "items": [
+      "openbooklm"
+    ]
   },
   {
     "question": "Where did Aryan study?",

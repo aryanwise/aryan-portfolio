@@ -9,10 +9,22 @@
     "./",
     script?.src || new URL("./chatbot/chatbot.js", document.baseURI),
   );
+  const knowledgeVersion = new URL(script?.src || "./chatbot/chatbot.js", document.baseURI).searchParams.get("v");
   const endpoint = String(
     window.AskAryanConfig?.endpoint || script?.dataset.endpoint || "",
   ).trim();
   const storageKey = "ask-aryan-conversation-v1";
+  const starters = Object.freeze([
+    { label: "What has he built?", question: "What has Aryan built?" },
+    { label: "Where has he worked?", question: "Where has Aryan worked?" },
+    { label: "What’s his tech stack?", question: "What tools does Aryan use?" },
+    { label: "How can I reach him?", question: "How can I contact Aryan?" },
+  ].map(Object.freeze));
+  const contactLinks = [
+    { label: "Email Aryan", href: "mailto:aryanmishraa12@gmail.com" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/aryan-mishra-9540a1250/" },
+    { label: "GitHub", href: "https://github.com/aryanwise" },
+  ];
   const allowedActions = new Set([
     "message",
     "show_projects",
@@ -64,6 +76,8 @@
     history: [],
     lastFocus: null,
     loading: null,
+    queryQueue: Promise.resolve(),
+    pageWasInert: false,
   };
 
   // This template is fixed markup. All questions, JSON content and endpoint
@@ -84,7 +98,7 @@
       <header class="aryan-chatbot-header">
         <div class="aryan-chatbot-heading">
           <h2 id="aryan-chatbot-title">Ask Aryan<span aria-hidden="true">.</span></h2>
-          <p>Interactive portfolio · questions into connections</p>
+          <p>A guide to the work, skills & experience</p>
         </div>
         <div class="aryan-chatbot-header-actions">
           <button class="aryan-chatbot-icon-button" type="button" data-action="minimize"
@@ -103,7 +117,7 @@
         <section class="aryan-chatbot-chat" id="aryan-chatbot-chat-panel" role="tabpanel"
           aria-labelledby="aryan-chatbot-chat-tab">
           <div class="aryan-chatbot-chat-toolbar">
-            <span class="aryan-chatbot-kicker">A conversation with the work</span>
+            <span class="aryan-chatbot-kicker">Conversation</span>
             <button class="aryan-chatbot-small-button" type="button" data-action="clear">New conversation</button>
           </div>
           <div class="aryan-chatbot-log" role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions text"></div>
@@ -114,14 +128,14 @@
           <form class="aryan-chatbot-form">
             <label for="aryan-chatbot-input" class="sr-only">Ask a question about Aryan's portfolio</label>
             <textarea class="aryan-chatbot-input" id="aryan-chatbot-input" rows="1" maxlength="500"
-              placeholder="Ask about a project, a skill, an experience…"></textarea>
+              placeholder="Ask about the work…"></textarea>
             <button class="aryan-chatbot-send" type="submit" aria-label="Send question" title="Send">↗</button>
           </form>
         </section>
         <section class="aryan-chatbot-explore" id="aryan-chatbot-explore-panel" role="tabpanel"
           aria-labelledby="aryan-chatbot-explore-tab">
           <div class="aryan-chatbot-explore-toolbar">
-            <span class="aryan-chatbot-kicker">The connected portfolio</span>
+            <span class="aryan-chatbot-kicker">Portfolio explorer</span>
           </div>
           <div class="aryan-chatbot-canvas"></div>
         </section>
@@ -131,9 +145,12 @@
   const $ = (selector) => host.querySelector(selector);
   const launcher = $(".aryan-chatbot-launcher");
   const intro = document.querySelector(".aryan-chatbot-intro");
-  if (intro) {
+  const heroTerminal = document.getElementById("hero-terminal");
+  if (intro && !heroTerminal) {
     intro.append(launcher);
     launcher.addEventListener("click", open);
+  } else if (launcher) {
+    launcher.style.display = "none";
   }
   const panel = $(".aryan-chatbot-panel");
   const log = $(".aryan-chatbot-log");
@@ -167,6 +184,98 @@
       ),
     ];
   }
+  function safeLink(link) {
+    if (!link || typeof link.label !== "string" || typeof link.href !== "string") return null;
+    try {
+      const url = new URL(link.href, document.baseURI);
+      if (!["https:", "http:", "mailto:"].includes(url.protocol)) return null;
+      return { label: link.label.slice(0, 100), href: url.href };
+    } catch {
+      return null;
+    }
+  }
+  function getItem(id) {
+    const item = state.items.get(id);
+    if (item) {
+      const card = [...document.querySelectorAll(".work-entry[data-node]")]
+        .find((node) => node.dataset.node === id);
+      const repository = card?.querySelector('a[href^="https://github.com/"]');
+      const portfolioHref = new URL(`#${id}`, document.baseURI).href;
+      return {
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        kind: item.kind,
+        url: repository?.href || portfolioHref,
+        portfolioHref,
+      };
+    }
+    const resume = new URL("../resume/index.html", base).href;
+    const destinations = {
+      about: {
+        title: "About Aryan", description: state.data?.about.introduction || "AI engineering and autonomous systems.",
+        kind: "about", url: new URL("#about", document.baseURI).href,
+      },
+      skills: {
+        title: "Skills & tools", description: state.data?.skills.core.join(" · ") || "Explore Aryan's technical skills.",
+        kind: "skills", url: resume,
+      },
+      education: {
+        title: "Education", description: "BSc in Data Science, AI & Digital Business at GISMA University of Applied Sciences.",
+        kind: "education", url: resume,
+      },
+      contact: {
+        title: "Get in touch", description: "Email Aryan or connect on LinkedIn.",
+        kind: "contact", url: contactLinks[0].href,
+      },
+    };
+    const destination = Object.prototype.hasOwnProperty.call(destinations, id) ? destinations[id] : null;
+    return destination ? { id, ...destination, portfolioHref: destination.url } : null;
+  }
+  function normalizeResult(response) {
+    const action = allowedActions.has(response.action) ? response.action : "message";
+    let items = Array.isArray(response.items)
+      ? [...new Set(response.items.filter((id) => typeof id === "string" && getItem(id)))].slice(0, 10)
+      : [];
+    if (action === "show_projects" || action === "show_experience") {
+      const kind = action === "show_projects" ? "project" : "experience";
+      items = items.filter((id) => state.items.get(id)?.kind === kind);
+      if (!items.length) items = [...state.items.values()].filter((item) => item.kind === kind).map((item) => item.id);
+    } else if (action === "show_skills") items = ["skills"];
+    else if (action === "show_education") items = ["education"];
+
+    let answer = String(response.answer || "").slice(0, 1400);
+    // Lists must remain useful in either the small terminal or the full chat.
+    // Remote and older FAQ responses may describe a list without naming it.
+    if (["show_projects", "show_experience"].includes(action) &&
+        !items.some((id) => normalize(answer).includes(normalize(getItem(id).title)))) {
+      answer = `${answer}\n${items.map((id) => {
+        const item = getItem(id);
+        return `- **${item.title}** — ${state.items.get(id).field}`;
+      }).join("\n")}`.slice(0, 1400);
+    }
+    const links = (Array.isArray(response.links) ? response.links : []).map(safeLink).filter(Boolean);
+    items.forEach((id) => {
+      const item = getItem(id);
+      if (id === "contact") links.push(...contactLinks.map(safeLink));
+      else if (id === "skills" || id === "education") {
+        links.push({ label: "View résumé", href: item.url });
+        if (id === "skills") links.push(safeLink(contactLinks[2]));
+      } else if (id === "about") {
+        links.push({ label: "A bit about me", href: item.url });
+        links.push({ label: "View résumé", href: new URL("../resume/index.html", base).href });
+      } else {
+        links.push({ label: `${item.title}${item.url !== item.portfolioHref ? " · GitHub" : " · Portfolio"}`, href: item.url });
+      }
+    });
+    return {
+      ...response,
+      action,
+      answer,
+      items,
+      links: links.filter((link, index) => link && links.findIndex((other) => other?.href === link.href) === index).slice(0, 12),
+    };
+  }
   function saveHistory() {
     try {
       sessionStorage.setItem(
@@ -192,6 +301,9 @@
         .map((entry) => ({
           role: entry.role,
           text: entry.text.slice(0, 1400),
+          action: allowedActions.has(entry.action) ? entry.action : "message",
+          items: Array.isArray(entry.items) ? entry.items.filter((id) => typeof id === "string").slice(0, 10) : [],
+          links: Array.isArray(entry.links) ? entry.links.map(safeLink).filter(Boolean).slice(0, 12) : [],
         }));
     } catch {
       return [];
@@ -240,7 +352,41 @@
       }
     }
   }
-  function addMessage(role, message, remember = true) {
+  function appendMessageResults(row, response) {
+    if (!response) return;
+    const results = el("div", "aryan-chatbot-message-results");
+    (response.items || []).forEach((id) => {
+      const item = getItem(id);
+      if (!item || !["project", "experience"].includes(item.kind)) return;
+      const button = el("button", "aryan-chatbot-result");
+      button.type = "button";
+      button.dataset.itemId = item.id;
+      button.setAttribute("aria-label", `Read about ${item.title}`);
+      button.append(
+        el("span", "aryan-chatbot-result-kind", item.kind === "project" ? "Project" : "Experience"),
+        el("span", "aryan-chatbot-result-title", item.title),
+        el("span", "aryan-chatbot-result-description", item.description.length > 145 ? `${item.description.slice(0, 142)}…` : item.description),
+      );
+      results.append(button);
+    });
+    if (results.childElementCount) row.append(results);
+    const links = el("div", "aryan-chatbot-message-links");
+    (response.links || []).map(safeLink).filter(Boolean).forEach((destination) => {
+      const link = el("a", "aryan-chatbot-message-link", `${destination.label} ↗`);
+      link.href = destination.href;
+      const url = new URL(destination.href, document.baseURI);
+      if (["https:", "http:"].includes(url.protocol) && url.origin !== location.origin) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      if (url.origin === location.origin && url.pathname === location.pathname && url.hash) {
+        link.dataset.portfolioDestination = decodeURIComponent(url.hash.slice(1));
+      }
+      links.append(link);
+    });
+    if (links.childElementCount) row.append(links);
+  }
+  function addMessage(role, message, remember = true, response = null) {
     const row = el("div", `aryan-chatbot-message aryan-chatbot-${role}`);
     row.append(
       el(
@@ -255,44 +401,56 @@
     );
 
     if (role === "assistant") {
-      appendAssistantMarkdown(content, message);
+      const hasCollection = response?.items?.length &&
+        ["show_projects", "show_experience"].includes(response.action);
+      // The linked cards carry the list; avoid repeating it as a second list.
+      const introduction = hasCollection
+        ? String(message).split("\n").find((line) => line.trim()) || message
+        : message;
+      appendAssistantMarkdown(content, introduction);
     } else {
       content.textContent = String(message);
     }
 
     row.append(content);
+    if (role === "assistant") appendMessageResults(row, response);
     log.append(row);
     log.scrollTop = log.scrollHeight;
+    if (role === "assistant" && row.querySelector(".aryan-chatbot-message-results")) {
+      log.scrollTop += row.getBoundingClientRect().top - log.getBoundingClientRect().top;
+    }
     if (remember) {
-      state.history.push({ role, text: String(message).slice(0, 1400) });
+      state.history.push({
+        role,
+        text: String(message).slice(0, 1400),
+        ...(response ? { action: response.action, items: response.items, links: response.links } : {}),
+      });
       state.history = state.history.slice(-40);
       saveHistory();
     }
   }
   function setSuggestions(questions) {
     suggestionsList.replaceChildren();
-    [...new Set(questions)].slice(0, 8).forEach((question) => {
-      const button = el("button", "aryan-chatbot-suggestion", question);
+    [...new Set(questions)].slice(0, 4).forEach((question) => {
+      const label = starters.find((starter) => starter.question === question)?.label || question;
+      const button = el("button", "aryan-chatbot-suggestion", label);
       button.type = "button";
       button.dataset.question = question;
+      button.disabled = state.busy;
       suggestionsList.append(button);
     });
   }
   function contextualSuggestions() {
-    if (state.selected) {
-      return [
-        "What technologies does it use?",
-        "What is this work about?",
-        "Show related projects",
-        "Show me his other projects",
-      ];
-    }
-    return state.data?.faq.slice(0, 8).map((item) => item.question) || [];
+    return starters.map((item) => item.question);
   }
   function setBusy(value) {
     state.busy = value;
     input.disabled = value;
     sendButton.disabled = value;
+    panel.setAttribute("aria-busy", String(value));
+    host.querySelectorAll("[data-question], [data-action=clear]").forEach((button) => {
+      button.disabled = value;
+    });
     sendButton.textContent = value ? "…" : "↗";
     sendButton.setAttribute(
       "aria-label",
@@ -324,13 +482,16 @@
     panel.setAttribute("aria-hidden", "false");
     launcher.setAttribute("aria-expanded", "true");
     document.body.classList.add("aryan-chatbot-scroll-lock");
-    if (page) page.inert = true;
+    if (page) {
+      state.pageWasInert = page.inert;
+      page.inert = true;
+    }
     requestAnimationFrame(() => {
       if (host.classList.contains("aryan-chatbot-open")) {
         (state.tab === "explore" &&
         window.matchMedia("(max-width: 680px)").matches
           ? $('.aryan-chatbot-tab[data-tab="explore"]')
-          : input
+          : input.disabled ? panel : input
         ).focus();
       }
     });
@@ -343,7 +504,7 @@
     panel.setAttribute("aria-hidden", "true");
     launcher.setAttribute("aria-expanded", "false");
     document.body.classList.remove("aryan-chatbot-scroll-lock");
-    if (page) page.inert = false;
+    if (page) page.inert = state.pageWasInert;
     if (reset) {
       state.view = "overview";
       state.selected = null;
@@ -351,7 +512,16 @@
       setTab("chat");
       renderCanvas();
     }
-    if (restoreFocus) launcher.focus({ preventScroll: true });
+    if (restoreFocus) {
+      const previous = state.lastFocus;
+      const target = previous?.isConnected && previous !== document.body &&
+        previous !== document.documentElement && !previous.disabled &&
+        !previous.closest("[inert]") && previous.getClientRects().length
+        ? previous
+        : heroTerminal?.querySelector(".dot-max") ||
+          heroTerminal?.querySelector("input, button") || launcher;
+      target?.focus({ preventScroll: true });
+    }
   }
 
   function navigation() {
@@ -462,6 +632,13 @@
     section.append(el("p", "", state.data.about.hobbies.join(" · ")));
     canvas.append(section);
   }
+  function renderContact() {
+    canvas.append(viewHeader("Let's talk.", "For a project, a role, or a conversation about the work."));
+    const section = el("div", "aryan-chatbot-detail");
+    section.append(el("p", "", "You can reach Aryan at aryanmishraa12@gmail.com, connect on LinkedIn, or browse his open-source work on GitHub."));
+    appendMessageResults(section, { links: contactLinks });
+    canvas.append(section);
+  }
   function renderDetailView(item) {
     const detail = el("div", "aryan-chatbot-detail");
     const back = el("button", "aryan-chatbot-back", "← Back to the work");
@@ -531,6 +708,7 @@
     } else if (view === "skills") renderSkills();
     else if (view === "education") renderEducation();
     else if (view === "about") renderAbout();
+    else if (view === "contact") renderContact();
     else if (
       view === "projects" ||
       view === "experience" ||
@@ -582,6 +760,10 @@
       setTab("explore");
   }
   function showItem(id, switchMobile = true) {
+    if (["about", "skills", "education", "contact"].includes(id)) {
+      showView(id, null, switchMobile);
+      return true;
+    }
     const item = state.items.get(id);
     if (!item) return false;
     if (state.view !== "detail") state.previousView = state.view;
@@ -595,6 +777,10 @@
     return true;
   }
   function focusPortfolioCard(id) {
+    if (typeof window.PortfolioWork?.openNode === "function") {
+      close(false, false);
+      return window.PortfolioWork.openNode(id);
+    }
     const card = [...document.querySelectorAll(".work-entry[data-node]")].find(
       (element) => element.dataset.node === id,
     );
@@ -663,6 +849,7 @@
         break;
       default:
         if (response.items?.includes("about")) showView("about", null, false);
+        else if (response.items?.includes("contact")) showView("contact", null, false);
     }
     if (
       action !== "message" &&
@@ -728,11 +915,21 @@
   function searchLocal(question) {
     const query = normalize(question);
     const selected = state.items.get(state.selected);
+    if (/\b(contact|email|linkedin|reach|get in touch)\b/.test(query)) {
+      return {
+        answer: "Email Aryan at aryanmishraa12@gmail.com, connect on LinkedIn, or explore his open-source work on GitHub.",
+        action: "message",
+        items: ["contact"],
+      };
+    }
+    if (/\b(who is aryan|about aryan|about him|introduce aryan)\b/.test(query)) {
+      return { answer: state.data.about.introduction, action: "message", items: ["about"] };
+    }
     const complex =
       /\b(connect\w*|compar\w*|evolv\w*|best|better|why|learn\w*|challeng\w*|next steps|recommend\w*)\b/i.test(
         question,
       );
-    if (selected && !complex) {
+    if (selected && !complex && /\b(it|this|that|selected|related)\b/.test(query)) {
       if (
         /\b(tech\w*|technolog\w*|stack|tools?|languages?|built with)\b/i.test(
           question,
@@ -741,6 +938,7 @@
         return {
           answer: `${selected.title} uses ${selected.technologies.join(", ")}.`,
           action: "message",
+          items: [selected.id],
         };
       }
       if (/\b(related|connected)\b/i.test(question)) {
@@ -758,7 +956,7 @@
         /\b(about|summary|overview|does it do)\b/i.test(question) &&
         /\b(this|it|project|work|experience)\b/i.test(question)
       ) {
-        return { answer: selected.description, action: "message" };
+        return { answer: selected.description, action: "message", items: [selected.id] };
       }
     }
     if (complex) return null;
@@ -782,13 +980,13 @@
     }
     if (
       /\bprojects?\b/.test(query) &&
-      /\b(ai|artificial intelligence|machine learning|llm)\b/.test(query)
+      /\b(ai|artificial intelligence|ml|machine learning|deep learning|llm)\b/.test(query)
     ) {
       return {
         answer:
-          "OpenbookLM and A.D.S.A. are two projects focused on local AI and autonomous data science.",
+          "Three projects to explore:\n- **A.D.S.A.** — an autonomous agent for complete data science workflows.\n- **OpenbookLM** — a local AI workspace and coding agent, currently a work in progress.\n- **Zombie Shooter AI** — a reinforcement learning agent trained with Q-learning over 5,000+ episodes.",
         action: "show_projects",
-        items: ["openbooklm", "adsa"],
+        items: ["adsa", "openbooklm", "zombie"],
       };
     }
     const results = rankedItems(question);
@@ -802,7 +1000,7 @@
           query.includes(name) && (name.includes(" ") || name.length >= 6),
       );
     });
-    if (/^(does|do|has|have|is)\b/.test(query) && top.score >= 6) {
+    if (/^(does|do|has|have|is)\b/.test(query) && top?.score >= 6) {
       const evidence = results
         .filter(
           ({ item, score }) =>
@@ -817,7 +1015,7 @@
           items: evidence.map(({ item }) => item.id),
         };
     }
-    if (exactNamed && top.score >= 7) {
+    if (exactNamed && top?.score >= 7) {
       const item = exactNamed.item;
       return {
         answer: item.description,
@@ -834,19 +1032,19 @@
         action: "show_experience",
       };
     }
-    if (/\b(skills|tech stack|technologies|toolkit)\b/.test(query)) {
+    if (/\b(skills|tech stack|technologies|toolkit|tools|languages)\b/.test(query)) {
       return {
-        answer: "Here are the skills and tools mentioned on Aryan’s portfolio.",
+        answer: `Aryan works with ${state.data.skills.core.join(", ")}. His projects also use ${state.data.skills.toolsFromPortfolio.join(", ")}.`,
         action: "show_skills",
       };
     }
-    if (/\b(projects|portfolio)\b/.test(query) && top.score < 6) {
+    if (/\b(projects|portfolio|built|building)\b/.test(query) && (!top || top.score < 6)) {
       return {
         answer: "Here are the selected projects from Aryan’s portfolio.",
         action: "show_projects",
       };
     }
-    if (top.score < 6) return null;
+    if (!top || top.score < 6) return null;
     const matches = results
       .filter((entry) => entry.score >= 6 && entry.score >= top.score * 0.65)
       .slice(0, 4);
@@ -890,7 +1088,7 @@
     };
   }
 
-  async function askExternalAssistant(question, context) {
+  async function askExternalAssistant(question, context, signal) {
     if (!endpoint) return null;
     const url = new URL(endpoint, location.href);
     if (
@@ -900,7 +1098,10 @@
       throw new Error("Use an HTTPS endpoint for the external assistant.");
     }
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 12000);
+    const abort = () => controller.abort();
+    if (signal?.aborted) throw new DOMException("Query cancelled", "AbortError");
+    signal?.addEventListener("abort", abort, { once: true });
+    const timer = setTimeout(abort, 12000);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -921,6 +1122,7 @@
       return result;
     } finally {
       clearTimeout(timer);
+      signal?.removeEventListener("abort", abort);
     }
   }
   function externalContext(question) {
@@ -991,56 +1193,20 @@
   }
   async function ask(question, directFaq = null) {
     if (!state.data || state.busy) return;
-    const text = String(question).trim().slice(0, 500);
+    const text = String(question || "").trim().slice(0, 500);
     if (!text) return;
-    addMessage("user", text);
     input.value = "";
-    const comeback = trollReply(text);
-    if (comeback) {
-      addMessage("assistant", comeback);
-      return;
+    input.style.height = "";
+    setBusy(true);
+    try {
+      await queryAssistant(text, { directFaq });
+    } catch {
+      setBusy(false);
+      addMessage("assistant", "The assistant couldn’t load right now. Please try again.");
     }
-    const exactFaq =
-      directFaq ||
-      state.data.faq.find(
-        (entry) => normalize(entry.question) === normalize(text),
-      );
-    let result = exactFaq;
-
-    if (!result && endpoint) {
-      setBusy(true);
-
-      try {
-        const remote = await askExternalAssistant(text, externalContext(text));
-
-        // A classified jab takes priority over a local project match.
-        // Genuine questions still use the existing local actions when available.
-        result =
-          remote.kind === "jab" || remote.kind === "identity"
-            ? remote
-            : findFaq(text) || searchLocal(text) || remote;
-      } catch {
-        result = findFaq(text) ||
-          searchLocal(text) || {
-            answer:
-              "The online assistant could not respond right now. Try a specific project or skill.",
-            action: "message",
-          };
-      } finally {
-        setBusy(false);
-      }
+    if (host.classList.contains("aryan-chatbot-open") && state.tab === "chat") {
+      input.focus({ preventScroll: true });
     }
-
-    if (!result) {
-      result = findFaq(text) ||
-        searchLocal(text) || {
-          answer:
-            "I can show you what is in the portfolio, but the open-ended assistant is not connected yet.",
-          action: "message",
-        };
-    }
-    addMessage("assistant", String(result.answer).slice(0, 1400));
-    handleAssistantAction(result);
   }
   async function loadKnowledge() {
     if (state.loading) return state.loading;
@@ -1054,7 +1220,9 @@
     ];
     state.loading = Promise.all(
       names.map(async (name) => {
-        const response = await fetch(new URL(`data/${name}.json`, base));
+        const url = new URL(`data/${name}.json`, base);
+        if (knowledgeVersion) url.searchParams.set("v", knowledgeVersion);
+        const response = await fetch(url, { cache: "no-cache" });
         if (!response.ok) throw new Error(`Cannot load ${name}.json`);
         return [name, await response.json()];
       }),
@@ -1073,17 +1241,25 @@
             })),
           ].map((item) => [item.id, item]),
         );
+        state.data.projects = state.data.projects.map((item) => state.items.get(item.id));
+        state.data.experience = state.data.experience.map((item) => state.items.get(item.id));
         renderCanvas();
+        // Stored messages are painted again once their linked items are loaded.
+        log.replaceChildren();
+        state.history.forEach((entry) => addMessage(entry.role, entry.text, false, entry));
+        const latestResult = [...state.history].reverse().find((entry) =>
+          entry.role === "assistant" && (entry.items?.length || (entry.action && entry.action !== "message")));
+        if (latestResult) handleAssistantAction(latestResult);
         setSuggestions(contextualSuggestions());
         setBusy(false);
         if (state.history.length === 0) {
           addMessage(
             "assistant",
-            "Hi, I’m a guide to Aryan’s portfolio. Ask about a project or skill, and I’ll pull the relevant work into the canvas beside our conversation.",
+            "Hi, I’m Aryan’s portfolio guide. Ask about the work, experience, or tools. I’ll bring up the relevant projects and links as we talk.",
           );
         }
       })
-      .catch(() => {
+      .catch((error) => {
         state.loading = null;
         addMessage(
           "assistant",
@@ -1097,6 +1273,7 @@
         retry.type = "button";
         retry.dataset.action = "retry";
         suggestionsList.replaceChildren(retry);
+        throw error;
       });
     return state.loading;
   }
@@ -1108,10 +1285,24 @@
     el("span", "aryan-chatbot-empty", "Loading suggested questions…"),
   );
   state.history = readHistory();
-  state.history.forEach(({ role, text }) => addMessage(role, text, false));
-  loadKnowledge();
+  state.history.forEach((entry) => addMessage(entry.role, entry.text, false, entry));
+  void loadKnowledge().catch(() => {});
 
   host.addEventListener("click", (event) => {
+    const destination = event.target.closest("a[data-portfolio-destination]");
+    if (destination && host.contains(destination)) {
+      const id = destination.dataset.portfolioDestination;
+      if (state.items.has(id)) {
+        event.preventDefault();
+        focusPortfolioCard(id);
+      } else if (id === "about") {
+        event.preventDefault();
+        close(false, false);
+        document.getElementById("about-link")?.click();
+        document.getElementById("about")?.focus({ preventScroll: true });
+      }
+      return;
+    }
     const target = event.target.closest("button");
     if (!target || !host.contains(target)) return;
     if (target.dataset.tab) return setTab(target.dataset.tab, true);
@@ -1137,7 +1328,7 @@
         close();
         break;
       case "close":
-        close(true);
+        close();
         break;
       case "back":
         showView(
@@ -1145,7 +1336,7 @@
         );
         break;
       case "retry":
-        void loadKnowledge();
+        void loadKnowledge().catch(() => {});
         break;
       case "clear":
         if (state.busy) return;
@@ -1165,6 +1356,10 @@
   $(".aryan-chatbot-form").addEventListener("submit", (event) => {
     event.preventDefault();
     void ask(input.value);
+  });
+  input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = `${Math.min(input.scrollHeight, 110)}px`;
   });
   input.addEventListener("keydown", (event) => {
     if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
@@ -1194,7 +1389,7 @@
       if (event.key !== "Tab") return;
       const focusables = [
         ...panel.querySelectorAll(
-          "button:not(:disabled), textarea:not(:disabled)",
+          "button:not(:disabled), textarea:not(:disabled), a[href]",
         ),
       ].filter((item) => item.getClientRects().length && item.tabIndex >= 0);
       if (!focusables.length) return;
@@ -1212,8 +1407,72 @@
     true,
   );
 
+  function queryAssistant(question, options = {}) {
+    const text = String(question || "").trim().slice(0, 500);
+    if (!text) return Promise.resolve(null);
+    // Both the hero terminal and modal share one conversation. Serialize their
+    // requests so responses, history, and explore actions stay in order.
+    const query = async () => {
+      const { signal, directFaq } = options;
+      const checkCancelled = () => {
+        if (signal?.aborted) throw new DOMException("Query cancelled", "AbortError");
+      };
+      checkCancelled();
+      await loadKnowledge();
+      checkCancelled();
+      setBusy(true);
+      try {
+        addMessage("user", text);
+        const comeback = trollReply(text);
+        const exactFaq = directFaq || state.data.faq.find(
+          (entry) => normalize(entry.question) === normalize(text),
+        );
+        // Clear portfolio navigation resolves locally, including when a remote
+        // endpoint is configured. The endpoint handles open-ended questions.
+        let result = comeback
+          ? { answer: comeback, action: "message" }
+          : exactFaq || findFaq(text) || searchLocal(text);
+        if (!result && endpoint) {
+          try {
+            const remote = await askExternalAssistant(text, externalContext(text), signal);
+            checkCancelled();
+            result = remote.kind === "jab" || remote.kind === "identity"
+              ? remote
+              : findFaq(text) || searchLocal(text) || remote;
+          } catch (error) {
+            checkCancelled();
+            result = findFaq(text) || searchLocal(text) || {
+              answer: "The online assistant is unavailable right now. You can still explore the projects and experience below, or ask about a specific project or skill.",
+              action: "message",
+            };
+          }
+        }
+        checkCancelled();
+        if (!result) {
+          result = findFaq(text) || searchLocal(text) || {
+            answer: "I can help you explore the work in this portfolio. Try a project name, a skill, or ask about Aryan’s experience.",
+            action: "message",
+          };
+        }
+        // Return the same bounded answer that is saved to the conversation.
+        result = normalizeResult(result);
+        addMessage("assistant", result.answer, true, result);
+        handleAssistantAction(result);
+        return result;
+      } finally {
+        setBusy(false);
+      }
+    };
+    const pending = state.queryQueue.then(query, query);
+    state.queryQueue = pending.catch(() => {});
+    return pending;
+  }
+
   window.PortfolioAssistant = {
+    starters,
+    getItem,
     open,
+    ready: () => loadKnowledge(),
     close: () => close(),
     showProject: (id) => {
       if (state.items.get(id)?.kind !== "project") return false;
@@ -1226,5 +1485,6 @@
       return showItem(id);
     },
     focusPortfolioCard,
+    query: queryAssistant,
   };
 })();

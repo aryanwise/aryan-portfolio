@@ -5,7 +5,7 @@
   const mainNav = header?.querySelector('nav[aria-label="Main navigation"]');
   if (!header || !mainNav) return;
 
-  const isHome = Boolean(document.getElementById("open-work"));
+  const isHome = Boolean(document.getElementById("work"));
 
   const toggle = document.createElement("button");
   toggle.type = "button";
@@ -30,19 +30,21 @@
     ? [
         ["Work", "#work"],
         ["About me", "#about"],
-        ["Blogs", "blog/index.html"],
+        ["Logs", "blog/index.html"],
         ["Resume", "resume/index.html"],
       ]
     : [
         ["Work", "../index.html#work"],
         ["About me", "../index.html#about"],
-        ["Blogs", "index.html"],
+        ["Logs", "index.html"],
         ["Resume", "../resume/index.html"],
       ];
 
   items.forEach(([label, href], index) => {
     const link = document.createElement("a");
     link.href = href;
+    const currentPage = mainNav.querySelector('a[aria-current="page"]');
+    if (currentPage && currentPage.href === link.href) link.setAttribute("aria-current", "page");
     link.dataset.navTarget = ["work", "about", "blogs", "resume"][index];
 
     const number = document.createElement("span");
@@ -55,7 +57,19 @@
     arrow.textContent = "↗";
     arrow.setAttribute("aria-hidden", "true");
 
-    link.append(number, document.createTextNode(label), arrow);
+    if (label === "Logs") {
+      link.setAttribute("aria-label", "Logs");
+      const wordmark = document.createElement("span");
+      wordmark.className = "logs-label";
+      const fadedB = document.createElement("span");
+      fadedB.className = "logs-faded-b";
+      fadedB.textContent = "B";
+      fadedB.setAttribute("aria-hidden", "true");
+      wordmark.append(fadedB, document.createTextNode("logs"));
+      link.append(number, wordmark, arrow);
+    } else {
+      link.append(number, document.createTextNode(label), arrow);
+    }
     menu.append(link);
   });
 
@@ -68,24 +82,6 @@
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
   }
 
-  function openWork(event) {
-    if (!isHome) return;
-    event?.preventDefault();
-
-    const work = document.getElementById("work");
-
-    if (!work?.classList.contains("is-open")) {
-      document.getElementById("open-work").click();
-    } else {
-      document.querySelector(".work-open-controls")?.scrollIntoView({
-        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-        block: "start",
-      });
-    }
-  }
-
   toggle.addEventListener("click", () => setMenuOpen(menu.hidden));
 
   menu.addEventListener("click", (event) => {
@@ -94,18 +90,11 @@
 
     setMenuOpen(false);
 
-    if (link.dataset.navTarget === "work") openWork(event);
-
     if (link.dataset.navTarget === "about" && isHome) {
       if (document.getElementById("about")?.hidden) {
         document.querySelector(".about-toggle")?.click();
       }
     }
-  });
-
-  // Make the existing desktop Work link open the window too.
-  mainNav.querySelectorAll('a[href="#work"]').forEach((link) => {
-    link.addEventListener("click", openWork);
   });
 
   document.addEventListener("pointerdown", (event) => {
@@ -133,9 +122,6 @@
 
   function openDeepLink() {
     if (!isHome) return;
-
-    // Arriving from a blog's Work link opens the existing work window.
-    if (location.hash === "#work") openWork();
 
     if (
       location.hash === "#about" &&

@@ -2,7 +2,6 @@
 (() => {
   const storageKey = "aryan-portfolio-theme";
   const root = document.documentElement;
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
   function savedTheme() {
     try {
@@ -14,10 +13,11 @@
   }
 
   function applyTheme(theme) {
+    theme = theme === "light" ? "light" : "dark";
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = theme === "dark" ? "#090A0A" : "#F3EFE6";
+    if (meta) meta.content = theme === "dark" ? "#0D0E11" : "#F4F1EA";
 
     document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
       const dark = theme === "dark";
@@ -35,9 +35,9 @@
     });
   }
 
-  applyTheme(savedTheme() || (prefersDark.matches ? "dark" : "light"));
+  applyTheme(savedTheme() || "dark");
 
-  document.addEventListener("DOMContentLoaded", () => {
+  function initializeControls() {
     applyTheme(root.dataset.theme);
     document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -48,14 +48,17 @@
         applyTheme(next);
       });
     });
-  });
-
-  const systemThemeChanged = (event) => {
-    if (!savedTheme()) applyTheme(event.matches ? "dark" : "light");
-  };
-  if (prefersDark.addEventListener) {
-    prefersDark.addEventListener("change", systemThemeChanged);
-  } else if (prefersDark.addListener) {
-    prefersDark.addListener(systemThemeChanged);
   }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeControls, { once: true });
+  } else {
+    initializeControls();
+  }
+
+  // Keep the portfolio and notebook consistent when both are open in tabs.
+  window.addEventListener("storage", (event) => {
+    if (event.key === storageKey || event.key === null) {
+      applyTheme(savedTheme() || "dark");
+    }
+  });
 })();

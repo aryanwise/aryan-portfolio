@@ -1,0 +1,42 @@
+/* The same header on the portfolio and Logs; page content keeps its own width. */
+:root { --site-serif: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; }
+.site-header.shared-site-header {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100vw - 128px),1192px);
+  height: 96px;
+  min-height: 96px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  line-height: 1.6;
+}
+.site-header.shared-site-header .wordmark { display: flex; align-items: center; gap: 13px; color: var(--text); font: 550 16px/1.6 var(--sans); letter-spacing: .02em; white-space: nowrap; }
+.site-header.shared-site-header .wordmark-symbol { font: italic 600 36px/1 var(--site-serif); letter-spacing: -.06em; }
+.site-header.shared-site-header > nav[aria-label="Main navigation"] { display: flex; align-items: center; justify-content: flex-start; gap: 26px; width: auto; margin: 0; }
+.site-header.shared-site-header > nav[aria-label="Main navigation"] > a { display: inline-flex; align-items: center; padding: 10px 0; color: var(--text); font: 500 16px/1.6 var(--sans); white-space: nowrap; }
+.site-header.shared-site-header > nav[aria-label="Main navigation"] > a:hover { color: var(--accent-text); }
+.site-header.shared-site-header .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 38px; height: 38px; min-width: 38px; min-height: 38px; padding: 7px; border: 0; border-radius: 5px; background: transparent; color: var(--text); font: 700 11px/1.2 var(--mono); }
+.site-header.shared-site-header .theme-toggle:hover { background: var(--surface-hover); }
+.site-header.shared-site-header .theme-toggle-icon { font-size: 23px; line-height: 1; }
+.site-header.shared-site-header .theme-toggle-text { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.site-header.shared-site-header :is(a,button):focus-visible { outline: 2px solid var(--accent-text); outline-offset: 4px; }
+.logs-index-page .site-header.shared-site-header > nav[aria-label="Main navigation"] { gap: 20px; }
+@media(max-width:1100px) { .site-header.shared-site-header { width: calc(100vw - 80px); } }
+@media(max-width:850px) { .site-header.shared-site-header > nav[aria-label="Main navigation"] { gap: 19px; } }
+@media(max-width:767px) { .site-header.shared-site-header { width: calc(100vw - 48px); height: 80px; min-height: 80px; } }
+@media(max-width:700px) {
+  .site-header.shared-site-header { z-index: 30; gap: 10px; padding: 10px 0; }
+  .site-header.shared-site-header .wordmark > span:not(.wordmark-symbol) { display: none; }
+  .site-header.shared-site-header > nav[aria-label="Main navigation"] { flex: 0 0 auto; margin-left: auto; gap: 0; }
+  .site-header.shared-site-header .mobile-menu-button { box-shadow: none; border-radius: 4px; background: transparent; border-color: var(--border-subtle); color: var(--text); }
+  .site-header.shared-site-header .mobile-site-menu:not([hidden]) { box-shadow: 0 14px 32px var(--shadow); border-radius: 6px; }
+}
+@media(max-width:500px) { .site-header.shared-site-header { width: calc(100vw - 40px); }.site-header.shared-site-header .wordmark { gap: 9px; font-size: 14px; }.site-header.shared-site-header .wordmark-symbol { font-size: 31px; } }
+@media(max-width:360px) { .site-header.shared-site-header { width: calc(100vw - 32px); }.site-header.shared-site-header .wordmark { font-size: 13px; } }

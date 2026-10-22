@@ -4,214 +4,75 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090A0A">
-  <meta name="description" content="A note from Aryan Mishra's notebook.">
-  <script src="../theme.js"></script>
-  <title>Article — Aryan Mishra</title>
-  <link rel="stylesheet" href="../styles.css">
+  <meta name="theme-color" content="#0D0E11">
+  <meta name="description" content="Notes on machine learning, autonomy, and building things by Aryan Mishra.">
+  <script src="../theme.js?v=3"></script>
+  <title>Reading a log — Aryan Mishra</title>
+  <link rel="stylesheet" href="../styles.css?v=3.3">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked-katex-extension/lib/index.umd.js"></script>
   <link rel="stylesheet" href="../theme.css">
-  <style>
-    .entry-shell { max-width: 850px; margin: 0 auto; padding: clamp(35px, 6vw, 70px) 0 95px; }
-    .entry-back { display: inline-block; margin-bottom: 35px; color: var(--text-secondary); font: 550 12px/1.4 var(--mono, monospace); }
-    .entry-back:hover, .entry-series a:hover { color: var(--accent); }
-    .entry-context {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 8px 18px; padding: 13px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      color: var(--text-secondary); font: 500 12px/1.4 var(--mono, monospace);
-    }
-    .entry-kind { color: var(--accent); text-transform: uppercase; letter-spacing: .07em; }
-    .entry-content { margin-top: 39px; color: var(--text); font-size: 17px; line-height: 1.78; overflow-wrap: anywhere; }
-    .entry-content > :first-child { margin-top: 0; }
-    .entry-content h1, .entry-content h2, .entry-content h3 {
-      color: var(--text); font-family: var(--serif, sans-serif); font-weight: 550; line-height: 1.18;
-      letter-spacing: -.035em;
-    }
-    .entry-content h1 { font-size: clamp(38px, 5vw, 58px); margin-bottom: 23px; }
-    .entry-content h2 { font-size: clamp(27px, 3vw, 35px); margin: 48px 0 15px; }
-    .entry-content h3 { font-size: 22px; margin: 32px 0 11px; }
-    .entry-content p, .entry-content ul, .entry-content ol, .entry-content blockquote { margin: 0 0 21px; }
-    .entry-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-    .entry-content blockquote { margin-left: 0; padding: 4px 0 4px 20px; border-left: 3px solid var(--accent); color: var(--text-secondary); }
-    .entry-content img { max-width: 100%; height: auto; border-radius: 6px; }
-    .entry-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
-    .entry-content th, .entry-content td { padding: 8px 12px; border: 1px solid var(--border); }
-    .entry-content :not(pre) > code {
-      padding: 2px 5px; border-radius: 3px; background: var(--bg-secondary);
-      font-size: .88em;
-    }
-    .entry-content pre {
-      margin: 0; padding: 38px 20px 20px; overflow-x: auto; border: 1px solid var(--border);
-      border-radius: 6px; background: var(--code-surface, var(--bg-secondary));
-      color: var(--text); font-size: 14px; line-height: 1.55;
-    }
-    .entry-code { position: relative; margin: 26px 0; }
-    .entry-code button {
-      position: absolute; top: 8px; right: 10px; padding: 5px 9px; border: 1px solid var(--border);
-      border-radius: 4px; background: var(--surface-elevated); color: var(--text-secondary);
-      font: 500 11px/1.2 var(--mono, monospace); cursor: pointer;
-    }
-    .entry-code button:hover { color: var(--text); border-color: var(--accent); }
-    .katex-display { margin: 1.4em 0 !important; overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
-    .entry-series { margin-top: 54px; padding-top: 25px; border-top: 1px solid var(--border); }
-    .entry-series h2 { margin: 0 0 17px; color: var(--text); font: 550 24px/1.2 var(--serif, sans-serif); }
-    .entry-series p { color: var(--text-secondary); margin: 0 0 17px; }
-    .entry-series-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .entry-series-links a {
-      display: block; min-height: 90px; padding: 15px; border: 1px solid var(--border);
-      border-radius: 6px; background: var(--surface); color: var(--text);
-      font-size: 14px; line-height: 1.45;
-    }
-    .entry-series-links a span { display: block; margin-bottom: 6px; color: var(--accent); font: 500 11px/1.4 var(--mono, monospace); text-transform: uppercase; }
-    .entry-series .entry-course-link { display: inline-block; margin-top: 20px; color: var(--accent); font: 550 12px/1.4 var(--mono, monospace); }
-    .entry-shell :is(a, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    @media (max-width: 700px) {
-      .site-header .wordmark > span:not(.wordmark-symbol) { display: none !important; }
-      .entry-shell { padding: 40px 0 65px; }
-      .entry-content { margin-top: 30px; font-size: 16px; }
-      .entry-series-links { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="./logs.css?v=5">
+  <link rel="stylesheet" href="./reader.css?v=4">
+  <script defer src="./reader.js?v=4"></script>
 </head>
 
-<body>
+<body class="logs-page logs-reader-page">
+  <a class="skip-link" href="#content">Skip to article</a>
   <div class="page-shell">
-    <header class="site-header blog-header">
+    <header class="site-header logs-header">
       <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
         <span class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span>
       </a>
       <nav aria-label="Main navigation">
-        <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
+        <a class="nav-back-link" href="./index.html">← Back to logs</a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" aria-pressed="false">
           <span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light mode</span>
         </button>
       </nav>
     </header>
 
-    <main class="entry-shell">
-      <a class="entry-back" id="entry-back" href="./index.html">← Back to notebook</a>
-      <div class="entry-context" id="entry-context" hidden>
-        <span class="entry-kind" id="entry-kind"></span>
-        <span id="entry-meta"></span>
+    <main class="reader-shell" id="reader-main">
+      <div class="reader-layout" id="reader-layout">
+        <aside class="reader-sidebar" id="reader-sidebar" aria-label="Reading navigation" hidden>
+          <div class="reader-sidebar-inner">
+            <details class="reader-disclosure reader-lessons" id="reader-lessons" open hidden>
+              <summary>Lessons <span class="reader-count" id="reader-lesson-count"></span><span class="reader-summary-mark" aria-hidden="true">+</span></summary>
+              <div class="reader-disclosure-body">
+                <a class="reader-course-title" id="reader-course-title"></a>
+                <ol class="reader-lesson-list" id="reader-lesson-list"></ol>
+              </div>
+            </details>
+          </div>
+        </aside>
+
+        <div class="reader-document">
+          <div class="reader-outline" id="reader-outline" hidden>
+            <button class="reader-outline-trigger" id="reader-outline-trigger" type="button" aria-label="On this page" aria-expanded="false" aria-controls="reader-outline-panel">
+              <span class="reader-outline-label">On this page</span>
+              <span class="reader-outline-bars" id="reader-outline-bars" aria-hidden="true"></span>
+              <span class="reader-outline-toggle-mark" aria-hidden="true">+</span>
+            </button>
+            <nav class="reader-outline-panel" id="reader-outline-panel" aria-label="On this page" hidden>
+              <span class="reader-outline-panel-title">On this page</span>
+              <ol class="reader-outline-list" id="reader-outline-list"></ol>
+            </nav>
+          </div>
+          <div class="entry-context" id="entry-context" hidden>
+            <span class="entry-kind" id="entry-kind"></span>
+            <span class="entry-meta" id="entry-meta"></span>
+          </div>
+          <article class="entry-content" id="content" aria-label="Article" aria-busy="true" tabindex="-1"><p class="reader-loading" role="status">Opening the log…</p></article>
+          <nav class="entry-series" id="entry-series" aria-label="Previous and next lessons" hidden>
+            <div class="entry-series-links" id="entry-series-links"></div>
+          </nav>
+          <a class="reader-return" id="entry-back" href="./index.html">← Back to Logs</a>
+        </div>
       </div>
-      <article class="entry-content" id="content" aria-label="Article"><p>Loading the article…</p></article>
-      <nav class="entry-series" id="entry-series" aria-label="Course navigation" hidden>
-        <h2 id="entry-series-title"></h2>
-        <p id="entry-series-description"></p>
-        <div class="entry-series-links" id="entry-series-links"></div>
-        <a class="entry-course-link" id="entry-course-link" href="./index.html">Explore the full course ↗</a>
-      </nav>
     </main>
   </div>
-
-  <script>
-    (() => {
-      "use strict";
-      const content = document.getElementById("content");
-      const file = new URLSearchParams(location.search).get("file");
-      const metadataPattern = /^\uFEFF?<!--\s*portfolio-post\s*\r?\n[\s\S]*?\r?\n-->\s*/;
-      function el(tag, className, text) {
-        const element = document.createElement(tag);
-        if (className) element.className = className;
-        if (text != null) element.textContent = text;
-        return element;
-      }
-      function showError(message) {
-        content.replaceChildren(el("p", "", message));
-      }
-      function niceDate(iso) {
-        return new Intl.DateTimeFormat("en-US", {
-          month: "short", day: "numeric", year: "numeric", timeZone: "UTC",
-        }).format(new Date(iso + "T12:00:00Z"));
-      }
-      function addCodeButtons() {
-        content.querySelectorAll("pre").forEach((pre) => {
-          const wrapper = el("div", "entry-code");
-          const button = el("button", "", "Copy");
-          button.type = "button";
-          button.setAttribute("aria-label", "Copy code block");
-          button.addEventListener("click", async () => {
-            try {
-              await navigator.clipboard.writeText(pre.querySelector("code")?.textContent || pre.textContent);
-              button.textContent = "Copied";
-              setTimeout(() => { button.textContent = "Copy"; }, 1600);
-            } catch {
-              button.textContent = "Unavailable";
-              setTimeout(() => { button.textContent = "Copy"; }, 1600);
-            }
-          });
-          pre.replaceWith(wrapper);
-          wrapper.append(pre, button);
-        });
-      }
-      function renderSeries(post, catalog) {
-        if (post.kind !== "course") return;
-        const course = catalog.courses.find((item) => item.id === post.course);
-        if (!course) return;
-        const lessons = catalog.posts.filter((item) => item.course === post.course)
-          .sort((a, b) => a.lesson - b.lesson);
-        const position = lessons.findIndex((item) => item.file === post.file);
-        const series = document.getElementById("entry-series");
-        series.hidden = false;
-        document.getElementById("entry-series-title").textContent = course.title;
-        document.getElementById("entry-series-description").textContent =
-          "Lesson " + post.lesson + " · " + lessons.length +
-          (lessons.length === 1 ? " lesson published." : " lessons published.");
-        const links = document.getElementById("entry-series-links");
-        for (const [item, label] of [
-          [lessons[position - 1], "← Previous lesson"],
-          [lessons[position + 1], "Next lesson →"],
-        ]) {
-          if (!item) continue;
-          const link = el("a", "");
-          link.href = "post.html?file=" + encodeURIComponent(item.file);
-          link.append(el("span", "", label), document.createTextNode(item.title));
-          links.append(link);
-        }
-        document.getElementById("entry-course-link").href = "index.html?course=" + encodeURIComponent(course.id);
-      }
-      async function load() {
-        if (!file) return showError("Choose a post from the notebook to read it here.");
-        try {
-          const catalogResponse = await fetch("../posts/posts.json", { cache: "no-cache" });
-          if (!catalogResponse.ok) throw new Error("Cannot load the posts catalog");
-          const catalog = await catalogResponse.json();
-          if (!Array.isArray(catalog.posts)) throw new Error("Invalid posts catalog");
-          const post = catalog.posts.find((item) => item.file === file);
-          if (!post) return showError("This post is not listed in the notebook.");
-          const response = await fetch("../posts/" + post.file);
-          if (!response.ok) throw new Error("The Markdown file could not be loaded.");
-          let markdown = (await response.text()).replace(metadataPattern, "");
-          if (!window.marked) throw new Error("The Markdown renderer did not load. Try refreshing the page.");
-          if (window.markedKatex && window.katex) {
-            marked.use(markedKatex({ throwOnError: false, nonStandard: true }));
-          }
-          content.innerHTML = marked.parse(markdown);
-          if (!content.querySelector("h1")) content.prepend(el("h1", "", post.title));
-          addCodeButtons();
-          const course = catalog.courses.find((item) => item.id === post.course);
-          document.getElementById("entry-kind").textContent = post.kind === "course"
-            ? (course?.title || "Course") + " / Lesson " + String(post.lesson).padStart(2, "0")
-            : ({ daily: "Daily note", essay: "Essay", "project-log": "Project log" })[post.kind] || "Note";
-          document.getElementById("entry-meta").textContent =
-            niceDate(post.date) + " · " + post.readMinutes + " min read";
-          document.getElementById("entry-context").hidden = false;
-          document.getElementById("entry-back").href = post.kind === "course"
-            ? "index.html?course=" + encodeURIComponent(post.course)
-            : "index.html?view=daily";
-          document.title = post.title + " — Aryan's Notebook";
-          document.querySelector('meta[name="description"]').content = post.summary;
-          renderSeries(post, catalog);
-        } catch (error) {
-          showError(error.message || "This post could not be loaded.");
-        }
-      }
-      load();
-    })();
-  </script>
 </body>
 
 </html>

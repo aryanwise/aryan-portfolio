@@ -6,7 +6,7 @@
 :root,
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #F3EFE6;
+  --bg: #F4F1EA;
   --bg-secondary: #EBE6DC;
   --surface: #F8F4EC;
   --surface-elevated: #FFFCF5;
@@ -16,19 +16,20 @@
   --text-muted: #514D46;
   --border: #CBC4B8;
   --border-subtle: #DDD6CA;
-  --accent: #D97757;
-  --accent-hover: #C96748;
-  --accent-text: #9F5037;
-  --accent-muted: rgba(217, 119, 87, .12);
+  --accent: #B85D3B;
+  --accent-hover: #A54F30;
+  --accent-text: #B85D3B;
+  --accent-muted: rgba(184, 93, 59, .12);
   --work-rule: #D5A28F;
   --mint: #22B98A;
   --mint-muted: rgba(34, 185, 138, .10);
   --shadow: rgba(45, 38, 30, .10);
-  --accent-glow: rgba(217, 119, 87, .16);
-  --on-accent: #0A0A0A;
+  --accent-glow: rgba(184, 93, 59, .20);
+  --on-accent: #FFFFFF;
   --code-surface: #EAE4D9;
   --scrim: rgba(23, 23, 23, .36);
   --traffic-yellow: #F4BC55;
+  --grid-dot-pattern: radial-gradient(rgba(20, 20, 20, 0.10) 1px, transparent 1px);
   /* Aliases used by the existing CSS. */
   --cream: var(--bg);
   --ink: var(--text);
@@ -42,29 +43,30 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #090A0A;
-  --bg-secondary: #0D0F0F;
-  --surface: #111313;
-  --surface-elevated: #171919;
-  --surface-hover: #1C1F1E;
+  --bg: #0D0E11;
+  --bg-secondary: #121418;
+  --surface: #16181D;
+  --surface-elevated: #1C1F25;
+  --surface-hover: #232730;
   --text: #fffcf5;
   --text-secondary: #fffcf5;
   --text-muted: #BCB7AE;
-  --border: #32302D;
-  --border-subtle: #1D1E1D;
-  --accent: #E09473;
-  --accent-hover: #F0A184;
-  --accent-text: #D99B80;
-  --accent-muted: rgba(224, 148, 115, .12);
+  --border: #2D313A;
+  --border-subtle: #1C1F26;
+  --accent: #B85D3B;
+  --accent-hover: #D97757;
+  --accent-text: #E09473;
+  --accent-muted: rgba(184, 93, 59, .18);
   --work-rule: #976A57;
   --mint: #59E6BA;
   --mint-muted: rgba(89, 230, 186, .12);
   --shadow: rgba(0, 0, 0, .45);
-  --accent-glow: rgba(224, 148, 115, .18);
-  --on-accent: #090A0A;
-  --code-surface: #0D0F0F;
+  --accent-glow: rgba(184, 93, 59, .24);
+  --on-accent: #FFFFFF;
+  --code-surface: #121418;
   --scrim: rgba(0, 0, 0, .7);
   --traffic-yellow: #E8B759;
+  --grid-dot-pattern: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
 }
 
 html {

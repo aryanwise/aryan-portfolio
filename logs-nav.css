@@ -1,0 +1,22 @@
+/* A quiet nod to “Blogs”: the B recedes while the logs stay readable. */
+.logs-label {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    white-space: nowrap;
+}
+
+.logs-faded-b {
+    color: inherit;
+    opacity: 0.22;
+    font: inherit;
+}
+
+@media (forced-colors: active) {
+    .logs-faded-b {
+        opacity: 0.4;
+    }
+}

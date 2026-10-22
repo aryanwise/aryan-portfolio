@@ -4,11 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#F3EFE6">
-  <script src="./theme.js"></script>
+  <meta name="theme-color" content="#0D0E11">
+  <script src="./theme.js?v=3"></script>
   <!-- Standard SEO -->
-  <title>Aryan</title>
-  <meta name="description" content="Aryan Mishra - Software Engineer">
+  <title>Aryan Mishra</title>
+  <meta name="description"
+    content="Aryan Mishra — AI engineering, autonomous systems, and applied math. Explore selected projects, experience, and notes from building things.">
 
   <!-- Open Graph (WhatsApp, Facebook, LinkedIn, Discord) -->
   <meta property="og:title" content="Aryan">
@@ -22,29 +23,37 @@
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23D97757'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23090A0A'%3Ea%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css?v=3.2">
-  <link rel="stylesheet" href="./chatbot/chatbot.css?v=3">
+  <link rel="stylesheet" href="./chatbot/chatbot.css?v=4">
   <link rel="stylesheet" href="./theme.css">
-  <script src="./app.js?v=3.2" defer></script>
+  <script src="./app.js?v=4.2" defer></script>
   <script>
     window.AskAryanConfig = {
       endpoint: 'https://ask-aryan.aryanmishraa12.workers.dev/api/chat'
     };
   </script>
-  <script src="./chatbot/chatbot.js?v=4" defer></script>
+  <script src="./chatbot/chatbot.js?v=10" defer></script>
+  <script src="./hero-showcase.js?v=2" defer></script>
+  <script src="./hero-terminal.js?v=5" defer></script>
   <link rel="stylesheet" href="./mobile-nav.css?v=1">
-  <script src="./mobile-nav.js?v=1" defer></script>
+  <link rel="stylesheet" href="./logs-nav.css?v=1">
+  <script src="./mobile-nav.js?v=5" defer></script>
+  <link rel="stylesheet" href="./hero-redesign.css?v=9">
+  <link rel="stylesheet" href="./chatbot/assistant-redesign.css?v=3">
+  <link rel="stylesheet" href="./site-header.css?v=1">
 </head>
 
 <body>
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
   <a class="skip-link" href="#work">Skip to the work</a>
   <div class="page-shell">
-    <header class="site-header">
+    <header class="site-header shared-site-header">
       <a class="wordmark" href="#top" aria-label="Aryan Mishra home">
         <span class="wordmark-symbol">am<span>·</span></span>
         <span>Aryan Mishra</span>
       </a>
       <nav aria-label="Main navigation">
-        <a href="blog/index.html" rel="noopener noreferrer">Blogs</a>
+        <a href="blog/index.html" rel="noopener noreferrer" aria-label="Logs"><span class="logs-label"><span
+              class="logs-faded-b" aria-hidden="true">B</span>logs</span></a>
         <a href="resume/index.html">Resume</a>
         <a href="#about" id="about-link">A bit about me</a>
         <a href="#work">The work</a>
@@ -55,6 +64,7 @@
     </header>
     <main id="top">
       <section class="intro aryan-chatbot-intro" aria-labelledby="intro-title">
+        <canvas id="hero-flow-canvas" class="hero-flow-canvas" aria-hidden="true"></canvas>
         <div class="intro-copy">
           <p class="eyebrow">
             <span class="little-rule" aria-hidden="true"></span>SIC<span
@@ -62,20 +72,85 @@
               style="color: var(--rust); letter-spacing: 0; margin: 0 -2px; display: inline-block;">•</span>MAGNA
           </p>
           <h1 id="intro-title">hi, <em>aryan</em> here.</h1>
+          <p class="hero-domain-subheader">AI ENGINEERING <span class="sub-sep">•</span> AUTONOMOUS SYSTEMS <span
+              class="sub-sep">•</span> APPLIED MATH</p>
           <p class="intro-text">I’ve always been curious about how things work when you take them apart—especially
-            things that act on their own, like code that learns or machines that move. Outside of that, it’s just Coffee
-            &amp; Formula 1</p>
+            things that act on their own, like code that learns or machines that move. Outside of that, it’s just coffee
+            &amp; Formula 1.</p>
           <div class="intro-foot">
             <button class="about-toggle" type="button" aria-expanded="false" aria-controls="about">
               <span class="round-arrow" aria-hidden="true">↓</span>
-              <span style="font-size: 1.15rem; font-weight: 500;">Read a little more</span>
+              <span>Read a little more</span>
             </button>
           </div>
         </div>
+
+        <div class="hero-terminal" id="hero-terminal" role="region" aria-label="Interactive portfolio chatbot terminal">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <button class="terminal-dot dot-close" type="button" title="Clear terminal"
+                aria-label="Clear terminal"></button>
+              <button class="terminal-dot dot-min" type="button" title="Minimize terminal"
+                aria-label="Minimize terminal"></button>
+              <button class="terminal-dot dot-max" type="button" title="Expand chatbot explorer"
+                aria-label="Expand chatbot explorer"></button>
+            </div>
+            <div class="terminal-title">ASK ARYAN <span class="terminal-title-extra">/ PORTFOLIO CHAT</span></div>
+            <div class="terminal-status" aria-label="Status: ready">
+              <span class="status-pulse" aria-hidden="true"></span>
+              <span class="status-text">READY</span>
+            </div>
+          </div>
+
+          <div class="terminal-body">
+            <div class="terminal-output" id="terminal-output" role="log" aria-live="polite">
+              <div class="terminal-line command-line">
+                <span class="terminal-prompt-symbol" aria-hidden="true">&gt;</span>
+                <span class="terminal-cmd">ask --about aryan</span>
+              </div>
+              <div class="terminal-line response-line" id="terminal-intro-response">
+                <span class="terminal-typewriter-text" id="terminal-typewriter-target">Curious about the work? Ask about
+                  a project, my experience, or the tools I use.</span>
+              </div>
+            </div>
+
+            <div class="terminal-pills-container">
+              <div class="terminal-prompts-heading">
+                <span class="terminal-pills-label">A PLACE TO START</span>
+                <button class="terminal-full-chat" type="button">Open full chat <span
+                    aria-hidden="true">↗</span></button>
+              </div>
+              <div class="terminal-pills" role="group" aria-label="Quick prompts">
+                <button type="button" class="terminal-pill" data-prompt="What has Aryan built?">What has he built? <span
+                    aria-hidden="true">↗</span></button>
+                <button type="button" class="terminal-pill" data-prompt="Where has Aryan worked?">Where has he worked?
+                  <span aria-hidden="true">↗</span></button>
+                <button type="button" class="terminal-pill" data-prompt="What tools does Aryan use?">What’s his tech
+                  stack? <span aria-hidden="true">↗</span></button>
+                <button type="button" class="terminal-pill" data-prompt="How can I contact Aryan?">How can I reach him?
+                  <span aria-hidden="true">↗</span></button>
+              </div>
+            </div>
+
+            <form class="terminal-input-form" id="terminal-form" autocomplete="off">
+              <label for="terminal-input" class="sr-only">Type a question for Ask Aryan terminal</label>
+              <span class="terminal-input-prefix" aria-hidden="true">&gt;</span>
+              <div class="terminal-input-wrapper">
+                <input type="text" class="terminal-input" id="terminal-input" placeholder="Type a question..."
+                  autocomplete="off" spellcheck="false" maxlength="200" />
+                <span class="terminal-cursor" aria-hidden="true">_</span>
+              </div>
+              <button type="submit" class="terminal-submit-btn" aria-label="Execute query">
+                <span>RUN</span>
+                <span aria-hidden="true">↵</span>
+              </button>
+            </form>
+          </div>
+        </div>
       </section>
-      <section class="about-panel" id="about" aria-labelledby="about-heading" hidden>
+      <section class="about-panel" id="about" aria-labelledby="about-heading" tabindex="-1" hidden>
         <div class="about-heading">
-          <p class="eyebrow">BEHIND THE SCENES</p>
+          <h2 id="about-heading" class="eyebrow">BEHIND THE SCENES</h2>
           <p class="intro-role">
             I’ve always been drawn to the space where messy data turns into clear decisions. Most days, that means
             teaching models how to reason through complex problems, cut through noise, and make sense of the world. But
@@ -111,71 +186,98 @@
               SCREEN</span>Swimming laps, Reading books and Touching grass.</p>
         </div>
       </section>
-      <section class="work-section" id="work" aria-labelledby="work-title">
+      <section class="work-section" id="work" aria-labelledby="work-title" data-view="cards" tabindex="-1">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">SELECTED PROJECTS & EXPERIENCE</p>
+            <p class="eyebrow"><span class="section-number">01 /</span> SELECTED PROJECTS &amp; EXPERIENCE</p>
             <h2 id="work-title">Different paths.<br><em>Connected ideas.</em></h2>
           </div>
-          <div class="work-context">
-            <p style="font-weight: 500;">A few things I’ve built,<br>and what they’ve taught me.</p>
-            <button class="work-launch-button" id="open-work" type="button" aria-expanded="false"
-              aria-controls="work-board">Click to view my work <span aria-hidden="true">↗</span></button>
-            <div class="work-open-controls" hidden>
-              <div class="work-mode-switch" role="group" aria-label="Choose work category">
-                <button class="work-mode-button" type="button" data-mode="experience" aria-pressed="true"
-                  aria-controls="work-board">Experience</button>
-                <button class="work-mode-button" type="button" data-mode="project" aria-pressed="false"
-                  aria-controls="work-board">Projects</button>
+          <p class="work-introduction">A few things I’ve built, and the
+            work behind them.</p>
+        </div>
+        <div class="work-toolbar">
+          <p id="work-view-hint">Pick an input. Follow a connection. Explore the work.</p>
+          <div class="work-view-switch" role="group" aria-label="Work presentation">
+            <button type="button" data-work-view="visual" aria-pressed="false" aria-controls="network-view"><svg
+                width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="m4 10 11-6M4 10l11 6" stroke="currentColor" />
+                <circle cx="4" cy="10" r="2" fill="currentColor" />
+                <circle cx="15" cy="4" r="2" fill="currentColor" />
+                <circle cx="15" cy="16" r="2" fill="currentColor" />
+              </svg>Visual view</button>
+            <button type="button" data-work-view="cards" aria-pressed="true" aria-controls="work-board"><svg width="15"
+                height="15" viewBox="0 0 18 18" fill="none" stroke="currentColor" aria-hidden="true">
+                <rect x="2" y="2" width="5" height="5" rx="1" />
+                <rect x="11" y="2" width="5" height="5" rx="1" />
+                <rect x="2" y="11" width="5" height="5" rx="1" />
+                <rect x="11" y="11" width="5" height="5" rx="1" />
+              </svg>Cards view</button>
+          </div>
+        </div>
+        <div class="network-view" id="network-view" hidden>
+          <div class="network-topbar"><span><span class="network-live-dot" aria-hidden="true"></span> THE WORK,
+              CONNECTED</span><button type="button" id="network-motion" aria-pressed="false">Pause animation <span
+                aria-hidden="true">Ⅱ</span></button></div>
+          <div class="network-layout">
+            <div class="network-graph" id="network-graph" role="group"
+              aria-label="Interactive neural network. Choose projects or experience, then select a work node.">
+              <div class="network-layer-label layer-input">01 / INPUT</div>
+              <div class="network-layer-label layer-hidden">02 / WORK NODES</div>
+              <svg class="network-connections" id="network-connections" aria-hidden="true"></svg>
+              <div class="network-inputs">
+                <button type="button" class="network-input" data-mode="project" aria-pressed="true"><span
+                    class="neuron-dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="1.4" aria-hidden="true">
+                      <rect x="4" y="5" width="16" height="14" rx="2" />
+                      <path d="m9 9-3 3 3 3m6-6 3 3-3 3" />
+                    </svg></span><span>Projects <small>06</small></span></button>
+                <button type="button" class="network-input" data-mode="experience" aria-pressed="false"><span
+                    class="neuron-dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="1.4" aria-hidden="true">
+                      <rect x="3" y="7" width="18" height="14" rx="2" />
+                      <path d="M8 7V3h8v4M3 12h18m-9-2v5" />
+                    </svg></span><span>Experience <small>04</small></span></button>
               </div>
-              <button class="work-close-button" id="close-work" type="button" aria-label="Close work window">×</button>
+              <div class="network-neurons" id="network-neurons"></div>
+              <span class="network-output-port" aria-hidden="true"></span>
+              <div class="network-graph-caption"><span class="graph-key" aria-hidden="true"></span><span
+                  id="network-caption">Each neuron is a project. Select one to look inside.</span></div>
             </div>
+            <aside class="node-inspector" id="node-inspector" aria-labelledby="inspector-title"></aside>
           </div>
+          <div class="network-bottom"><span>Ideas connect. That’s the interesting part.</span><span
+              id="network-selection">01 / 06 NODES</span></div>
         </div>
-        <div class="work-preview" aria-label="What I work on">
-          <p class="work-preview-heading">WHAT I WORK ON</p>
-          <div class="work-preview-grid">
-            <div class="work-preview-item"><span>01 / GEN AI &amp; AGENTS</span>
-              <p>Building agents that can safely write, debug, and run their own workflows.</p>
-            </div>
-            <div class="work-preview-item"><span>02 / APPLIED ML</span>
-              <p>Teaching models to make sense of data and forecast what comes next.</p>
-            </div>
-            <div class="work-preview-item"><span>03 / AUTONOMOUS SYSTEMS</span>
-              <p>Autonomous navigation and embedded C++ decision loops on physical hardware.</p>
-            </div>
-          </div>
-        </div>
-        <div class="work-board" id="work-board" role="region" aria-label="Projects and experience" aria-hidden="true"
-          tabindex="0" inert>
-          <div class="work-board-header">
-            <div><span class="work-board-eyebrow">A CLOSER LOOK</span>
-              <p class="work-board-title" id="work-board-title">Experience</p>
-            </div>
-            <p class="work-board-note"><span id="work-board-count">04 entries</span><span aria-hidden="true"> ·
-              </span>Scroll to explore</p>
+        <div class="work-board" id="work-board" role="region" aria-label="Project and experience cards">
+          <div class="card-view-header">
+            <div class="work-category-switch" role="group" aria-label="Work category"><button class="work-mode-button"
+                type="button" data-mode="project" aria-pressed="true">Projects <span>06</span></button><button
+                class="work-mode-button" type="button" data-mode="experience" aria-pressed="false">Experience
+                <span>04</span></button></div><span id="card-count">06 PROJECTS</span>
           </div>
           <div class="work-entry-list">
-            <!-- Add future entries here with data-kind="experience" or data-kind="project". -->
-            <article class="work-entry" id="adsa" data-node="adsa" data-kind="project" hidden>
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-adsa">
-                <span class="work-entry-overview">
-                  <h3 id="title-adsa">
-                    A.D.S.A.
-                    <a href="https://github.com/aryanwise/adsa" target="_blank" rel="noopener noreferrer"
-                      class="project-github-link" aria-label="View A.D.S.A. on GitHub"
-                      onclick="event.stopPropagation();">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                        <path
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
-                    </a>
-                  </h3>
-                  <span class="work-entry-description">An autonomous agent that plans, writes code, and executes full
-                    data science pipelines inside an isolated local sandbox.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
+            <article class="work-entry" id="adsa" data-node="adsa" data-kind="project">
+              <div class="work-card-art" data-art="adsa" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span><a
+                  href="https://github.com/aryanwise/adsa" target="_blank" rel="noopener noreferrer"
+                  class="project-github-link" aria-label="View A.D.S.A. on GitHub">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                </a></div>
+              <h3 id="title-adsa">
+                A.D.S.A.
+
+              </h3>
+
+              <span class="work-entry-description">An autonomous agent that plans, writes code, and executes full
+                data science pipelines inside an isolated sandbox.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-adsa">Details <span aria-hidden="true">↗</span></button>
+              </div>
               <div class="work-entry-details" id="details-adsa" role="region" aria-labelledby="title-adsa" hidden>
                 <div class="work-entry-detail-grid">
                   <div class="work-entry-story">
@@ -207,19 +309,290 @@
                 </div>
               </div>
             </article>
+            <article class="work-entry" id="openbooklm" data-node="openbooklm" data-kind="project">
+              <div class="work-card-art" data-art="openbooklm" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span><a
+                  href="https://github.com/aryanwise/OpenbookLM" target="_blank" rel="noopener noreferrer"
+                  class="project-github-link" aria-label="View OpenbookLM on GitHub">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                </a></div>
+              <h3 id="title-openbooklm">
+                OpenbookLM
 
+              </h3>
+
+              <span class="work-entry-description">A private, local-first research workspace that reads
+                documentation, indexes entire codebases, and writes code offline.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-openbooklm">Details <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="work-entry-details" id="details-openbooklm" role="region" aria-labelledby="title-openbooklm"
+                hidden>
+                <div class="work-entry-detail-grid">
+                  <div class="work-entry-story">
+                    <p>A zero-cloud developer workspace designed to eliminate cloud privacy risks by indexing technical
+                      papers, APIs, and deep repositories entirely on local hardware.</p>
+                    <ul class="detail-list">
+                      <li><strong>Syntax-Aware Graph Retrieval:</strong> Implemented GraphRAG and AST-aware indexing to
+                        trace inter-file dependencies, inheritance trees, and call graphs across complex codebases.</li>
+                      <li><strong>Air-Gapped LLM Inference:</strong> Embedded local inference engines via llama.cpp and
+                        USearch vector indexing, generating and testing code modifications completely offline.</li>
+                      <li><strong>Automated Local Refactoring:</strong> Bridges passive documentation reading with
+                        execution—planning, patching, and verifying multi-file changes with zero external telemetry.
+                      </li>
+                    </ul>
+                  </div>
+                  <aside class="work-entry-stack" aria-label="Technologies used">
+                    <span class="work-entry-small-label">FIELD / Local AI & Developer Tools</span>
+                    <span class="work-entry-small-label">TECH STACK</span>
+                    <div class="tags">
+                      <span>TypeScript</span><span>FastAPI</span><span>C++</span><span>GraphRAG</span><span>llama.cpp</span><span>USearch</span>
+                    </div>
+                  </aside>
+                </div>
+                <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL • AGENTS THAT WRITE CODE</span>
+                  <button type="button" data-connect="fertrado" aria-label="Go to FERTRADO: document retrieval">FERTRADO
+                    ↗</button>
+                  <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: agents that write code">A.D.S.A.
+                    ↗</button>
+                </div>
+              </div>
+            </article>
+            <article class="work-entry" id="polymarket" data-node="polymarket" data-kind="project">
+              <div class="work-card-art" data-art="polymarket" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span><a
+                  href="https://github.com/aryanwise/Polymarket-Analysis-BIT-Capital" target="_blank"
+                  rel="noopener noreferrer" class="project-github-link" aria-label="View Polymarket Analyzer on GitHub">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                </a></div>
+              <h3 id="title-polymarket">
+                Polymarket Analyzer
+
+              </h3>
+
+              <span class="work-entry-description">Automated data pipeline tracking prediction market shifts,
+                filtering targeted news, and synthesizing daily stock intelligence.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-polymarket">Details <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="work-entry-details" id="details-polymarket" role="region" aria-labelledby="title-polymarket"
+                hidden>
+                <div class="work-entry-detail-grid">
+                  <div class="work-entry-story">
+                    <p>Built an automated data pipeline to evaluate whether prediction market contract swings provide a
+                      reliable leading signal for specific equity holdings.</p>
+                    <ul class="detail-list">
+                      <li><strong>Scheduled Ingestion Pipelines:</strong> Built an automated ETL pipeline with GitHub
+                        Actions workflows to scrape
+                        Polymarket order books, web sources, and financial metrics at dynamic intervals (5m–5h).</li>
+                      <li><strong>Cross-Asset Verification:</strong> Compared prediction market odds with Yahoo Finance
+                        stock data in Supabase, using a 6-hour cache to
+                        evaluate prediction accuracy</li>
+                      <li><strong>Actionable Synthesis:</strong> Integrated Groq and Gemini models to strip away general
+                        market noise, delivering portfolio-specific probability shifts and price targets in clean
+                        executive briefs.</li>
+                    </ul>
+                  </div>
+                  <aside class="work-entry-stack" aria-label="Technologies used">
+                    <span class="work-entry-small-label">FIELD / Prediction Markets & Finance</span>
+                    <span class="work-entry-small-label">TECH STACK</span>
+                    <div class="tags">
+                      <span>Python</span><span>GitHub Actions</span><span>Supabase</span><span>Polymarket
+                        API</span><span>Groq</span><span>Gemini</span>
+                    </div>
+                  </aside>
+                </div>
+                <div class="related"><span>CONNECTED THROUGH STRUCTURED SIGNAL PIPELINES · PREDICTION AND
+                    VERIFICATION</span>
+                  <button type="button" data-connect="careergenie"
+                    aria-label="Go to CareerGenie: structured signal pipelines">CareerGenie ↗</button>
+                  <button type="button" data-connect="teleperformance"
+                    aria-label="Go to Teleperformance: prediction and verification">Teleperformance ↗</button>
+                </div>
+              </div>
+            </article>
+            <article class="work-entry" id="rover" data-node="rover" data-kind="project">
+              <div class="work-card-art" data-art="rover" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span><a
+                  href="https://github.com/aryanwise/autonomous-obstacle-avoidance-robot" target="_blank"
+                  rel="noopener noreferrer" class="project-github-link" aria-label="View Rover on GitHub">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                </a></div>
+              <h3 id="title-rover">
+                Autonomous 4WD Rover
+
+              </h3>
+
+              <span class="work-entry-description">Real-time perception, spatial scanning, and state-machine
+                navigation built on resource-constrained embedded hardware.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-rover">Details <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="work-entry-details" id="details-rover" role="region" aria-labelledby="title-rover" hidden>
+                <div class="work-entry-detail-grid">
+                  <div class="work-entry-story">
+                    <p>Built a self-contained 4WD mobile robot driven by a deterministic perception → decision → action
+                      control loop algorithm written in C++.</p>
+                    <ul class="detail-list">
+                      <li><strong>Spatial Scanning:</strong> Engineered dynamic obstacle mapping using a servo-mounted
+                        ultrasonic sensor to scan 180° sweeps whenever distance thresholds are crossed.</li>
+                      <li><strong>Reactive State Control:</strong> Wrote non-blocking C++ state logic to evaluate
+                        spatial clearance and execute real-time evasive steering maneuvers via an L298N dual H-bridge
+                        driver.</li>
+                      <li><strong>Hardware & Power Management:</strong> Optimized PWM motor speed regulation and
+                        isolated sensor polling cycles to mitigate inductive back-EMF spikes and prevent logic-board
+                        brownouts.</li>
+                    </ul>
+                  </div>
+                  <aside class="work-entry-stack" aria-label="Technologies used">
+                    <span class="work-entry-small-label">FIELD / Autonomous Systems & Embedded C++</span>
+                    <span class="work-entry-small-label">TECH STACK</span>
+                    <div class="tags">
+                      <span>C++</span><span>Arduino</span><span>L298N Driver</span><span>Ultrasonic
+                        Sensor</span><span>PWM Control</span><span>State Machines</span>
+                    </div>
+                  </aside>
+                </div>
+                <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT</span>
+                  <button type="button" data-connect="zombie"
+                    aria-label="Go to Zombie Shooter AI: agents that sense and act">Zombie Shooter AI ↗</button>
+                </div>
+              </div>
+            </article>
+            <article class="work-entry" id="zombie" data-node="zombie" data-kind="project">
+              <div class="work-card-art" data-art="zombie" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span><a
+                  href="https://github.com/aryanwise/Reinforcement-learning-on-Game" target="_blank"
+                  rel="noopener noreferrer" class="project-github-link" aria-label="View Zombie Shooter AI on GitHub">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                </a></div>
+              <h3 id="title-zombie">
+                Zombie Shooter - Reinforcement Learning
+
+              </h3>
+
+              <span class="work-entry-description">Trained a tabular reinforcement learning agent to balance
+                evasion, targeting, and survival across 5,000+ simulated episodes.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-zombie">Details <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="work-entry-details" id="details-zombie" role="region" aria-labelledby="title-zombie" hidden>
+                <div class="work-entry-detail-grid">
+                  <div class="work-entry-story">
+                    <p>Built a custom 2D Pygame simulation from scratch to train a reinforcement learning agent capable
+                      of discovering survival strategies through pure trial-and-error.</p>
+                    <ul class="detail-list">
+                      <li><strong>State-Space Discretization:</strong> Mapped continuous 2D spatial coordinates and
+                        dynamic enemy proximity vectors into compact, discrete states for fast tabular convergence.</li>
+                      <li><strong>Reward Function Engineering:</strong> Formulated a shaped reward architecture
+                        balancing aggressive targeting against collision penalties, training the policy over 5,000+
+                        episodes.</li>
+                      <li><strong>Policy Convergence Diagnostics:</strong> Logged Q-table updates and episodic metrics
+                        using NumPy, evaluating exploration decay and policy heatmaps across headless training runs.
+                      </li>
+                    </ul>
+                  </div>
+                  <aside class="work-entry-stack" aria-label="Technologies used">
+                    <span class="work-entry-small-label">FIELD / Reinforcement Learning & Simulation</span>
+                    <span class="work-entry-small-label">TECH STACK</span>
+                    <div class="tags">
+                      <span>Python</span><span>Pygame</span><span>Q-Learning</span><span>NumPy</span><span>Simulation</span>
+                    </div>
+                  </aside>
+                </div>
+                <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT · GAME AGENT DECISIONS</span>
+                  <button type="button" data-connect="rover"
+                    aria-label="Go to Autonomous 4WD Rover: agents that sense and act">Autonomous 4WD Rover ↗</button>
+                  <button type="button" data-connect="gomoku"
+                    aria-label="Go to Gomoku Game AI: game agent decisions">Gomoku Game AI ↗</button>
+                </div>
+              </div>
+            </article>
+            <article class="work-entry" id="gomoku" data-node="gomoku" data-kind="project">
+              <div class="work-card-art" data-art="gomoku" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span><a
+                  href="https://github.com/aryanwise/Gomoku-AI-Game" target="_blank" rel="noopener noreferrer"
+                  class="project-github-link" aria-label="View Gomoku AI on GitHub">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                </a></div>
+              <h3 id="title-gomoku">
+                Gomoku Game AI
+
+              </h3>
+
+              <span class="work-entry-description">Heuristic adversarial search engine combining iterative deepening
+                minimax and alpha-beta pruning under strict 10-second turn constraints.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-gomoku">Details <span aria-hidden="true">↗</span></button>
+              </div>
+              <div class="work-entry-details" id="details-gomoku" role="region" aria-labelledby="title-gomoku" hidden>
+                <div class="work-entry-detail-grid">
+                  <div class="work-entry-story">
+                    <p>Built a real-time Gomoku game AI agent engineered to out-search human opponents and algorithms
+                      under a strict 10-second turn timer.</p>
+                    <ul class="detail-list">
+                      <li><strong>Anytime Iterative Deepening:</strong> Combined depth-variable minimax with alpha-beta
+                        pruning to dynamically maximize search depth within the 10-second turn limit.</li>
+                      <li><strong>Neighborhood Move Pruning:</strong> Restricted candidate branch evaluation to local
+                        occupied stone neighborhoods, drastically slashing the game tree branching factor.</li>
+                      <li><strong>Pattern Threat Evaluation:</strong> Implemented multi-directional heuristic scoring to
+                        detect open lines, block emergent fours, and prioritize forced winning sequences across all
+                        axes.</li>
+                    </ul>
+                  </div>
+                  <aside class="work-entry-stack" aria-label="Technologies used">
+                    <span class="work-entry-small-label">FIELD / Adversarial Search & Game AI</span>
+                    <span class="work-entry-small-label">TECH STACK</span>
+                    <div class="tags">
+                      <span>Python</span><span>Minimax</span><span>Alpha-Beta Pruning</span><span>Iterative
+                        Deepening</span><span>Heuristics</span><span>Game Theory</span>
+                    </div>
+                  </aside>
+                </div>
+                <div class="related"><span>CONNECTED THROUGH GAME AGENT DECISIONS</span>
+                  <button type="button" data-connect="zombie"
+                    aria-label="Go to Zombie Shooter AI: game agent decisions">Zombie Shooter AI ↗</button>
+                </div>
+              </div>
+            </article>
             <article class="work-entry" id="careergenie" data-node="careergenie" data-kind="experience">
-              <button class="work-entry-trigger" type="button" aria-expanded="false"
-                aria-controls="details-careergenie">
-                <span class="work-entry-overview">
-                  <h3 id="title-careergenie">CareerGenie</h3>
-                  <span class="work-entry-role">AI Engineer · Jan 2026 - Present</span>
-                  <span class="work-entry-description">Turning real-world professional work into verifiable talent
-                    signals for recruiters, while helping candidates identify and bridge the skill gaps needed for their
-                    target roles.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
+              <div class="work-card-art" data-art="careergenie" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span></div>
+              <h3 id="title-careergenie">CareerGenie</h3>
+              <span class="work-entry-role">AI Engineer · Jan 2026 - Present</span>
+              <span class="work-entry-description">Turning real-world professional work into verifiable talent
+                signals for recruiters, while helping candidates identify and bridge the skill gaps needed for their
+                target roles.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-careergenie">Details <span aria-hidden="true">↗</span></button>
+              </div>
               <div class="work-entry-details" id="details-careergenie" role="region" aria-labelledby="title-careergenie"
                 hidden>
                 <div class="work-entry-detail-grid">
@@ -257,16 +630,17 @@
               </div>
             </article>
             <article class="work-entry" id="teleperformance" data-node="teleperformance" data-kind="experience">
-              <button class="work-entry-trigger" type="button" aria-expanded="false"
-                aria-controls="details-teleperformance">
-                <span class="work-entry-overview">
-                  <h3 id="title-teleperformance">Teleperformance</h3>
-                  <span class="work-entry-role">Data Analytics Intern · Jun-Sep 2026</span>
-                  <span class="work-entry-description">Automating end-to-end data science workflows in sandboxed
-                    environments and boosting time-series forecasting accuracy with zero-shot foundation models.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
+              <div class="work-card-art" data-art="teleperformance" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span></div>
+              <h3 id="title-teleperformance">Teleperformance</h3>
+              <span class="work-entry-role">Data Analytics Intern · Jun-Sep 2026</span>
+              <span class="work-entry-description">Automating end-to-end data science workflows in sandboxed
+                environments and boosting time-series forecasting accuracy with zero-shot foundation models.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-teleperformance">Details <span aria-hidden="true">↗</span></button>
+              </div>
               <div class="work-entry-details" id="details-teleperformance" role="region"
                 aria-labelledby="title-teleperformance" hidden>
                 <div class="work-entry-detail-grid">
@@ -302,80 +676,33 @@
 
               </div>
             </article>
-            <article class="work-entry" id="openbooklm" data-node="openbooklm" data-kind="project" hidden>
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-openbooklm">
-                <span class="work-entry-overview">
-                  <h3 id="title-openbooklm">
-                    OpenbookLM
-                    <a href="https://github.com/aryanwise/OpenbookLM" target="_blank" rel="noopener noreferrer"
-                      class="project-github-link" aria-label="View OpenbookLM on GitHub"
-                      onclick="event.stopPropagation();">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                        <path
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
-                    </a>
-                  </h3>
-                  <span class="work-entry-description">A private, local-first research workspace that reads
-                    documentation, indexes entire codebases, and writes code offline. -- Work in Progress!</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
-              <div class="work-entry-details" id="details-openbooklm" role="region" aria-labelledby="title-openbooklm"
-                hidden>
-                <div class="work-entry-detail-grid">
-                  <div class="work-entry-story">
-                    <p>A zero-cloud developer workspace designed to eliminate cloud privacy risks by indexing technical
-                      papers, APIs, and deep repositories entirely on local hardware.</p>
-                    <ul class="detail-list">
-                      <li><strong>Syntax-Aware Graph Retrieval:</strong> Implemented GraphRAG and AST-aware indexing to
-                        trace inter-file dependencies, inheritance trees, and call graphs across complex codebases.</li>
-                      <li><strong>Air-Gapped LLM Inference:</strong> Embedded local inference engines via llama.cpp and
-                        USearch vector indexing, generating and testing code modifications completely offline.</li>
-                      <li><strong>Automated Local Refactoring:</strong> Bridges passive documentation reading with
-                        execution—planning, patching, and verifying multi-file changes with zero external telemetry.
-                      </li>
-                    </ul>
-                  </div>
-                  <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Local AI & Developer Tools</span>
-                    <span class="work-entry-small-label">TECH STACK</span>
-                    <div class="tags">
-                      <span>TypeScript</span><span>FastAPI</span><span>C++</span><span>GraphRAG</span><span>llama.cpp</span><span>USearch</span>
-                    </div>
-                  </aside>
-                </div>
-                <div class="related"><span>CONNECTED THROUGH DOCUMENT RETRIEVAL • AGENTS THAT WRITE CODE</span>
-                  <button type="button" data-connect="fertrado" aria-label="Go to FERTRADO: document retrieval">FERTRADO
-                    ↗</button>
-                  <button type="button" data-connect="adsa" aria-label="Go to A.D.S.A.: agents that write code">A.D.S.A.
-                    ↗</button>
-                </div>
-              </div>
-            </article>
             <article class="work-entry" id="fertrado" data-node="fertrado" data-kind="experience">
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-fertrado">
-                <span class="work-entry-overview">
-                  <h3 id="title-fertrado">FERTRADO</h3>
-                  <span class="work-entry-role">AI Engineer · Sep-Nov 1</span>
-                  <span class="work-entry-description">Making complex EU fertilizer regulations easier to explore and
-                    understand.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
+              <div class="work-card-art" data-art="fertrado" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span></div>
+              <h3 id="title-fertrado">FERTRADO</h3>
+              <span class="work-entry-role">AI Engineer Intern · Sep–Nov 2025</span>
+              <span class="work-entry-description">Making complex EU fertilizer regulations easier to explore and
+                understand.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-fertrado">Details <span aria-hidden="true">↗</span></button>
+              </div>
               <div class="work-entry-details" id="details-fertrado" role="region" aria-labelledby="title-fertrado"
                 hidden>
                 <div class="work-entry-detail-grid">
                   <div class="work-entry-story">
-                    <li><strong>Local-First Model Serving:</strong> Served an open-source Qwen model locally using
-                      Ollama and containerized the service with Docker for AWS deployment, avoiding third-party API
-                      dependencies and external data leaks.</li>
-                    <li><strong>Document Parsing & Ingestion:</strong> Used Docling to parse complex, layout-heavy EU
-                      regulatory PDFs, preserving structural hierarchy and table data for clean vector indexing.</li>
-                    <li><strong>Grounded Policy Retrieval:</strong> Built an internal retrieval pipeline using a FastAPI
-                      backend and FAISS vector search to ground responses strictly in verified policy clauses with
-                      direct citations.</li>
-
+                    <ul class="detail-list">
+                      <li><strong>Local-First Model Serving:</strong> Served an open-source Qwen model locally using
+                        Ollama and containerized the service with Docker for AWS deployment, avoiding third-party API
+                        dependencies and external data leaks.</li>
+                      <li><strong>Document Parsing & Ingestion:</strong> Used Docling to parse complex, layout-heavy EU
+                        regulatory PDFs, preserving structural hierarchy and table data for clean vector indexing.</li>
+                      <li><strong>Grounded Policy Retrieval:</strong> Built an internal retrieval pipeline using a
+                        FastAPI
+                        backend and FAISS vector search to ground responses strictly in verified policy clauses with
+                        direct citations.</li>
+                    </ul>
                   </div>
                   <aside class="work-entry-stack" aria-label="Technologies used">
                     <span class="work-entry-small-label">FIELD / Regulatory AI / grounded search</span>
@@ -393,15 +720,17 @@
               </div>
             </article>
             <article class="work-entry" id="infovirgin" data-node="infovirgin" data-kind="experience">
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-infovirgin">
-                <span class="work-entry-overview">
-                  <h3 id="title-infovirgin">Infovirgin Technology Solutions Pvt. Ltd.</h3>
-                  <span class="work-entry-role">Data Science &amp; AI Intern · Mar-May 2025</span>
-                  <span class="work-entry-description">Automated reporting, built executive BI dashboards, and
-                    improved revenue and workload forecasting for operational decisions.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
+              <div class="work-card-art" data-art="infovirgin" aria-hidden="true"></div>
+              <div class="work-card-top"><span class="work-card-field"></span></div>
+              <h3 id="title-infovirgin">Infovirgin Technology Solutions Pvt. Ltd.</h3>
+              <span class="work-entry-role">Data Science &amp; AI Intern · Mar-May 2025</span>
+              <span class="work-entry-description">Automated reporting, built executive BI dashboards, and
+                improved revenue and workload forecasting for operational decisions.</span>
+              <div class="work-card-tags" aria-label="Technologies"></div>
+              <div class="work-card-bottom"><span class="work-card-fact"></span>
+                <button class="work-entry-trigger" type="button" aria-expanded="false"
+                  aria-controls="details-infovirgin">Details <span aria-hidden="true">↗</span></button>
+              </div>
               <div class="work-entry-details" id="details-infovirgin" role="region" aria-labelledby="title-infovirgin"
                 hidden>
                 <div class="work-entry-detail-grid">
@@ -439,213 +768,23 @@
                 </div>
               </div>
             </article>
-            <article class="work-entry" id="polymarket" data-node="polymarket" data-kind="project" hidden>
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-polymarket">
-                <span class="work-entry-overview">
-                  <h3 id="title-polymarket">
-                    Polymarket Analyzer
-                    <a href="https://github.com/aryanwise/Polymarket-Analysis-BIT-Capital" target="_blank"
-                      rel="noopener noreferrer" class="project-github-link"
-                      aria-label="View Polymarket Analyzer on GitHub" onclick="event.stopPropagation();">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                        <path
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
-                    </a>
-                  </h3>
-                  <span class="work-entry-description">Automated data pipeline tracking prediction market shifts,
-                    filtering targeted news, and synthesizing daily stock intelligence.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
-              <div class="work-entry-details" id="details-polymarket" role="region" aria-labelledby="title-polymarket"
-                hidden>
-                <div class="work-entry-detail-grid">
-                  <div class="work-entry-story">
-                    <p>Built an automated data pipeline to evaluate whether prediction market contract swings provide a
-                      reliable leading signal for specific equity holdings.</p>
-                    <ul class="detail-list">
-                      <li><strong>Scheduled Ingestion Pipelines:</strong> Built an automated ETL pipeline with GitHub
-                        Actions workflows to scrape
-                        Polymarket order books, web sources, and financial metrics at dynamic intervals (5m–5h).</li>
-                      <li><strong>Cross-Asset Verification:</strong> Compared prediction market odds with Yahoo Finance
-                        stock data in Supabase, using a 6-hour cache to
-                        evaluate prediction accuracy</li>
-                      <li><strong>Actionable Synthesis:</strong> Integrated Groq and Gemini models to strip away general
-                        market noise, delivering portfolio-specific probability shifts and price targets in clean
-                        executive briefs.</li>
-                    </ul>
-                  </div>
-                  <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Prediction Markets & Finance</span>
-                    <span class="work-entry-small-label">TECH STACK</span>
-                    <div class="tags">
-                      <span>Python</span><span>GitHub Actions</span><span>Supabase</span><span>Polymarket
-                        API</span><span>Groq</span><span>Gemini</span>
-                    </div>
-                  </aside>
-                </div>
-                <div class="related"><span>CONNECTED THROUGH STRUCTURED SIGNAL PIPELINES · PREDICTION AND
-                    VERIFICATION</span>
-                  <button type="button" data-connect="careergenie"
-                    aria-label="Go to CareerGenie: structured signal pipelines">CareerGenie ↗</button>
-                  <button type="button" data-connect="teleperformance"
-                    aria-label="Go to Teleperformance: prediction and verification">Teleperformance ↗</button>
-                </div>
-              </div>
-            </article>
-            <article class="work-entry" id="rover" data-node="rover" data-kind="project" hidden>
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-rover">
-                <span class="work-entry-overview">
-                  <h3 id="title-rover">
-                    Autonomous 4WD Rover
-                    <a href="https://github.com/aryanwise/autonomous-obstacle-avoidance-robot" target="_blank"
-                      rel="noopener noreferrer" class="project-github-link" aria-label="View Rover on GitHub"
-                      onclick="event.stopPropagation();">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                        <path
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
-                    </a>
-                  </h3>
-                  <span class="work-entry-description">Real-time perception, spatial scanning, and state-machine
-                    navigation built on resource-constrained embedded hardware.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
-              <div class="work-entry-details" id="details-rover" role="region" aria-labelledby="title-rover" hidden>
-                <div class="work-entry-detail-grid">
-                  <div class="work-entry-story">
-                    <p>Built a self-contained 4WD mobile robot driven by a deterministic perception → decision → action
-                      control loop algorithm written in C++.</p>
-                    <ul class="detail-list">
-                      <li><strong>Spatial Scanning:</strong> Engineered dynamic obstacle mapping using a servo-mounted
-                        ultrasonic sensor to scan 180° sweeps whenever distance thresholds are crossed.</li>
-                      <li><strong>Reactive State Control:</strong> Wrote non-blocking C++ state logic to evaluate
-                        spatial clearance and execute real-time evasive steering maneuvers via an L298N dual H-bridge
-                        driver.</li>
-                      <li><strong>Hardware & Power Management:</strong> Optimized PWM motor speed regulation and
-                        isolated sensor polling cycles to mitigate inductive back-EMF spikes and prevent logic-board
-                        brownouts.</li>
-                    </ul>
-                  </div>
-                  <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Autonomous Systems & Embedded C++</span>
-                    <span class="work-entry-small-label">TECH STACK</span>
-                    <div class="tags">
-                      <span>C++</span><span>Arduino</span><span>L298N Driver</span><span>Ultrasonic
-                        Sensor</span><span>PWM Control</span><span>State Machines</span>
-                    </div>
-                  </aside>
-                </div>
-                <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT</span>
-                  <button type="button" data-connect="zombie"
-                    aria-label="Go to Zombie Shooter AI: agents that sense and act">Zombie Shooter AI ↗</button>
-                </div>
-              </div>
-            </article>
-            <article class="work-entry" id="zombie" data-node="zombie" data-kind="project" hidden>
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-zombie">
-                <span class="work-entry-overview">
-                  <h3 id="title-zombie">
-                    Zombie Shooter - Reinforcement Learning
-                    <a href="https://github.com/aryanwise/Reinforcement-learning-on-Game" target="_blank"
-                      rel="noopener noreferrer" class="project-github-link"
-                      aria-label="View Zombie Shooter AI on GitHub" onclick="event.stopPropagation();">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                        <path
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
-                    </a>
-                  </h3>
-                  <span class="work-entry-description">Trained a tabular reinforcement learning agent to balance
-                    evasion, targeting, and survival across 5,000+ simulated episodes.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
-              <div class="work-entry-details" id="details-zombie" role="region" aria-labelledby="title-zombie" hidden>
-                <div class="work-entry-detail-grid">
-                  <div class="work-entry-story">
-                    <p>Built a custom 2D Pygame simulation from scratch to train a reinforcement learning agent capable
-                      of discovering survival strategies through pure trial-and-error.</p>
-                    <ul class="detail-list">
-                      <li><strong>State-Space Discretization:</strong> Mapped continuous 2D spatial coordinates and
-                        dynamic enemy proximity vectors into compact, discrete states for fast tabular convergence.</li>
-                      <li><strong>Reward Function Engineering:</strong> Formulated a shaped reward architecture
-                        balancing aggressive targeting against collision penalties, training the policy over 5,000+
-                        episodes.</li>
-                      <li><strong>Policy Convergence Diagnostics:</strong> Logged Q-table updates and episodic metrics
-                        using NumPy, evaluating exploration decay and policy heatmaps across headless training runs.
-                      </li>
-                    </ul>
-                  </div>
-                  <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Reinforcement Learning & Simulation</span>
-                    <span class="work-entry-small-label">TECH STACK</span>
-                    <div class="tags">
-                      <span>Python</span><span>Pygame</span><span>Q-Learning</span><span>NumPy</span><span>Simulation</span>
-                    </div>
-                  </aside>
-                </div>
-                <div class="related"><span>CONNECTED THROUGH AGENTS THAT SENSE AND ACT · GAME AGENT DECISIONS</span>
-                  <button type="button" data-connect="rover"
-                    aria-label="Go to Autonomous 4WD Rover: agents that sense and act">Autonomous 4WD Rover ↗</button>
-                  <button type="button" data-connect="gomoku"
-                    aria-label="Go to Gomoku Game AI: game agent decisions">Gomoku Game AI ↗</button>
-                </div>
-              </div>
-            </article>
-            <article class="work-entry" id="gomoku" data-node="gomoku" data-kind="project" hidden>
-              <button class="work-entry-trigger" type="button" aria-expanded="false" aria-controls="details-gomoku">
-                <span class="work-entry-overview">
-                  <h3 id="title-gomoku">
-                    Gomoku Game AI
-                    <a href="https://github.com/aryanwise/Gomoku-AI-Game" target="_blank" rel="noopener noreferrer"
-                      class="project-github-link" aria-label="View Gomoku AI on GitHub"
-                      onclick="event.stopPropagation();">
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-                        <path
-                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
-                    </a>
-                  </h3>
-                  <span class="work-entry-description">Heuristic adversarial search engine combining iterative deepening
-                    minimax and alpha-beta pruning under strict 10-second turn constraints.</span>
-                </span>
-                <span class="work-entry-symbol" aria-hidden="true">+</span>
-              </button>
-              <div class="work-entry-details" id="details-gomoku" role="region" aria-labelledby="title-gomoku" hidden>
-                <div class="work-entry-detail-grid">
-                  <div class="work-entry-story">
-                    <p>Built a real-time Gomoku game AI agent engineered to out-search human opponents and algorithms
-                      under a strict 10-second turn timer.</p>
-                    <ul class="detail-list">
-                      <li><strong>Anytime Iterative Deepening:</strong> Combined depth-variable minimax with alpha-beta
-                        pruning to dynamically maximize search depth within the 10-second turn limit.</li>
-                      <li><strong>Neighborhood Move Pruning:</strong> Restricted candidate branch evaluation to local
-                        occupied stone neighborhoods, drastically slashing the game tree branching factor.</li>
-                      <li><strong>Pattern Threat Evaluation:</strong> Implemented multi-directional heuristic scoring to
-                        detect open lines, block emergent fours, and prioritize forced winning sequences across all
-                        axes.</li>
-                    </ul>
-                  </div>
-                  <aside class="work-entry-stack" aria-label="Technologies used">
-                    <span class="work-entry-small-label">FIELD / Adversarial Search & Game AI</span>
-                    <span class="work-entry-small-label">TECH STACK</span>
-                    <div class="tags">
-                      <span>Python</span><span>Minimax</span><span>Alpha-Beta Pruning</span><span>Iterative
-                        Deepening</span><span>Heuristics</span><span>Game Theory</span>
-                    </div>
-                  </aside>
-                </div>
-                <div class="related"><span>CONNECTED THROUGH GAME AGENT DECISIONS</span>
-                  <button type="button" data-connect="zombie"
-                    aria-label="Go to Zombie Shooter AI: game agent decisions">Zombie Shooter AI ↗</button>
-                </div>
-              </div>
-            </article>
           </div>
         </div>
+        <noscript>
+          <style>
+            .work-entry-details[hidden] {
+              display: block !important
+            }
+
+            .work-entry-trigger,
+            .work-view-switch,
+            .work-category-switch {
+              display: none !important
+            }
+          </style>
+          <p>All projects and experience are listed above. Enable JavaScript for the interactive network and expandable
+            details.</p>
+        </noscript>
       </section>
     </main>
     <footer class="site-footer">
@@ -679,8 +818,8 @@
               </svg>
             </a>
 
-            <!-- Blogs -->
-            <a href="blog/index.html" class="social-link" aria-label="Aryan's Blogs" title="Blogs">
+            <!-- Logs -->
+            <a href="blog/index.html" class="social-link" aria-label="Logs" title="Logs">
               <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor">
                 <path
                   d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83zM2 22h20v2H2v-2z" />
@@ -691,7 +830,7 @@
 
         <div class="footer-credits">
           <span style="font-weight: 600;">Built and designed by Aryan Mishra.</span>
-          <span style="font-weight: 500;">All rights reserved. &copy;</span>
+          <span>Berlin, Germany <span aria-hidden="true">·</span> &copy; 2026</span>
         </div>
       </div>
     </footer>

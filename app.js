@@ -1,246 +1,227 @@
 (() => {
-  "use strict";
-
-  const board = document.querySelector("#work-board");
-  const about = document.querySelector("#about");
-  const aboutToggle = document.querySelector(".about-toggle");
-  const aboutLink = document.querySelector("#about-link");
-  const announcement = document.querySelector("#focus-announcement");
-
+  'use strict';
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const about = document.querySelector('#about');
+  const aboutToggle = document.querySelector('.about-toggle');
   function showAbout(open) {
     if (!about || !aboutToggle) return;
     about.hidden = !open;
-    aboutToggle.setAttribute("aria-expanded", String(open));
-    aboutToggle.querySelector("span:last-child").textContent = open
-      ? "A little less"
-      : "Read a little more";
+    aboutToggle.setAttribute('aria-expanded', String(open));
+    aboutToggle.querySelector('span:last-child').textContent = open ? 'A little less' : 'Read a little more';
   }
+  aboutToggle?.addEventListener('click', () => showAbout(about.hidden));
+  document.querySelector('#about-link')?.addEventListener('click', () => showAbout(true));
+  window.addEventListener('hashchange', () => {if (location.hash === '#about') showAbout(true);});
+  if (location.hash === '#about') showAbout(true);
 
-  aboutToggle?.addEventListener("click", () => showAbout(about.hidden));
-  aboutLink?.addEventListener("click", () => showAbout(true));
-  if (location.hash === "#about") showAbout(true);
-  if (!board) return;
+  const work = document.querySelector('#work');
+  if (!work) return;
+  const board = document.querySelector('#work-board');
+  const network = document.querySelector('#network-view');
+  const graph = document.querySelector('#network-graph');
+  const neurons = document.querySelector('#network-neurons');
+  const inspector = document.querySelector('#node-inspector');
+  const svg = document.querySelector('#network-connections');
+  const announcement = document.querySelector('#focus-announcement');
+  const entries = [...board.querySelectorAll('.work-entry')];
+  const metadata = {
+    adsa: {short:'A.D.S.A.', field:'AUTONOMOUS DATA SCIENCE', metrics:[['8B','model parameters'],['Isolated','code execution']], fact:'Sandboxed Python execution', art:'agent'},
+    openbooklm: {short:'OpenbookLM', field:'LOCAL AI / IN PROGRESS', metrics:[['Local-first','research & inference'],['In progress','actively building']], fact:'Work in progress', art:'graph'},
+    polymarket: {short:'Polymarket', field:'SIGNAL PIPELINES', metrics:[['5m–5h','ingestion intervals'],['6h','verification cache']], fact:'5m–5h ingestion intervals', art:'signal'},
+    rover: {short:'4WD Rover', field:'AUTONOMY / EMBEDDED', metrics:[['180°','ultrasonic scanning'],['4WD','motor platform']], fact:'180° ultrasonic scanning', art:'radar'},
+    zombie: {short:'Zombie Shooter RL', field:'REINFORCEMENT LEARNING', metrics:[['5,000+','training episodes'],['Q-learning','tabular policy']], fact:'5,000+ training episodes', art:'learning'},
+    gomoku: {short:'Gomoku AI', field:'ADVERSARIAL SEARCH', metrics:[['10 sec','turn budget'],['Minimax','with alpha-beta pruning']], fact:'10-second search budget', art:'board'},
+    careergenie: {short:'CareerGenie', field:'RECRUITER INTELLIGENCE', metrics:[['10%','lower tooling costs'],['GitHub','technical signal engine']], fact:'10% lower tooling costs'},
+    teleperformance: {short:'Teleperformance', field:'DATA AGENTS / FORECASTING', metrics:[['32%','lower sMAPE vs. baseline'],['Zero-shot','no model retraining']], fact:'32% lower forecasting sMAPE'},
+    fertrado: {short:'FERTRADO', field:'GROUNDED REGULATORY AI', metrics:[['Local Qwen','model serving'],['Citations','source-grounded retrieval']], fact:'Local inference + cited retrieval'},
+    infovirgin: {short:'Infovirgin', field:'DATA SCIENCE / ANALYTICS', metrics:[['75%','less data preparation'],['45+','standardized attributes']], fact:'75% less reporting preparation'}
+  };
+  const escape = text => String(text).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  const compact = text => text.replace(/\s+/g,' ').trim();
+  const records = entries.map(entry => {
+    const id = entry.dataset.node;
+    const meta = metadata[id];
+    const record = {id, entry, kind:entry.dataset.kind, title:compact(entry.querySelector('h3').textContent), description:compact(entry.querySelector('.work-entry-description').textContent), role:entry.querySelector('.work-entry-role')?.textContent || '', tags:[...entry.querySelectorAll('.work-entry-stack .tags span')].map(tag => compact(tag.textContent)), source:entry.querySelector('.project-github-link')?.href, related:[...entry.querySelectorAll('[data-connect]')].map(button => button.dataset.connect), ...meta};
+    entry.querySelector('.work-entry-trigger').setAttribute('aria-label', `Details about ${record.title}`);
+    entry.querySelector('.work-card-field').textContent = meta.field;
+    entry.querySelector('.work-card-fact').textContent = meta.fact;
+    entry.querySelector('.work-card-tags').innerHTML = record.tags.slice(0,3).map(tag => `<span>${escape(tag)}</span>`).join('');
+    return record;
+  });
+  const byId = new Map(records.map(record => [record.id,record]));
+  let category = 'project';
+  let selectedId = 'adsa';
+  let openCardId = null;
+  let view = 'cards';
+  let paused = false;
+  let inViewport = true;
+  let drawFrame = 0;
+  const storageKey = 'aryan-portfolio-work-view';
 
-  const workSection = board.closest(".work-section");
-  const launchButton = document.querySelector("#open-work");
-  const closeWorkButton = document.querySelector("#close-work");
-  const openControls = document.querySelector(".work-open-controls");
-  const modes = [...document.querySelectorAll(".work-mode-button")];
-  const entries = [...board.querySelectorAll(".work-entry")];
-  const entryById = new Map(
-    entries.map((entry) => [entry.dataset.node, entry]),
-  );
-  const boardHeader = board.querySelector(".work-board-header");
-  const boardTitle = board.querySelector("#work-board-title");
-  const boardCount = board.querySelector("#work-board-count");
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let mode = "experience";
-  let openId = null;
-  let escapeFocusTarget = null;
-
-  function clearEscapeFocus() {
-    escapeFocusTarget?.classList.remove("is-escape-focus");
-    escapeFocusTarget = null;
-  }
-
-  function suppressEscapeOutline(target) {
-    clearEscapeFocus();
-    escapeFocusTarget = target;
-    target.classList.add("is-escape-focus");
-  }
-
-  document.addEventListener("pointerdown", clearEscapeFocus, true);
-  document.addEventListener(
-    "keydown",
-    (event) => {
-      if (event.key !== "Escape") clearEscapeFocus();
-    },
-    true,
-  );
-  document.addEventListener("focusin", (event) => {
-    if (event.target !== escapeFocusTarget) clearEscapeFocus();
+  const art = {
+    agent:'<rect x="20" y="45" width="62" height="30" rx="3"/><rect x="109" y="45" width="62" height="30" rx="3"/><rect x="198" y="45" width="62" height="30" rx="3"/><path d="M82 60h27m62 0h27m-57-15V26H51v19"/><path d="m103 56 6 4-6 4m89-8 6 4-6 4"/><g stroke="none" fill="currentColor"><text x="51" y="63">PLAN</text><text x="140" y="63">EXECUTE</text><text x="229" y="63">REPORT</text><text x="96" y="20" opacity=".6">SELF-CORRECT</text></g>',
+    graph:'<path d="m50 32 88 28-88 29m88-29 87-30m-87 30 87 29M50 32v57m175-59v59"/><circle cx="138" cy="60" r="19"/><circle cx="50" cy="32" r="11"/><circle cx="50" cy="89" r="11"/><circle cx="225" cy="30" r="11"/><circle cx="225" cy="89" r="11"/><g stroke="none" fill="currentColor"><text x="138" y="63">LOCAL</text><text x="50" y="35">.PY</text><text x="50" y="92">.MD</text><text x="225" y="33">.TS</text><text x="225" y="92">.PDF</text></g>',
+    signal:'<path d="M23 25v65h238" opacity=".3"/><path d="m23 76 21-6 19 5 18-30 20 12 20-9 20 20 20-45 20 14 20-5 20 23 20-35 20 11"/><path d="M23 66q40-22 70-12t60-7 108-4" stroke-dasharray="3 5" opacity=".4"/><g stroke="none" fill="currentColor"><text x="66" y="106">INGEST</text><text x="140" y="106">VERIFY</text><text x="219" y="106">SYNTHESIZE</text></g>',
+    radar:'<g transform="translate(140,96)"><path d="M-85 0a85 85 0 0 1 170 0m-60 0a25 25 0 0 0-50 0m-30 0a55 55 0 0 1 110 0M0 0l-61-60M0 0l61-60M-85 0H85M0 0v-85" opacity=".5"/><path d="M0 0 55-66"/><circle r="5" fill="currentColor"/><circle cx="36" cy="-44" r="4" fill="currentColor"/></g><g fill="currentColor" stroke="none"><text x="35" y="110">0°</text><text x="245" y="110">180°</text><text x="140" y="19">SENSE → DECIDE → ACT</text></g>',
+    learning:'<path d="M25 23v69h235" opacity=".3"/><path d="m25 86 8-12 9 9 11-18 9 8 10-16 9 7 10-19 12 10 13-14 10 5 12-13 12 6 11-12 12 8 12-13 10 5 12-9 12 2 12-7 12 4 12-6" opacity=".5"/><path d="M25 85Q90 65 123 47t137-22" stroke-width="2"/><g fill="currentColor" stroke="none"><text x="140" y="108">EXPLORATION → POLICY</text></g>',
+    board:'<path d="M101 20v80m20-80v80m20-80v80m20-80v80m20-80v80M101 20h80m-80 20h80m-80 20h80m-80 20h80m-80 20h80" opacity=".4"/><g fill="currentColor"><circle cx="121" cy="40" r="7"/><circle cx="141" cy="60" r="7"/><circle cx="161" cy="80" r="7"/></g><g fill="none"><circle cx="141" cy="40" r="7"/><circle cx="121" cy="80" r="7"/></g><circle cx="181" cy="100" r="9" stroke-dasharray="2 3"/>'
+  };
+  records.forEach(record => {
+    const container = record.entry.querySelector('.work-card-art');
+    if (record.art) container.innerHTML = `<svg viewBox="0 0 280 120" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><g font-family="monospace" font-size="7" text-anchor="middle">${art[record.art]}</g></svg>`;
   });
 
-  function closeEntry(returnFocus = false) {
-    const entry = entryById.get(openId);
-    if (!entry) return;
-    openId = null;
-    entry.classList.remove("is-open");
-    const trigger = entry.querySelector(".work-entry-trigger");
-    trigger.setAttribute("aria-expanded", "false");
-    entry.querySelector(".work-entry-details").hidden = true;
-    if (returnFocus) trigger.focus({ preventScroll: true });
-  }
-
-  function setMode(nextMode, announce = true) {
-    if (nextMode !== "experience" && nextMode !== "project") return;
-    closeEntry();
-    mode = nextMode;
-    modes.forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
+  function announce(message) {if (announcement) announcement.textContent = message;}
+  function closeCards() {
+    const focusedDetails = document.activeElement?.closest('.work-entry-details');
+    const returnTrigger = focusedDetails?.closest('.work-entry')?.querySelector('.work-entry-trigger');
+    records.forEach(({entry}) => {
+      entry.classList.remove('is-open');
+      entry.querySelector('.work-entry-trigger').setAttribute('aria-expanded','false');
+      entry.querySelector('.work-entry-trigger').innerHTML = 'Details <span aria-hidden="true">↗</span>';
+      entry.querySelector('.work-entry-details').hidden = true;
     });
-    entries.forEach((entry) => {
-      entry.hidden = entry.dataset.kind !== mode;
+    openCardId = null;
+    returnTrigger?.focus({preventScroll:true});
+  }
+  function visibleRecords() {return records.filter(record => record.kind === category);}
+  function updateInspector() {
+    const record = byId.get(selectedId);
+    const list = visibleRecords();
+    const index = list.indexOf(record);
+    inspector.innerHTML = `<p class="inspector-label"><span>03 / A CLOSER LOOK</span><span class="inspector-index">${String(index+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')}</span></p><p class="inspector-field">${escape(record.field)}</p><h3 id="inspector-title">${escape(record.title)}</h3>${record.role ? `<p class="inspector-role">${escape(record.role)}</p>` : ''}<p class="inspector-description">${escape(record.description)}</p><div class="inspector-metrics">${record.metrics.map(([value,label]) => `<div class="inspector-metric"><strong>${escape(value)}</strong><span>${escape(label)}</span></div>`).join('')}</div><div class="inspector-tags" aria-label="Technologies">${record.tags.slice(0,4).map(tag => `<span>${escape(tag)}</span>`).join('')}</div><div class="inspector-actions"><button type="button" class="inspector-more" data-detail="${record.id}">Read the breakdown <span aria-hidden="true">&nbsp;↗</span></button>${record.source ? `<a class="inspector-source" href="${escape(record.source)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}</div><div class="inspector-related"><span>CONNECTED TO</span><br>${record.related.map(id => { const other=byId.get(id); return other ? `<button type="button" data-open-node="${id}">${escape(other.short)} ↗</button>` : ''; }).join('')}</div>`;
+    document.querySelector('#network-selection').textContent = `${String(index+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')} NODES`;
+  }
+  function renderNeurons() {
+    const list = visibleRecords();
+    neurons.innerHTML = list.map((record,index) => {
+      const column = index % 2;
+      const row = Math.floor(index / 2);
+      const totalRows = Math.ceil(list.length / 2);
+      const y = totalRows === 3 ? 25 + row * 27 : 35 + row * 35;
+      return `<button type="button" class="work-neuron" data-neuron="${record.id}" aria-pressed="${record.id === selectedId}" aria-label="${escape(record.title)}${record.id==='openbooklm'?', work in progress':''}" aria-controls="node-inspector" style="left:${column === 0 ? 48 : 79}%;top:${y}%;--node-delay:${index*30}ms"><span class="neuron-dot">${String(index+1).padStart(2,'0')}</span><span class="neuron-label">${escape(record.short)}${record.id==='openbooklm'?'<small class="neuron-wip">IN PROGRESS</small>':''}</span></button>`;
+    }).join('');
+    document.querySelector('#network-caption').textContent = `Each neuron is ${category === 'project'?'a project':'an experience'}. Select one to look inside.`;
+    scheduleDraw();
+  }
+  function setCategory(next, notify=true) {
+    if (next !== 'project' && next !== 'experience') return;
+    closeCards(); category = next;
+    if (byId.get(selectedId)?.kind !== category) selectedId = visibleRecords()[0].id;
+    document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.mode === category)));
+    records.forEach(record => {record.entry.hidden = record.kind !== category;});
+    document.querySelector('#card-count').textContent = `${String(visibleRecords().length).padStart(2,'0')} ${category === 'project' ? 'PROJECTS' : 'EXPERIENCES'}`;
+    renderNeurons(); updateInspector();
+    if (notify) announce(`Showing ${category === 'project'?'projects':'experience'}. Select a ${view === 'visual'?'neuron':'card'} for details.`);
+  }
+  function setView(next, save=true) {
+    if (!['visual','cards'].includes(next)) return;
+    view = next; work.dataset.view = view;
+    network.hidden = view !== 'visual'; board.hidden = view !== 'cards';
+    document.querySelectorAll('[data-work-view]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.workView === view)));
+    document.querySelector('#work-view-hint').textContent = view === 'visual' ? 'Pick an input. Follow a connection. Explore the work.' : 'The same work, with a little less wiring. Pick a card for details.';
+    if (save) {try {localStorage.setItem(storageKey,view);} catch {} }
+    scheduleDraw(); syncMotion();
+  }
+  function selectNode(id, focus=false) {
+    const record = byId.get(id);
+    if (!record) return false;
+    if (record.kind !== category) setCategory(record.kind,false);
+    selectedId = id;
+    neurons.querySelectorAll('[data-neuron]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.neuron === id)));
+    updateInspector(); scheduleDraw();
+    if (focus) neurons.querySelector(`[data-neuron="${id}"]`)?.focus({preventScroll:true});
+    announce(`${record.title} selected. ${record.fact}.`);
+    return true;
+  }
+  function openCard(id, scroll=false) {
+    const record = byId.get(id); if (!record) return;
+    closeCards(); openCardId = id;
+    record.entry.classList.add('is-open'); record.entry.querySelector('.work-entry-details').hidden = false;
+    record.entry.querySelector('.work-entry-trigger').setAttribute('aria-expanded','true');
+    record.entry.querySelector('.work-entry-trigger').innerHTML = 'Close details <span aria-hidden="true">−</span>';
+    if (scroll) record.entry.scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth',block:'start'});
+  }
+  function openNode(id) {
+    if (!byId.has(id)) return false;
+    selectNode(id);
+    if (view === 'cards') openCard(id);
+    const target = view === 'cards' ? byId.get(id).entry : network;
+    target.scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth',block:'start'});
+    if (view === 'visual') neurons.querySelector(`[data-neuron="${id}"]`)?.focus({preventScroll:true});
+    else byId.get(id).entry.querySelector('.work-entry-trigger').focus({preventScroll:true});
+    return true;
+  }
+  window.PortfolioWork = {openNode, showAbout};
+
+  function scheduleDraw() {cancelAnimationFrame(drawFrame); drawFrame = requestAnimationFrame(drawConnections);}
+  function drawConnections() {
+    if (network.hidden) return;
+    const bounds = graph.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return;
+    svg.setAttribute('viewBox',`0 0 ${bounds.width} ${bounds.height}`);
+    const center = element => {const rect=element.getBoundingClientRect(); return {x:rect.left-bounds.left+rect.width/2,y:rect.top-bounds.top+rect.height/2};};
+    const input = center(graph.querySelector(`.network-input[data-mode="${category}"] .neuron-dot`));
+    const end = center(graph.querySelector('.network-output-port'));
+    const path = (a,b) => `M${a.x},${a.y} C${a.x+(b.x-a.x)*.45},${a.y} ${b.x-(b.x-a.x)*.45},${b.y} ${b.x},${b.y}`;
+    let paths = '';
+    neurons.querySelectorAll('.work-neuron').forEach(button => {
+      const point = center(button.querySelector('.neuron-dot'));
+      const active = button.dataset.neuron === selectedId;
+      const inputPath = path(input,point), outputPath=path(point,end);
+      paths += `<path class="network-path${active?' is-selected':''}" d="${inputPath}"/><path class="network-path${active?' is-selected':''}" d="${outputPath}" opacity="${active?'.8':'.38'}"/>`;
+      if (active) paths += `<path class="network-signal" d="${inputPath}"/><path class="network-signal" d="${outputPath}" style="animation-delay:-2s"/>`;
     });
-    const count = entries.filter((entry) => entry.dataset.kind === mode).length;
-    const label = mode === "experience" ? "Experience" : "Projects";
-    boardTitle.textContent = label;
-    boardCount.textContent = String(count).padStart(2, "0") + " entries";
-    board.scrollTop = 0;
-    if (announce && announcement) {
-      announcement.textContent = `Showing ${label.toLowerCase()}. Select a card for details.`;
-    }
+    svg.innerHTML = paths;
   }
-
-  function scrollToWorkControls(behavior) {
-    const top = window.scrollY + openControls.getBoundingClientRect().top - 18;
-    window.scrollTo({ top: Math.max(0, top), behavior });
-  }
-
-  function openWork(focusMode = true, scrollToWork = true) {
-    if (workSection.classList.contains("is-open")) return;
-    setMode("experience", false);
-    workSection.classList.add("is-open");
-    board.inert = false;
-    board.removeAttribute("aria-hidden");
-    launchButton.hidden = true;
-    launchButton.setAttribute("aria-expanded", "true");
-    openControls.hidden = false;
-    if (focusMode) modes[0].focus({ preventScroll: true });
-    if (scrollToWork) {
-      const behavior = reducedMotion.matches ? "instant" : "smooth";
-      requestAnimationFrame(() => scrollToWorkControls(behavior));
-      if (!reducedMotion.matches) {
-        const finishOpening = (event) => {
-          if (event.target !== board || event.propertyName !== "height") return;
-          board.removeEventListener("transitionend", finishOpening);
-          if (
-            workSection.classList.contains("is-open") &&
-            Math.abs(openControls.getBoundingClientRect().top - 18) > 12
-          ) {
-            scrollToWorkControls("smooth");
-          }
-        };
-        board.addEventListener("transitionend", finishOpening);
-      }
-    }
-    if (announcement)
-      announcement.textContent = "Work window open. Showing experience.";
-  }
-
-  function closeWork(viaEscape = false) {
-    if (!workSection.classList.contains("is-open")) return;
-    closeEntry();
-    workSection.classList.remove("is-open");
-    board.inert = true;
-    board.setAttribute("aria-hidden", "true");
-    openControls.hidden = true;
-    launchButton.hidden = false;
-    launchButton.setAttribute("aria-expanded", "false");
-    launchButton.focus({ preventScroll: true });
-    if (viaEscape) suppressEscapeOutline(launchButton);
-    if (announcement) announcement.textContent = "Work window closed.";
-  }
-
-  function scrollEntryIntoBoard(entry) {
-    requestAnimationFrame(() => {
-      if (openId !== entry.dataset.node) return;
-      const offset =
-        entry.getBoundingClientRect().top -
-        board.getBoundingClientRect().top +
-        board.scrollTop -
-        boardHeader.offsetHeight -
-        15;
-      board.scrollTo({
-        top: Math.max(0, offset),
-        behavior: reducedMotion.matches ? "instant" : "smooth",
-      });
-    });
-  }
-
-  function openEntry(entry, focusTrigger = false) {
-    if (!workSection.classList.contains("is-open")) openWork(false, false);
-    if (entry.hidden) setMode(entry.dataset.kind, false);
-    closeEntry();
-    openId = entry.dataset.node;
-    entry.classList.add("is-open");
-    const trigger = entry.querySelector(".work-entry-trigger");
-    trigger.setAttribute("aria-expanded", "true");
-    entry.querySelector(".work-entry-details").hidden = false;
-    if (focusTrigger) trigger.focus({ preventScroll: true });
-    scrollEntryIntoBoard(entry);
-    if (announcement) {
-      announcement.textContent = `${entry.querySelector("h3").textContent.trim()} details open.`;
-    }
-  }
-
-  entries.forEach((entry) => {
-    entry.querySelector(".work-entry-trigger").addEventListener("click", () => {
-      if (openId === entry.dataset.node) {
-        closeEntry();
-        if (announcement) announcement.textContent = "Details closed.";
-      } else {
-        openEntry(entry);
-      }
-    });
+  function syncMotion() {network.classList.toggle('is-paused',paused || !inViewport || document.hidden || reduceMotion.matches || view !== 'visual');}
+  new ResizeObserver(scheduleDraw).observe(graph);
+  new IntersectionObserver(entries => {inViewport=entries[0].isIntersecting;syncMotion();}).observe(network);
+  document.addEventListener('visibilitychange',syncMotion);
+  reduceMotion.addEventListener('change',syncMotion);
+  document.querySelector('#network-motion').addEventListener('click',event => {paused=!paused;event.currentTarget.setAttribute('aria-pressed',String(paused));event.currentTarget.innerHTML=paused?'Resume animation <span aria-hidden="true">▷</span>':'Pause animation <span aria-hidden="true">Ⅱ</span>';syncMotion();});
+  document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click',() => setCategory(button.dataset.mode)));
+  document.querySelectorAll('[data-work-view]').forEach(button => button.addEventListener('click',() => {setView(button.dataset.workView); announce(`${view === 'visual'?'Visual':'Cards'} view selected.`);}));
+  neurons.addEventListener('click',event => {const button=event.target.closest('[data-neuron]');if(button)selectNode(button.dataset.neuron);});
+  neurons.addEventListener('keydown',event => {
+    if (!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Home','End'].includes(event.key)) return;
+    const buttons=[...neurons.querySelectorAll('[data-neuron]')];const index=buttons.indexOf(event.target);if(index<0)return;
+    event.preventDefault();const step=event.key==='ArrowDown'?2:event.key==='ArrowUp'?-2:event.key==='ArrowLeft'?-1:1;
+    const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+step+buttons.length)%buttons.length;
+    selectNode(buttons[next].dataset.neuron,true);
   });
+  records.forEach(record => record.entry.querySelector('.work-entry-trigger').addEventListener('click',() => {if(openCardId===record.id)closeCards();else {selectNode(record.id);openCard(record.id,true);}}));
 
-  modes.forEach((button) => {
-    button.addEventListener("click", () => {
-      if (button.dataset.mode !== mode) setMode(button.dataset.mode);
-    });
-  });
-
-  launchButton.addEventListener("click", () => openWork());
-  document
-    .querySelector('.site-header nav a[href="#work"]')
-    ?.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      if (workSection.classList.contains("is-open")) {
-        scrollToWorkControls(reducedMotion.matches ? "auto" : "smooth");
-      } else {
-        openWork();
-      }
-    });
-  function openWorkFromLink() {
-    if (
-      location.hash === "#work" &&
-      !workSection.classList.contains("is-open")
-    ) {
-      openWork();
-    }
+  const dialog=document.createElement('dialog');dialog.className='work-detail-dialog';dialog.setAttribute('aria-labelledby','detail-dialog-title');
+  dialog.innerHTML='<div class="detail-dialog-header"><h2 id="detail-dialog-title"></h2><button type="button" class="detail-dialog-close" aria-label="Close project details">×</button></div><div class="detail-dialog-body"></div>';
+  document.body.append(dialog);
+  let beforeDialogOverflow='';
+  function showDetails(id) {
+    const record=byId.get(id);if(!record)return;
+    dialog.querySelector('h2').textContent=record.title;
+    const content=record.entry.querySelector('.work-entry-details').cloneNode(true);content.hidden=false;content.removeAttribute('id');content.removeAttribute('aria-labelledby');content.removeAttribute('role');
+    dialog.querySelector('.detail-dialog-body').replaceChildren(content);
+    beforeDialogOverflow=document.body.style.overflow;document.body.style.overflow='hidden';
+    dialog.showModal();
   }
-
-  window.addEventListener("hashchange", openWorkFromLink);
-  if (location.hash === "#work") requestAnimationFrame(openWorkFromLink);
-  closeWorkButton.addEventListener("click", () => closeWork());
-
-  board.addEventListener("click", (event) => {
-    const link = event.target.closest("[data-connect]");
-    if (!link) return;
-    const target = entryById.get(link.dataset.connect);
-    if (!target) return;
-    openEntry(target, true);
+  dialog.querySelector('.detail-dialog-close').addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}});
+  dialog.addEventListener('close',()=>{document.body.style.overflow=beforeDialogOverflow;});
+  document.addEventListener('click',event=>{
+    const detail=event.target.closest('[data-detail]');if(detail){showDetails(detail.dataset.detail);return;}
+    const target=event.target.closest('[data-open-node],[data-connect]');if(!target)return;
+    const id=target.dataset.openNode||target.dataset.connect;
+    if(dialog.open)dialog.close();
+    openNode(id);
   });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape" || !workSection.classList.contains("is-open"))
-      return;
-    if (openId) {
-      const trigger = entryById
-        .get(openId)
-        .querySelector(".work-entry-trigger");
-      closeEntry(true);
-      suppressEscapeOutline(trigger);
-      if (announcement) announcement.textContent = "Details closed.";
-    } else {
-      closeWork(true);
-    }
-    event.preventDefault();
-  });
-
-  setMode("experience", false);
-  board.inert = true;
-  if (announcement) announcement.textContent = "";
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&openCardId&&!dialog.open){closeCards();announce('Card details closed.');}});
+  let initialView;try{initialView=localStorage.getItem(storageKey);}catch{}
+  setCategory('project',false);
+  setView(initialView || (matchMedia('(min-width:768px)').matches?'visual':'cards'),false);
+  function openLinkedWork() {
+    const id = location.hash.slice(1);
+    if (byId.has(id)) openNode(id);
+  }
+  window.addEventListener('hashchange', openLinkedWork);
+  if (byId.has(location.hash.slice(1))) requestAnimationFrame(openLinkedWork);
 })();

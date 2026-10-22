@@ -49,7 +49,9 @@ async function markdownFiles(directory) {
     if (item.name.startsWith(".") || item.name.startsWith("_")) continue;
     const absolute = path.join(directory, item.name);
     if (item.isDirectory()) files.push(...await markdownFiles(absolute));
-    else if (item.isFile() && item.name.endsWith(".md") && item.name !== "POST_TEMPLATE.md") {
+    else if (item.isFile() && item.name.endsWith(".md")
+      && item.name !== "POST_TEMPLATE.md"
+      && !/^readme(?:[._-].*)?\.md$/i.test(item.name)) {
       files.push(absolute);
     }
   }

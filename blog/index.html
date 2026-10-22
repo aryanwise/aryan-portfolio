@@ -1,464 +1,69 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090A0A">
-  <meta name="description" content="Daily notes and practical courses on machine learning, autonomy, and building things by Aryan Mishra.">
-  <script src="../theme.js"></script>
-  <title>Aryan's Notebook</title>
-  <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23D97757'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23090A0A'%3Ea%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="../styles.css">
+  <meta name="theme-color" content="#0D0E11">
+  <meta name="description" content="Aryan's logs: personal notes and practical courses on machine learning, applied math, autonomy, and things worth figuring out.">
+  <script src="../theme.js?v=3"></script>
+  <title>Logs — Aryan Mishra</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23B85D3B'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23F4F1EA'%3Ea%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css?v=3.3">
   <link rel="stylesheet" href="../theme.css">
-  <style>
-    .journal-shell {
-      display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
-      gap: clamp(36px, 5vw, 64px); max-width: 1120px; margin: 0 auto;
-      padding: clamp(38px, 6vw, 76px) 0 100px;
-    }
-    .journal-sidebar, .journal-main { min-width: 0; }
-    .journal-sidebar-inner { position: sticky; top: 30px; }
-    .journal-hero { margin-bottom: 38px; }
-    .journal-nav-label, .journal-section-kicker, .journal-card-kind {
-      color: var(--accent); font: 550 11px/1.5 var(--mono, monospace);
-      letter-spacing: .1em; text-transform: uppercase;
-    }
-    .journal-hero .eyebrow { margin: 0 0 20px; }
-    .journal-hero h1 {
-      margin: 0; color: var(--text); font: 600 clamp(42px, 4.4vw, 60px)/1.06 var(--sans, sans-serif);
-      letter-spacing: -.035em; text-transform: uppercase;
-    }
-    .journal-hero h1 em { color: var(--accent); font-style: normal; }
-    .journal-hero .writing-intro {
-      margin: 20px 0 0; color: var(--text-secondary); font-size: 15px; line-height: 1.75;
-    }
-    .journal-nav-label { display: block; margin-bottom: 13px; color: var(--text-secondary); }
-    .journal-tabs { display: flex; flex-direction: column; gap: 8px; }
-    .journal-tabs button {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      width: 100%; min-height: 47px; padding: 11px 14px;
-      border: 1px solid var(--border); border-radius: 5px;
-      background: transparent; color: var(--text-secondary);
-      font: 550 13px/1.2 var(--sans, sans-serif); text-align: left; cursor: pointer;
-    }
-    .journal-tabs button:hover { color: var(--text); border-color: var(--accent); }
-    .journal-tabs button[aria-pressed="true"] {
-      color: var(--text); background: var(--surface-elevated); border-color: var(--accent);
-    }
-    .journal-tab-count { color: var(--text-secondary); font: 500 11px/1.2 var(--mono, monospace); }
-    .journal-tabs button[aria-pressed="true"] .journal-tab-count { color: var(--accent); }
-
-    .journal-toolbar {
-      padding-bottom: 25px; border-bottom: 1px solid var(--border);
-    }
-    .journal-search {
-      display: flex; align-items: center; gap: 13px; width: 100%;
-      min-height: 54px; padding: 0 17px; border: 1px solid var(--border);
-      border-radius: 6px; background: var(--surface); color: var(--text-secondary);
-    }
-    .journal-search:focus-within { border-color: var(--accent); }
-    .journal-search svg { flex: none; width: 18px; height: 18px; }
-    .journal-search input {
-      flex: 1; min-width: 0; border: 0; outline: none; background: transparent;
-      color: var(--text); font: 500 15px/1.3 var(--sans, sans-serif);
-    }
-    .journal-search input::placeholder { color: var(--text-muted); opacity: 1; }
-    .journal-clear {
-      flex: none; border: 0; background: none; padding: 7px 0 7px 9px;
-      color: var(--accent); font: 550 12px/1.2 var(--mono, monospace); cursor: pointer;
-    }
-
-    .journal-section { margin-top: 34px; }
-    .journal-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
-    .journal-section-kicker { display: block; margin-bottom: 7px; }
-    .journal-section-heading h2, .journal-course-focus h2 {
-      margin: 0; color: var(--text); font: 550 clamp(27px, 3vw, 37px)/1.16 var(--serif, sans-serif);
-      letter-spacing: -.035em;
-    }
-    .journal-count { color: var(--text-secondary); font: 500 12px/1.4 var(--mono, monospace); white-space: nowrap; }
-
-    .journal-course-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
-    .journal-course-grid .journal-empty { grid-column: 1 / -1; }
-    .journal-course {
-      display: flex; flex-direction: column; min-height: 190px; padding: 21px 23px;
-      border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
-      transition: border-color 160ms ease, transform 160ms ease;
-    }
-    .journal-course:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .journal-course-top { color: var(--accent); font: 550 11px/1.4 var(--mono, monospace); letter-spacing: .08em; }
-    .journal-course h3 { margin: 17px 0 8px; color: var(--text); font: 600 24px/1.18 var(--serif, sans-serif); }
-    .journal-course p { max-width: 52ch; margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
-    .journal-course-bottom {
-      display: flex; justify-content: space-between; gap: 15px; margin-top: auto; padding-top: 19px;
-      color: var(--text-secondary); font: 500 11px/1.4 var(--mono, monospace);
-    }
-    .journal-course-bottom span:last-child { color: var(--accent); }
-    .journal-browse { display: inline-block; margin-top: 16px; color: var(--accent); font: 550 12px/1.5 var(--mono, monospace); }
-    .journal-course-focus {
-      margin-top: 34px; padding: 25px 28px; border: 1px solid var(--border);
-      border-radius: 7px; background: var(--surface);
-    }
-    .journal-course-focus p { max-width: 70ch; margin: 10px 0 16px; color: var(--text-secondary); line-height: 1.65; }
-    .journal-course-focus a { color: var(--accent); font: 550 12px/1.5 var(--mono, monospace); }
-
-    .journal-feed { display: grid; gap: 12px; }
-    .journal-month { margin: 21px 0 3px; color: var(--text-secondary); font: 550 12px/1.4 var(--mono, monospace); letter-spacing: .08em; text-transform: uppercase; }
-    .journal-card {
-      display: block; padding: 22px 24px; border: 1px solid var(--border);
-      border-radius: 8px; background: var(--surface); transition: border-color 160ms ease, transform 160ms ease;
-    }
-    .journal-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .journal-card-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; }
-    .journal-card-meta { color: var(--text-secondary); font: 500 12px/1.5 var(--mono, monospace); }
-    .journal-card h3 { margin: 10px 0 8px; color: var(--text); font: 600 clamp(20px, 2.3vw, 27px)/1.24 var(--serif, sans-serif); letter-spacing: -.02em; }
-    .journal-card:hover h3 { color: var(--accent); }
-    .journal-card p { max-width: 75ch; margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.65; }
-    .journal-card-bottom {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
-      color: var(--text-secondary); font: 500 11px/1.4 var(--mono, monospace);
-    }
-    .journal-card-bottom span:last-child { color: var(--accent); white-space: nowrap; }
-    .journal-empty { padding: 28px; border: 1px solid var(--border); border-radius: 7px; color: var(--text-secondary); }
-    .journal-more {
-      display: block; margin: 24px auto 0; min-height: 43px; padding: 9px 20px;
-      border: 1px solid var(--border); border-radius: 5px; background: var(--surface);
-      color: var(--text); font: 550 12px/1.2 var(--mono, monospace); cursor: pointer;
-    }
-    .journal-more:hover { border-color: var(--accent); }
-    .journal-shell :is(a, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    @media (max-width: 1060px) {
-      .journal-course-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 960px) {
-      .journal-shell { grid-template-columns: 1fr; gap: 36px; }
-      .journal-sidebar-inner { position: static; }
-      .journal-hero { max-width: 600px; margin-bottom: 26px; }
-      .journal-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .journal-tabs button { min-height: 44px; }
-      .journal-toolbar { padding-bottom: 18px; }
-      .journal-course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 700px) {
-      .site-header .wordmark > span:not(.wordmark-symbol) { display: none !important; }
-      .journal-shell { padding: 42px 0 65px; gap: 30px; }
-      .journal-course-grid { grid-template-columns: 1fr; }
-      .journal-card { padding: 20px; }
-    }
-    @media (max-width: 430px) {
-      .journal-tabs button { padding: 9px; font-size: 11px; }
-      .journal-tab-count { font-size: 10px; }
-      .journal-hero h1 { font-size: 44px; }
-    }
-    @media (max-width: 380px) {
-      .journal-tabs button { justify-content: center; text-align: center; }
-      .journal-tab-count { display: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .journal-course, .journal-card { transition: none; }
-    }
-  </style>
+  <link rel="stylesheet" href="./logs.css?v=5">
+  <script src="./logs.js?v=6" defer></script>
+  <link rel="stylesheet" href="../site-header.css?v=2">
 </head>
-
-<body>
-  <div class="page-shell">
-    <header class="site-header blog-header">
-      <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home">
-        <span class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span>
-      </a>
+<body class="logs-page logs-index-page">
+  <a class="skip-link" href="#journal-main">Skip to entries</a>
+  <div class="page-shell logs-page-shell">
+    <header class="site-header shared-site-header">
+      <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home"><span class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span></a>
       <nav aria-label="Main navigation">
-        <a class="nav-back-link" href="../index.html">← Back to portfolio</a>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" aria-pressed="false">
-          <span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light mode</span>
-        </button>
+        <a href="../index.html">← Back to portfolio</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light mode</span></button>
       </nav>
     </header>
-
-    <main class="journal-shell">
-      <aside class="journal-sidebar" aria-label="About and browse the notebook">
-        <div class="journal-sidebar-inner">
-          <header class="journal-hero writing-header">
-            <p class="eyebrow"><span class="little-rule" aria-hidden="true"></span>NOTITIA PRIVATA</p>
-            <h1>Dear <em>Diary...</em></h1>
-            <p class="writing-intro">
-              Here’s what’s actually been on my mind lately. Mostly writing down what I’m figuring out as I go so
-              I don’t forget—and leaving the pages open for anyone walking a similar path.
-            </p>
-          </header>
-          <span class="journal-nav-label">BROWSE</span>
-          <nav class="journal-tabs" aria-label="Browse the notebook">
-            <button type="button" data-view="all" aria-pressed="true"><span>Everything</span><span class="journal-tab-count" id="all-tab-count" aria-hidden="true"></span></button>
-            <button type="button" data-view="daily" aria-pressed="false"><span>Daily notes</span><span class="journal-tab-count" id="daily-tab-count" aria-hidden="true"></span></button>
-            <button type="button" data-view="courses" aria-pressed="false"><span>Courses</span><span class="journal-tab-count" id="courses-tab-count" aria-hidden="true"></span></button>
-          </nav>
-        </div>
-      </aside>
-
-      <div class="journal-main">
+    <main>
+      <header class="journal-hero">
+        <h1>Dear <em>Diary...</em></h1>
+        <p>Here’s what’s actually been on my mind lately. Mostly writing down what I’m figuring out as I go so I don’t forget—and leaving the pages open for anyone walking a similar path.</p>
+      </header>
+      <div class="journal-main" id="journal-main" tabindex="-1">
         <div class="journal-toolbar">
-          <div class="journal-search" role="search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"></circle><path d="m16 16 5 5"></path></svg>
-            <input id="journal-search" type="search" aria-label="Search posts and courses" placeholder="Search posts, courses, and topics…" autocomplete="off">
-            <button class="journal-clear" id="clear-search" type="button" aria-label="Clear search" hidden>Clear</button>
+          <nav class="journal-tabs" aria-label="Browse logs">
+            <button type="button" data-view="all" aria-pressed="true">Everything</button>
+            <button type="button" data-view="courses" aria-pressed="false">Courses</button>
+            <button type="button" data-view="notes" aria-pressed="false">Larp</button>
+          </nav>
+          <div class="journal-tools">
+            <div class="journal-search" role="search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg>
+              <input id="journal-search" type="search" aria-label="Search logs and courses" placeholder="Search logs…" autocomplete="off">
+              <button id="clear-search" type="button" aria-label="Clear search" hidden>×</button>
+            </div>
+            <select id="journal-topic" aria-label="Topic"><option value="">All topics</option></select>
           </div>
         </div>
-
-        <section class="journal-section" id="course-section" aria-labelledby="courses-heading" hidden>
-          <div class="journal-section-heading">
-            <div><span class="journal-section-kicker" id="courses-kicker">LEARN IN SERIES</span><h2 id="courses-heading">Courses</h2></div>
-            <span class="journal-count" id="course-count"></span>
-          </div>
-          <div class="journal-course-grid" id="course-grid"></div>
-          <a class="journal-browse" id="browse-courses" href="?view=courses" hidden>Browse all courses ↗</a>
-        </section>
-
+        <div class="journal-status"><p id="search-status" aria-live="polite"></p><button id="reset-filters" type="button" hidden>Clear filters</button></div>
         <section class="journal-course-focus" id="course-focus" aria-labelledby="course-focus-title" hidden>
-          <span class="journal-section-kicker">COURSE / LESSONS</span>
-          <h2 id="course-focus-title"></h2>
-          <p id="course-focus-description"></p>
-          <a href="?view=courses" id="back-to-courses">← All courses</a>
+          <a class="journal-back" href="?view=courses" data-choose="courses">← All courses</a>
+          <h2 id="course-focus-title"></h2><p id="course-focus-description"></p><span id="course-focus-meta"></span>
         </section>
-
+        <section class="journal-section" id="course-section" aria-labelledby="courses-heading" hidden>
+          <div class="journal-section-heading"><h2 id="courses-heading">Courses</h2><div class="journal-course-controls"><span id="course-count"></span><div id="course-carousel-controls" class="journal-carousel-buttons" hidden><button id="previous-course" type="button" aria-label="Previous courses" aria-controls="course-grid">←</button><button id="next-course" type="button" aria-label="Next courses" aria-controls="course-grid">→</button></div></div></div>
+          <div class="journal-course-grid" id="course-grid"></div>
+          <button class="journal-more" id="more-courses" type="button" hidden>More courses ↓</button>
+        </section>
         <section class="journal-section" id="feed-section" aria-labelledby="feed-heading">
-          <div class="journal-section-heading">
-            <div><span class="journal-section-kicker" id="feed-kicker">LATEST ENTRIES</span><h2 id="feed-heading">Latest writing</h2></div>
-            <span class="journal-count" id="feed-count" aria-live="polite"></span>
-          </div>
-          <div class="journal-feed" id="posts-feed">
-            <p class="journal-empty">Loading the notebook…</p>
-          </div>
-          <button class="journal-more" id="load-more" type="button" hidden>Show more entries ↓</button>
+          <div class="journal-section-heading"><h2 id="feed-heading">Larp</h2><span id="feed-count"></span></div>
+          <div class="journal-feed" id="posts-feed"><p class="journal-empty" role="status">Opening the diary…</p></div>
+          <button class="journal-more" id="load-more" type="button" hidden>More Larp ↓</button>
         </section>
+        <noscript><p class="journal-empty">Enable JavaScript to browse the Markdown logs and courses.</p></noscript>
       </div>
     </main>
+    <footer class="logs-footer"><span>Aryan Mishra</span><span>A few things, written down.</span></footer>
   </div>
-
-  <script>
-    (() => {
-      "use strict";
-      const $ = (selector) => document.querySelector(selector);
-      const feed = $("#posts-feed");
-      const search = $("#journal-search");
-      const PAGE_SIZE = 12;
-      let catalog = null;
-      let visible = PAGE_SIZE;
-      let filters = readFilters();
-
-      function readFilters() {
-        const params = new URLSearchParams(location.search);
-        const view = params.get("view");
-        return {
-          view: ["daily", "courses"].includes(view) ? view : "all",
-          course: params.get("course") || null,
-          query: params.get("q") || "",
-        };
-      }
-      function writeFilters(replace = false) {
-        const url = new URL(location.href);
-        url.search = "";
-        if (filters.course) url.searchParams.set("course", filters.course);
-        else if (filters.view !== "all") url.searchParams.set("view", filters.view);
-        if (filters.query) url.searchParams.set("q", filters.query);
-        history[replace ? "replaceState" : "pushState"]({}, "", url);
-      }
-      function el(tag, className, text) {
-        const element = document.createElement(tag);
-        if (className) element.className = className;
-        if (text != null) element.textContent = text;
-        return element;
-      }
-      function niceDate(iso) {
-        return new Intl.DateTimeFormat("en-US", {
-          month: "short", day: "numeric", year: "numeric", timeZone: "UTC",
-        }).format(new Date(iso + "T12:00:00Z"));
-      }
-      function monthName(iso) {
-        return new Intl.DateTimeFormat("en-US", {
-          month: "long", year: "numeric", timeZone: "UTC",
-        }).format(new Date(iso + "T12:00:00Z"));
-      }
-      function kindLabel(post, course) {
-        if (post.kind === "course") return (course?.title || "Course") + " / Lesson " + String(post.lesson).padStart(2, "0");
-        return ({ daily: "Daily note", essay: "Essay", "project-log": "Project log" })[post.kind] || "Note";
-      }
-      function createCourseCard(course) {
-        const link = el("a", "journal-course");
-        link.href = "?course=" + encodeURIComponent(course.id);
-        link.dataset.course = course.id;
-        link.append(el("span", "journal-course-top", "COURSE / " + course.id.replaceAll("-", " ").toUpperCase()));
-        link.append(el("h3", "", course.title));
-        link.append(el("p", "", course.description));
-        const bottom = el("div", "journal-course-bottom");
-        bottom.append(el("span", "", course.lessonCount + (course.lessonCount === 1 ? " lesson" : " lessons")));
-        bottom.append(el("span", "", "Explore course ↗"));
-        link.append(bottom);
-        return link;
-      }
-      function createPostCard(post) {
-        const course = catalog.courses.find((item) => item.id === post.course);
-        const link = el("a", "journal-card");
-        link.href = "post.html?file=" + encodeURIComponent(post.file);
-        const top = el("div", "journal-card-top");
-        top.append(el("span", "journal-card-kind", kindLabel(post, course)));
-        top.append(el("span", "journal-card-meta", niceDate(post.date) + " · " + post.readMinutes + " min read"));
-        link.append(top, el("h3", "", post.title), el("p", "", post.summary));
-        const bottom = el("div", "journal-card-bottom");
-        bottom.append(el("span", "", post.tags.join(" / ") || "FIELD NOTES"));
-        bottom.append(el("span", "", "Read entry ↗"));
-        link.append(bottom);
-        return link;
-      }
-      function postSearchText(post) {
-        const course = catalog.courses.find((item) => item.id === post.course);
-        return [post.title, post.summary, ...post.tags, course?.title || "", course?.description || ""];
-      }
-      function matches(parts, terms) {
-        const searchable = parts.join(" ").toLocaleLowerCase();
-        return terms.every((term) => searchable.includes(term));
-      }
-      function render() {
-        if (!catalog) return;
-        const terms = filters.query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-        const searching = terms.length > 0;
-        const currentCourse = catalog.courses.find((course) => course.id === filters.course);
-        if (filters.course && !currentCourse) filters.course = null;
-        const selectedCourse = searching ? null : currentCourse;
-        const view = searching ? "search" : selectedCourse ? "course" : filters.view;
-        const coursesByRecentLesson = [...catalog.courses].sort((a, b) => {
-          const latest = (course) => catalog.posts.find((post) => post.course === course.id)?.date || "";
-          return latest(b).localeCompare(latest(a)) || a.title.localeCompare(b.title);
-        });
-        const matchingCourses = searching ? coursesByRecentLesson.filter((course) => {
-          const lessons = catalog.posts.filter((post) => post.course === course.id);
-          return matches([course.title, course.description, ...lessons.flatMap(postSearchText)], terms);
-        }) : coursesByRecentLesson;
-        const shownCourses = view === "all" ? matchingCourses.slice(0, 2)
-          : view === "courses" || view === "search" ? matchingCourses : [];
-        document.querySelectorAll("[data-view]").forEach((button) => {
-          button.setAttribute("aria-pressed", String(
-            filters.course ? button.dataset.view === "courses" : button.dataset.view === filters.view
-          ));
-        });
-        $("#all-tab-count").textContent = String(catalog.posts.length).padStart(2, "0");
-        $("#daily-tab-count").textContent = String(catalog.posts.filter((post) => post.kind === "daily").length).padStart(2, "0");
-        $("#courses-tab-count").textContent = String(catalog.courses.length).padStart(2, "0");
-        if (search.value !== filters.query) search.value = filters.query;
-        $("#clear-search").hidden = !filters.query;
-        const courseSection = $("#course-section");
-        courseSection.hidden = !(["all", "courses", "search"].includes(view))
-          || (view !== "courses" && !shownCourses.length);
-        const courseGrid = $("#course-grid");
-        courseGrid.replaceChildren(...shownCourses.map(createCourseCard));
-        if (view === "courses" && !shownCourses.length) {
-          courseGrid.append(el("p", "journal-empty", "Courses will appear here when the first lesson is published."));
-        }
-        $("#courses-heading").textContent = view === "all" ? "Start a course" : view === "search" ? "Matching courses" : "Courses";
-        $("#courses-kicker").textContent = view === "search" ? "MATCHING SERIES" : "LEARN IN SERIES";
-        const courseCount = view === "search" ? shownCourses.length : catalog.courses.length;
-        $("#course-count").textContent = courseCount + (courseCount === 1 ? " course" : " courses");
-        $("#browse-courses").hidden = view !== "all" || catalog.courses.length <= 2;
-        const focus = $("#course-focus");
-        focus.hidden = !selectedCourse;
-        if (selectedCourse) {
-          $("#course-focus-title").textContent = selectedCourse.title;
-          $("#course-focus-description").textContent = selectedCourse.description;
-        }
-        $("#feed-section").hidden = view === "courses";
-        let posts = catalog.posts.filter((post) => view === "search" ? matches(postSearchText(post), terms)
-          : view === "course" ? post.course === selectedCourse.id
-          : view === "daily" ? post.kind === "daily"
-          : view === "all");
-        if (selectedCourse) posts = [...posts].sort((a, b) => a.lesson - b.lesson);
-        const heading = view === "search" ? "Search results" : view === "course" ? "Lessons"
-          : view === "daily" ? "Daily notes" : "Latest writing";
-        $("#feed-heading").textContent = heading;
-        $("#feed-kicker").textContent = view === "search" ? "LIVE SEARCH"
-          : view === "course" ? "THE SYLLABUS" : "LATEST ENTRIES";
-        $("#feed-count").textContent = posts.length + (posts.length === 1 ? " post" : " posts");
-        feed.replaceChildren();
-        let lastMonth = "";
-        for (const post of posts.slice(0, visible)) {
-          if (view === "daily") {
-            const month = monthName(post.date);
-            if (month !== lastMonth) feed.append(el("h3", "journal-month", month));
-            lastMonth = month;
-          }
-          feed.append(createPostCard(post));
-        }
-        if (!posts.length && view !== "courses") feed.append(el("p", "journal-empty",
-          view === "search" ? shownCourses.length ? "No matching posts. Open a course above or try another word."
-            : "No matches yet. Try another topic."
-            : "Nothing here yet. Try another section."));
-        $("#load-more").hidden = posts.length <= visible;
-      }
-      function choose(view, course = null) {
-        filters.view = view;
-        filters.course = course;
-        filters.query = "";
-        visible = PAGE_SIZE;
-        writeFilters();
-        render();
-        const target = course ? $("#course-focus") : view === "courses" ? $("#course-section")
-          : view === "daily" ? $("#feed-section") : $(".journal-main");
-        target.scrollIntoView({ block: "start" });
-      }
-      $(".journal-tabs").addEventListener("click", (event) => {
-        const button = event.target.closest("[data-view]");
-        if (button) choose(button.dataset.view);
-      });
-      $("#course-grid").addEventListener("click", (event) => {
-        const link = event.target.closest("a[data-course]");
-        if (!link) return;
-        event.preventDefault();
-        choose("courses", link.dataset.course);
-      });
-      $("#back-to-courses").addEventListener("click", (event) => {
-        event.preventDefault();
-        choose("courses");
-      });
-      $("#browse-courses").addEventListener("click", (event) => {
-        event.preventDefault();
-        choose("courses");
-      });
-      search.addEventListener("input", () => {
-        filters.query = search.value;
-        visible = PAGE_SIZE;
-        writeFilters(true);
-        render();
-      });
-      $("#clear-search").addEventListener("click", () => {
-        filters.query = "";
-        visible = PAGE_SIZE;
-        writeFilters(true);
-        render();
-        search.focus();
-      });
-      $("#load-more").addEventListener("click", () => {
-        visible += PAGE_SIZE;
-        render();
-      });
-      window.addEventListener("popstate", () => {
-        filters = readFilters();
-        visible = PAGE_SIZE;
-        render();
-      });
-      fetch("../posts/posts.json", { cache: "no-cache" })
-        .then((response) => {
-          if (!response.ok) throw new Error("Cannot load the posts catalog");
-          return response.json();
-        })
-        .then((data) => {
-          if (!Array.isArray(data.posts) || !Array.isArray(data.courses)) throw new Error("Invalid posts catalog");
-          catalog = data;
-          render();
-        })
-        .catch(() => {
-          feed.replaceChildren(el("p", "journal-empty", "The notebook could not load. Open this page through Live Server or GitHub Pages, then try again."));
-        });
-    })();
-  </script>
 </body>
-
 </html>

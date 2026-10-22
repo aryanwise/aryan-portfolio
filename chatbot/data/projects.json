@@ -3,7 +3,7 @@
     "id": "openbooklm",
     "title": "OpenbookLM",
     "field": "Local AI / developer tools",
-    "description": "A local-first alternative to Google NotebookLM that goes beyond answering questions - It will be your local private agent that reads documentation, understands your codebase, and writes the code to implement it.",
+    "description": "Work in progress: a local-first alternative to Google NotebookLM that goes beyond answering questions - It will be your local private agent that reads documentation, understands your codebase, and writes the code to implement it.",
     "technologies": [
       "TypeScript",
       "FastAPI",
@@ -35,7 +35,7 @@
     "id": "adsa",
     "title": "A.D.S.A.",
     "field": "Autonomous Data Science Agent",
-    "description": "An open-source autonomous agent that plans, codes, and runs complete data science workflows inside an isolated local sandbox.",
+    "description": "An open-source autonomous agent that plans, codes, and runs complete data science workflows inside an isolated sandbox.",
     "technologies": [
       "Python",
       "DeepAnalyze-8B",
@@ -129,8 +129,7 @@
       "hardware",
       "Arduino",
       "embedded",
-      "ultrasonic",
-      "person follow"
+      "ultrasonic"
     ]
   },
   {

@@ -166,7 +166,7 @@
     $("load-more").hidden = true; $("more-courses").hidden = true;
     $("course-carousel-controls").hidden = true;
     $("posts-feed").classList.toggle("is-course", !!course);
-    document.title = (course ? course.title : "Logs") + " — Aryan Mishra";
+    document.title = course ? course.title : "Logs";
     if (filters.course && !course) {
       $("course-section").hidden = true; $("feed-section").hidden = false;
       $("feed-heading").textContent = "Courses"; $("feed-count").textContent = ""; $("search-status").textContent = "";

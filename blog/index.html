@@ -1,33 +1,40 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0D0E11">
-  <meta name="description" content="Aryan's logs: personal notes and practical courses on machine learning, applied math, autonomy, and things worth figuring out.">
+  <meta name="description"
+    content="Aryan's logs: personal notes and practical courses on machine learning, applied math, autonomy, and things worth figuring out.">
   <script src="../theme.js?v=3"></script>
-  <title>Logs — Aryan Mishra</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23B85D3B'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='49' font-family='Georgia' fill='%23F4F1EA'%3Ea%3C/text%3E%3C/svg%3E">
+  <title>Logs</title>
+  <link rel="icon" type="image/svg+xml" sizes="any" href="../favicon.svg?v=1">
   <link rel="stylesheet" href="../styles.css?v=3.3">
   <link rel="stylesheet" href="../theme.css">
   <link rel="stylesheet" href="./logs.css?v=5">
-  <script src="./logs.js?v=6" defer></script>
+  <script src="./logs.js?v=7" defer></script>
   <link rel="stylesheet" href="../site-header.css?v=2">
 </head>
+
 <body class="logs-page logs-index-page">
   <a class="skip-link" href="#journal-main">Skip to entries</a>
   <div class="page-shell logs-page-shell">
     <header class="site-header shared-site-header">
-      <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home"><span class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span></a>
+      <a class="wordmark" href="../index.html" aria-label="Aryan Mishra home"><span
+          class="wordmark-symbol">am<span>·</span></span><span>Aryan Mishra</span></a>
       <nav aria-label="Main navigation">
         <a href="../index.html">← Back to portfolio</a>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-text">Light mode</span></button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme"
+          aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span
+            class="theme-toggle-text">Light mode</span></button>
       </nav>
     </header>
     <main>
       <header class="journal-hero">
         <h1>Dear <em>Diary...</em></h1>
-        <p>Here’s what’s actually been on my mind lately. Mostly writing down what I’m figuring out as I go so I don’t forget—and leaving the pages open for anyone walking a similar path.</p>
+        <p>Here’s what’s actually been on my mind lately. Mostly writing down what I’m figuring out as I go so I don’t
+          forget—and leaving the pages open for anyone walking a similar path.</p>
       </header>
       <div class="journal-main" id="journal-main" tabindex="-1">
         <div class="journal-toolbar">
@@ -38,32 +45,56 @@
           </nav>
           <div class="journal-tools">
             <div class="journal-search" role="search">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg>
-              <input id="journal-search" type="search" aria-label="Search logs and courses" placeholder="Search logs…" autocomplete="off">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.7" />
+                <path d="m16 16 5 5" />
+              </svg>
+              <input id="journal-search" type="search" aria-label="Search logs and courses" placeholder="Search logs…"
+                autocomplete="off">
               <button id="clear-search" type="button" aria-label="Clear search" hidden>×</button>
             </div>
-            <select id="journal-topic" aria-label="Topic"><option value="">All topics</option></select>
+            <select id="journal-topic" aria-label="Topic">
+              <option value="">All topics</option>
+            </select>
           </div>
         </div>
-        <div class="journal-status"><p id="search-status" aria-live="polite"></p><button id="reset-filters" type="button" hidden>Clear filters</button></div>
+        <div class="journal-status">
+          <p id="search-status" aria-live="polite"></p><button id="reset-filters" type="button" hidden>Clear
+            filters</button>
+        </div>
         <section class="journal-course-focus" id="course-focus" aria-labelledby="course-focus-title" hidden>
           <a class="journal-back" href="?view=courses" data-choose="courses">← All courses</a>
-          <h2 id="course-focus-title"></h2><p id="course-focus-description"></p><span id="course-focus-meta"></span>
+          <h2 id="course-focus-title"></h2>
+          <p id="course-focus-description"></p><span id="course-focus-meta"></span>
         </section>
         <section class="journal-section" id="course-section" aria-labelledby="courses-heading" hidden>
-          <div class="journal-section-heading"><h2 id="courses-heading">Courses</h2><div class="journal-course-controls"><span id="course-count"></span><div id="course-carousel-controls" class="journal-carousel-buttons" hidden><button id="previous-course" type="button" aria-label="Previous courses" aria-controls="course-grid">←</button><button id="next-course" type="button" aria-label="Next courses" aria-controls="course-grid">→</button></div></div></div>
+          <div class="journal-section-heading">
+            <h2 id="courses-heading">Courses</h2>
+            <div class="journal-course-controls"><span id="course-count"></span>
+              <div id="course-carousel-controls" class="journal-carousel-buttons" hidden><button id="previous-course"
+                  type="button" aria-label="Previous courses" aria-controls="course-grid">←</button><button
+                  id="next-course" type="button" aria-label="Next courses" aria-controls="course-grid">→</button></div>
+            </div>
+          </div>
           <div class="journal-course-grid" id="course-grid"></div>
           <button class="journal-more" id="more-courses" type="button" hidden>More courses ↓</button>
         </section>
         <section class="journal-section" id="feed-section" aria-labelledby="feed-heading">
-          <div class="journal-section-heading"><h2 id="feed-heading">Larp</h2><span id="feed-count"></span></div>
-          <div class="journal-feed" id="posts-feed"><p class="journal-empty" role="status">Opening the diary…</p></div>
+          <div class="journal-section-heading">
+            <h2 id="feed-heading">Larp</h2><span id="feed-count"></span>
+          </div>
+          <div class="journal-feed" id="posts-feed">
+            <p class="journal-empty" role="status">Opening the diary…</p>
+          </div>
           <button class="journal-more" id="load-more" type="button" hidden>More Larp ↓</button>
         </section>
-        <noscript><p class="journal-empty">Enable JavaScript to browse the Markdown logs and courses.</p></noscript>
+        <noscript>
+          <p class="journal-empty">Enable JavaScript to browse the Markdown logs and courses.</p>
+        </noscript>
       </div>
     </main>
     <footer class="logs-footer"><span>Aryan Mishra</span><span>A few things, written down.</span></footer>
   </div>
 </body>
+
 </html>

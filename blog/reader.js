@@ -30,7 +30,7 @@
     content.replaceChildren(box);
     content.setAttribute("aria-busy", "false");
     document.getElementById("reader-layout").classList.add("reader-without-sidebar");
-    document.title = "Log unavailable — Aryan Mishra";
+    document.title = "Log unavailable";
   }
 
   function niceDate(iso) {
@@ -327,7 +327,7 @@
         : ({ daily: "Daily log", essay: "Essay", "project-log": "Project log" })[post.kind] || "Log";
       document.getElementById("entry-meta").textContent = [niceDate(post.date), post.readMinutes ? post.readMinutes + " min read" : null].filter(Boolean).join(" · ");
       document.getElementById("entry-context").hidden = false;
-      document.title = post.title + " — Aryan's Logs";
+      document.title = post.title;
       document.querySelector('meta[name="description"]').content = post.summary || post.title;
       const hasCourse = renderSeries(post, catalog, course);
       renderOutline();

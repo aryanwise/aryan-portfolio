@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="./styles.css?v=3.2">
   <link rel="stylesheet" href="./chatbot/chatbot.css?v=4">
   <link rel="stylesheet" href="./theme.css">
-  <script src="./app.js?v=4.2" defer></script>
+  <script src="./app.js?v=4.3" defer></script>
   <script>
     window.AskAryanConfig = {
       endpoint: 'https://ask-aryan.aryanmishraa12.workers.dev/api/chat'
@@ -39,6 +39,10 @@
   <link rel="stylesheet" href="./hero-redesign.css?v=9">
   <link rel="stylesheet" href="./chatbot/assistant-redesign.css?v=3">
   <link rel="stylesheet" href="./site-header.css?v=1">
+  <link rel="stylesheet" href="./work-cards.css?v=1">
+  <link rel="stylesheet" href="./work-mobile.css?v=1">
+  <link rel="stylesheet" href="./ui-icons.css?v=1">
+  <script src="./ui-icons.js?v=1" defer></script>
 </head>
 
 <body>
@@ -214,8 +218,7 @@
         </div>
         <div class="network-view" id="network-view" hidden>
           <div class="network-topbar"><span><span class="network-live-dot" aria-hidden="true"></span> THE WORK,
-              CONNECTED</span><button type="button" id="network-motion" aria-pressed="false">Pause animation <span
-                aria-hidden="true">Ⅱ</span></button></div>
+              CONNECTED</span><button type="button" id="network-motion" aria-pressed="false" aria-label="Pause graph animation">Pause <svg class="network-motion-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 4v12M13 4v12"/></svg></button></div>
           <div class="network-layout">
             <div class="network-graph" id="network-graph" role="group"
               aria-label="Interactive neural network. Choose projects or experience, then select a work node.">
@@ -241,7 +244,7 @@
               <div class="network-graph-caption"><span class="graph-key" aria-hidden="true"></span><span
                   id="network-caption">Each neuron is a project. Select one to look inside.</span></div>
             </div>
-            <aside class="node-inspector" id="node-inspector" aria-labelledby="inspector-title"></aside>
+            <aside class="node-inspector" id="node-inspector" aria-labelledby="inspector-title" tabindex="-1"></aside>
           </div>
           <div class="network-bottom"><span>Ideas connect. That’s the interesting part.</span><span
               id="network-selection">01 / 06 NODES</span></div>
@@ -251,7 +254,7 @@
             <div class="work-category-switch" role="group" aria-label="Work category"><button class="work-mode-button"
                 type="button" data-mode="project" aria-pressed="true">Projects <span>06</span></button><button
                 class="work-mode-button" type="button" data-mode="experience" aria-pressed="false">Experience
-                <span>04</span></button></div><span id="card-count">06 PROJECTS</span>
+                <span>04</span></button></div>
           </div>
           <div class="work-entry-list">
             <article class="work-entry" id="adsa" data-node="adsa" data-kind="project">

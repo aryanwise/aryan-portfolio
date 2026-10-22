@@ -1,8 +1,21 @@
 (() => {
   'use strict';
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const verticalNetwork = matchMedia('(max-width: 767px)');
   const about = document.querySelector('#about');
   const aboutToggle = document.querySelector('.about-toggle');
+  const aboutSlot = document.createComment('Expanded bio position on desktop');
+  about?.before(aboutSlot);
+  function placeAbout() {
+    const terminal = document.querySelector('#hero-terminal');
+    if (!about || !terminal) return;
+    const focused = about.contains(document.activeElement) ? document.activeElement : null;
+    if (verticalNetwork.matches) terminal.before(about);
+    else aboutSlot.after(about);
+    focused?.focus({preventScroll:true});
+  }
+  placeAbout();
+  verticalNetwork.addEventListener('change', placeAbout);
   function showAbout(open) {
     if (!about || !aboutToggle) return;
     about.hidden = !open;
@@ -91,9 +104,11 @@
     const index = list.indexOf(record);
     inspector.innerHTML = `<p class="inspector-label"><span>03 / A CLOSER LOOK</span><span class="inspector-index">${String(index+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')}</span></p><p class="inspector-field">${escape(record.field)}</p><h3 id="inspector-title">${escape(record.title)}</h3>${record.role ? `<p class="inspector-role">${escape(record.role)}</p>` : ''}<p class="inspector-description">${escape(record.description)}</p><div class="inspector-metrics">${record.metrics.map(([value,label]) => `<div class="inspector-metric"><strong>${escape(value)}</strong><span>${escape(label)}</span></div>`).join('')}</div><div class="inspector-tags" aria-label="Technologies">${record.tags.slice(0,4).map(tag => `<span>${escape(tag)}</span>`).join('')}</div><div class="inspector-actions"><button type="button" class="inspector-more" data-detail="${record.id}">Read the breakdown <span aria-hidden="true">&nbsp;↗</span></button>${record.source ? `<a class="inspector-source" href="${escape(record.source)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}</div><div class="inspector-related"><span>CONNECTED TO</span><br>${record.related.map(id => { const other=byId.get(id); return other ? `<button type="button" data-open-node="${id}">${escape(other.short)} ↗</button>` : ''; }).join('')}</div>`;
     document.querySelector('#network-selection').textContent = `${String(index+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')} NODES`;
+    inspector.scrollTop = 0;
   }
   function renderNeurons() {
     const list = visibleRecords();
+    neurons.style.setProperty('--network-rows', Math.ceil(list.length / 2));
     neurons.innerHTML = list.map((record,index) => {
       const column = index % 2;
       const row = Math.floor(index / 2);
@@ -110,7 +125,6 @@
     if (byId.get(selectedId)?.kind !== category) selectedId = visibleRecords()[0].id;
     document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.mode === category)));
     records.forEach(record => {record.entry.hidden = record.kind !== category;});
-    document.querySelector('#card-count').textContent = `${String(visibleRecords().length).padStart(2,'0')} ${category === 'project' ? 'PROJECTS' : 'EXPERIENCES'}`;
     renderNeurons(); updateInspector();
     if (notify) announce(`Showing ${category === 'project'?'projects':'experience'}. Select a ${view === 'visual'?'neuron':'card'} for details.`);
   }
@@ -161,15 +175,34 @@
     if (!bounds.width || !bounds.height) return;
     svg.setAttribute('viewBox',`0 0 ${bounds.width} ${bounds.height}`);
     const center = element => {const rect=element.getBoundingClientRect(); return {x:rect.left-bounds.left+rect.width/2,y:rect.top-bounds.top+rect.height/2};};
-    const input = center(graph.querySelector(`.network-input[data-mode="${category}"] .neuron-dot`));
+    const inputButton = graph.querySelector(`.network-input[data-mode="${category}"]`);
+    const input = center(inputButton.querySelector('.neuron-dot'));
+    if (verticalNetwork.matches) {
+      const rect = inputButton.getBoundingClientRect();
+      input.x = rect.left - bounds.left + rect.width / 2;
+      input.y = rect.bottom - bounds.top;
+    }
     const end = center(graph.querySelector('.network-output-port'));
-    const path = (a,b) => `M${a.x},${a.y} C${a.x+(b.x-a.x)*.45},${a.y} ${b.x-(b.x-a.x)*.45},${b.y} ${b.x},${b.y}`;
+    const path = (a,b) => verticalNetwork.matches
+      ? `M${a.x},${a.y} C${a.x},${a.y+(b.y-a.y)*.45} ${b.x},${b.y-(b.y-a.y)*.45} ${b.x},${b.y}`
+      : `M${a.x},${a.y} C${a.x+(b.x-a.x)*.45},${a.y} ${b.x-(b.x-a.x)*.45},${b.y} ${b.x},${b.y}`;
     let paths = '';
-    neurons.querySelectorAll('.work-neuron').forEach(button => {
-      const point = center(button.querySelector('.neuron-dot'));
+    neurons.querySelectorAll('.work-neuron').forEach((button,index) => {
+      const dot = button.querySelector('.neuron-dot');
+      const point = center(dot);
       const active = button.dataset.neuron === selectedId;
-      const inputPath = path(input,point), outputPath=path(point,end);
-      paths += `<path class="network-path${active?' is-selected':''}" d="${inputPath}"/><path class="network-path${active?' is-selected':''}" d="${outputPath}" opacity="${active?'.8':'.38'}"/>`;
+      const radius = dot.getBoundingClientRect().width / 2;
+      const inputPath = path(input, verticalNetwork.matches ? {x:point.x, y:point.y-radius} : point);
+      let outputPath = path(point,end);
+      if (verticalNetwork.matches) {
+        // Follow the outer gutter into the panel below, keeping the selected
+        // output trace away from the other nodes and their labels.
+        const side = index % 2 === 0 ? 1 : -1;
+        const rail = side === 1 ? 10 : bounds.width - 10;
+        outputPath = `M${point.x-side*radius},${point.y} H${rail+side*12} Q${rail},${point.y} ${rail},${point.y+12} V${end.y-22} Q${rail},${end.y} ${rail+side*22},${end.y} H${end.x}`;
+      }
+      paths += `<path class="network-path${active?' is-selected':''}" d="${inputPath}"/>`;
+      if (active || !verticalNetwork.matches) paths += `<path class="network-path${active?' is-selected':''}" d="${outputPath}" opacity="${active?'.8':'.38'}"/>`;
       if (active) paths += `<path class="network-signal" d="${inputPath}"/><path class="network-signal" d="${outputPath}" style="animation-delay:-2s"/>`;
     });
     svg.innerHTML = paths;
@@ -179,7 +212,14 @@
   new IntersectionObserver(entries => {inViewport=entries[0].isIntersecting;syncMotion();}).observe(network);
   document.addEventListener('visibilitychange',syncMotion);
   reduceMotion.addEventListener('change',syncMotion);
-  document.querySelector('#network-motion').addEventListener('click',event => {paused=!paused;event.currentTarget.setAttribute('aria-pressed',String(paused));event.currentTarget.innerHTML=paused?'Resume animation <span aria-hidden="true">▷</span>':'Pause animation <span aria-hidden="true">Ⅱ</span>';syncMotion();});
+  verticalNetwork.addEventListener('change',scheduleDraw);
+  document.querySelector('#network-motion').addEventListener('click',event => {
+    paused=!paused;
+    event.currentTarget.setAttribute('aria-pressed',String(paused));
+    event.currentTarget.setAttribute('aria-label',`${paused?'Resume':'Pause'} graph animation`);
+    event.currentTarget.innerHTML = `${paused?'Resume':'Pause'} <svg class="network-motion-icon" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">${paused?'<path d="m7 4 9 6-9 6Z"/>':'<path d="M7 4v12M13 4v12"/>'}</svg>`;
+    syncMotion();
+  });
   document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click',() => setCategory(button.dataset.mode)));
   document.querySelectorAll('[data-work-view]').forEach(button => button.addEventListener('click',() => {setView(button.dataset.workView); announce(`${view === 'visual'?'Visual':'Cards'} view selected.`);}));
   neurons.addEventListener('click',event => {const button=event.target.closest('[data-neuron]');if(button)selectNode(button.dataset.neuron);});

@@ -1,0 +1,167 @@
+/* Card categories carry their count once, directly beside their label. */
+.work-section .card-view-header {
+  padding: 0 0 20px;
+}
+
+.work-section .work-category-switch {
+  display: flex;
+  gap: 24px;
+}
+
+.work-section .work-category-switch .work-mode-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font: 500 16px/1.4 var(--sans);
+}
+
+.work-section .work-category-switch .work-mode-button[aria-pressed="true"] {
+  border-bottom-color: var(--accent-text);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.work-section .work-category-switch .work-mode-button span {
+  margin: 0;
+  color: var(--text-muted);
+  font: 400 13px/1 var(--mono);
+  opacity: .8;
+}
+
+.work-section .project-github-link,
+.work-section .work-entry .work-entry-trigger {
+  min-height: 44px;
+}
+
+.work-section .project-github-link {
+  width: 44px;
+  height: 44px;
+  margin-top: -7px;
+  margin-bottom: -7px;
+}
+
+@media (max-width: 767px) {
+  .work-section .card-view-header {
+    margin-bottom: 18px;
+    padding-bottom: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .work-section .work-category-switch {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .work-section .work-category-switch .work-mode-button {
+    min-width: 0;
+    min-height: 50px;
+    margin-bottom: -1px;
+  }
+
+  .work-section .work-entry-list {
+    gap: 14px;
+    align-items: start;
+  }
+
+  .work-section .work-entry {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .work-section .work-entry:hover {
+    transform: none;
+  }
+
+  .work-section .work-card-art {
+    height: 112px;
+    margin-bottom: 17px;
+  }
+
+  .work-section .work-card-top {
+    margin-bottom: 10px;
+    min-height: 28px;
+  }
+
+  .work-section .work-card-field {
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: .045em;
+  }
+
+  .work-section .work-entry h3 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .work-section .work-entry-role {
+    margin: 0 0 12px;
+    font: 400 13px/1.6 var(--mono);
+  }
+
+  .work-section .work-entry-description {
+    margin: 0 0 15px;
+    font: 400 16px/1.65 var(--sans);
+  }
+
+  .work-section .work-card-tags {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .work-section .work-card-tags span {
+    padding: 4px 6px;
+    font-size: 12px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .work-section .work-card-bottom {
+    gap: 12px;
+    align-items: center;
+    padding-top: 9px;
+  }
+
+  .work-section .work-card-fact {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .work-section .work-entry .work-entry-trigger {
+    flex-shrink: 0;
+    padding: 8px 0 8px 8px;
+    font-size: 15px;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .work-section .work-entry .work-entry-details {
+    margin-top: 15px;
+    padding-top: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .work-section .work-entry-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  .work-section .work-entry { padding: 17px; }
+  .work-section .work-card-bottom { gap: 8px; }
+}
